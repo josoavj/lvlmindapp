@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
 import 'package:lvlmindbeta/loginpage.dart';
@@ -7,6 +8,7 @@ import 'package:lvlmindbeta/redirecting.dart';
 
 class Presentation extends StatelessWidget {
   const Presentation({super.key});
+
   // Added a constructor
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class Presentation extends StatelessWidget {
                   fontFamily: 'Adlam',
                   fontSize: 30,
                   fontWeight: FontWeight.w600,
-                  color: Colors.deepPurpleAccent,
+                  color: Color.fromARGB(255, 82, 7, 186),
                 ),
               ),
             ),
@@ -116,37 +118,54 @@ class Presentation extends StatelessWidget {
                             style: TextStyle(
                               fontFamily: 'Josefin',
                               fontSize: 15,
+                              fontWeight: FontWeight.w400,
                               color: Colors.black,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 50),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Redirecting(),
+                    const SizedBox(height: 15),
+                    // Texte avec lien de redirection dans une page redirecting
+                    SizedBox(
+                      child: Row(
+                        // Placer les deux élements côte à côte
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize
+                            .min, // Pour diminuer l'espacement entre les deuc élements
+                        children: [
+                          Text(
+                            "Don't have an account?",
+                            style: TextStyle(
+                              fontFamily: 'Josefin',
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        backgroundColor: Colors.white,
-                        padding: const EdgeInsets.all(13),
-                      ),
-                      child: const Text(
-                        'Create Account',
-                        style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Redirecting(),
+                                ),
+                              );
+                            },
+                            child: const DelayedAnimation(
+                              delay: 2500,
+                              child: Text("Register",
+                                  style: TextStyle(
+                                    fontFamily: 'Josefin',
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.blueAccent,
+                                    decoration: TextDecoration.underline,
+                                  )),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 20),
                   ],
                 ),
               ),

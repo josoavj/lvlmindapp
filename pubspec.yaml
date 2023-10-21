@@ -36,7 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -64,6 +64,9 @@ flutter:
     - images/
     - images/ispm.jpg
     - images/lvlmind.jpg
+    - images/logomin.jpg
+    - icon/
+    - icon/lvlmindico.png
     - fonts/
   
   # An image asset can refer to one or more resolution-specific "variants", see

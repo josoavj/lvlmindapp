@@ -31,7 +31,7 @@ class WelcomePage extends StatelessWidget {
               const DelayedAnimation(
                 delay: 1250,
                 child: SizedBox(
-                  height: 80,
+                  height: 90,
                   child: null,
                   // Juste un espacement etre les deux logos
                 ),
@@ -39,9 +39,9 @@ class WelcomePage extends StatelessWidget {
 
               // Pour notre logo
               DelayedAnimation(
-                delay: 1500,
+                delay: 1250,
                 child: SizedBox(
-                  height: 100,
+                  height: 90,
                   child: Image.asset('images/lvlmind.jpg'),
                   // Our application's logo
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
+import 'package:lvlmindbeta/presentation.dart';
 import 'package:lvlmindbeta/welcomepage.dart';
 // Suite à une erreur sur les polices que j'ait télechargé
 // J'ai du revenir à googlefonts
@@ -13,15 +14,32 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white.withOpacity(0),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.close,
-            color: Colors.blueAccent,
-            size: 30,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        leading: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.close,
+                color: Colors.blueAccent,
+                size: 25,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Presentation(),
+                    ));
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Image(
+              height: 70,
+              image: AssetImage('images/logomin.jpg'),
+            ),
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -30,7 +48,7 @@ class LoginPage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(
                 vertical: 100,
-                horizontal: 50,
+                horizontal: 30,
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,24 +66,24 @@ class LoginPage extends StatelessWidget {
                   ),
                   SizedBox(height: 22),
                   DelayedAnimation(
-                    delay: 1500,
+                    delay: 1200,
                     child: Text(
-                      'It' 's recommended to connect with your ID.',
+                      "It's recommended to connect with your ID.",
                       style: TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 20,
-                        color: Colors.black45,
+                        color: Color.fromARGB(95, 15, 12, 199),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 45),
+            const SizedBox(height: 20),
             const LoginForm(),
             const SizedBox(height: 100),
             DelayedAnimation(
-              delay: 2000,
+              delay: 1700,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
@@ -104,7 +122,7 @@ class LoginPage extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   child: const DelayedAnimation(
-                    delay: 3500,
+                    delay: 1900,
                     child: Text("Return",
                         style: TextStyle(
                           fontFamily: 'Josefin',
