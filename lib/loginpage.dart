@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
         backgroundColor: Colors.white.withOpacity(0),
         automaticallyImplyLeading: false,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
