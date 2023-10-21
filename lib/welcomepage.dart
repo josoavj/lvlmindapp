@@ -57,7 +57,7 @@ class WelcomePage extends StatelessWidget {
                   child: const Text('Online learning with levelmind',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'TiltNeon',
+                        fontFamily: 'Josefin',
                         fontSize: 30,
                         fontWeight: FontWeight.w800,
                         color: Colors.blueAccent,

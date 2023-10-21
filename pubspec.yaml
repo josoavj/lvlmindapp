@@ -75,12 +75,15 @@ flutter:
 
     - family: Josefin
       fonts:
-      - asset: fonts/JosefinSans-VariableFont_wght.ttf
-      - asset: fonts/JosefinSans-Italic-VariableFont_wght.ttf
+      - asset: fonts/JosefinSans-SemiBold.ttf
     
     - family: TiltNeon 
       fonts:
       - asset: fonts/TiltNeon-Regular-VariableFont_XROT,YROT.ttf
+
+    - family: Adlam 
+      fonts:
+      - asset: fonts/ADLaMDisplay-Regular.ttf
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 

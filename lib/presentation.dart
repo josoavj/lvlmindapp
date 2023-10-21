@@ -31,7 +31,7 @@ class Presentation extends StatelessWidget {
             DelayedAnimation(
               delay: 1200,
               child: SizedBox(
-                height: 250,
+                height: 230,
                 child: Image(
                   image: AssetImage('images/lvlmind.jpg'),
                 ), //Logo de notre application
@@ -43,7 +43,7 @@ class Presentation extends StatelessWidget {
                 "LVLMIND",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'PatrickHand',
+                  fontFamily: 'Adlam',
                   fontSize: 30,
                   fontWeight: FontWeight.w600,
                   color: Colors.deepPurpleAccent,
@@ -62,10 +62,10 @@ class Presentation extends StatelessWidget {
                     Text(
                       "Your adventure begins here and now.",
                       style: TextStyle(
-                        fontFamily: 'TiltNeon',
+                        fontFamily: 'Josefin',
                         fontSize: 30,
                         fontWeight: FontWeight.w600,
-                        color: Colors.blueGrey,
+                        color: Color.fromARGB(255, 16, 162, 236),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -73,7 +73,7 @@ class Presentation extends StatelessWidget {
                       "Train your mind to gain more knowledge with levelmind",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'TiltNeon',
+                        fontFamily: 'Josefin',
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                         color: Colors.blueAccent,
