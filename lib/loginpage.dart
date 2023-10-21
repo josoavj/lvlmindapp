@@ -119,7 +119,11 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 35),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pop(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Presentation(),
+                        ));
                   },
                   child: const DelayedAnimation(
                     delay: 1900,

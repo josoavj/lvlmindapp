@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
 import 'package:lvlmindbeta/loginpage.dart';
 import 'package:lvlmindbeta/redirecting.dart';
+import 'package:lvlmindbeta/welcomepage.dart';
 
 class Presentation extends StatelessWidget {
   const Presentation({super.key});
@@ -23,7 +24,11 @@ class Presentation extends StatelessWidget {
             size: 30,
           ),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WelcomePage(),
+                ));
           },
         ),
       ),
