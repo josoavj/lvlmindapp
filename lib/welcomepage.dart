@@ -12,40 +12,63 @@ class WelcomePage extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
         child: Container(
-          margin: const EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: 100,
             horizontal: 50,
           ),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xff2441e7), Color(0xffff1053)],
+            ),
+            image: DecorationImage(
+              image: const AssetImage('images/fond3 1.jpg'),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.5),
+                BlendMode.dstATop,
+              ),
+            ),
+          ),
           child: Column(
             children: [
-              // Pour le logo de l'ISPM
-              DelayedAnimation(
-                delay: 1200,
-                child: SizedBox(
-                  height: 100,
-                  child: Image.asset('images/ispm.jpg'),
-                ),
+              /* aligmement des logos */
+              Row(
+                // Pour le logo de l'ISPM
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DelayedAnimation(
+                    delay: 1200,
+                    child: SizedBox(
+                      height: 100,
+                      child: Image.asset('images/ispm.jpg'),
+                    ),
+                  ),
+                  // Juste un espacement etre les deux logos
+                  const DelayedAnimation(
+                    delay: 1250,
+                    child: SizedBox(
+                      width: 90,
+                      child: null,
+                    ),
+                  ),
+                  // Pour notre logo
+                  DelayedAnimation(
+                    delay: 1250,
+                    child: SizedBox(
+                      height: 90,
+                      child: Image.asset('images/lvlmind.jpg'),
+                      // Our application's logo
+                    ),
+                  ),
+                ],
               ),
 
               // Juste pour l'espacement
-              const DelayedAnimation(
-                delay: 1250,
-                child: SizedBox(
-                  height: 90,
-                  child: null,
-                  // Juste un espacement etre les deux logos
-                ),
-              ),
 
-              // Pour notre logo
-              DelayedAnimation(
-                delay: 1250,
-                child: SizedBox(
-                  height: 90,
-                  child: Image.asset('images/lvlmind.jpg'),
-                  // Our application's logo
-                ),
-              ),
               const SizedBox(height: 20),
               DelayedAnimation(
                 delay: 1700,
