@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
 import 'package:lvlmindbeta/presentation.dart';
@@ -12,9 +13,11 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //toolbarHeight: 70,
         elevation: 0,
         backgroundColor: Colors.white.withOpacity(0),
-        leading: Row(
+        automaticallyImplyLeading: false,
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -35,12 +38,15 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const Image(
-              height: 70,
-              image: AssetImage('images/logomin.jpg'),
-            ),
+            const Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Image(
+                  height: 50,
+                  image: AssetImage('images/logomin.jpg'),
+                ))
           ],
         ),
+        titleSpacing: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
