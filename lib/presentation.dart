@@ -60,7 +60,7 @@ class Presentation extends StatelessWidget {
             DelayedAnimation(
               delay: 1700,
               child: Container(
-                margin: const EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: 40,
                   horizontal: 30,
                 ),
