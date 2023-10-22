@@ -35,6 +35,10 @@ class WelcomePage extends StatelessWidget {
           ),
           child: Column(
             children: [
+              // Espacement pour mieux centrer les élements
+              const SizedBox(
+                height: 100,
+              ),
               /* aligmement des logos */
               Row(
                 // Pour le logo de l'ISPM
@@ -77,13 +81,29 @@ class WelcomePage extends StatelessWidget {
                     top: 50,
                     bottom: 30,
                   ),
-                  child: const Text('Online learning with levelmind',
+                  child: const Text('Online learning with',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Josefin',
-                        fontSize: 30,
+                        fontSize: 35,
                         fontWeight: FontWeight.w800,
-                        color: Colors.blueAccent,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      )),
+                ),
+              ),
+              DelayedAnimation(
+                delay: 1750,
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    bottom: 30,
+                  ),
+                  child: const Text('levelmind',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Josefin',
+                        fontSize: 50,
+                        fontWeight: FontWeight.w800,
+                        color: Color.fromARGB(255, 255, 255, 255),
                       )),
                 ),
               ),
@@ -101,7 +121,7 @@ class WelcomePage extends StatelessWidget {
                         fontFamily: 'Josefin',
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(255, 71, 136, 250),
+                        color: Color.fromARGB(255, 255, 255, 255),
                       )),
                 ),
               ),

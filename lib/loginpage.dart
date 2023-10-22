@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
 import 'package:lvlmindbeta/presentation.dart';
 import 'package:lvlmindbeta/welcomepage.dart';
-// Suite à une erreur sur les polices que j'ait télechargé
+// Suite à une erreur sur les polices que j'ai télechargé
 // J'ai du revenir à googlefonts
 
 class LoginPage extends StatelessWidget {
