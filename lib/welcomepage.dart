@@ -55,7 +55,7 @@ class WelcomePage extends StatelessWidget {
                   const DelayedAnimation(
                     delay: 1250,
                     child: SizedBox(
-                      width: 90,
+                      width: 70,
                       child: null,
                     ),
                   ),
