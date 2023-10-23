@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
-import 'package:lvlmindbeta/main.dart';
+//import 'package:lvlmindbeta/main.dart';
 import 'package:lvlmindbeta/presentation.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -63,10 +63,15 @@ class WelcomePage extends StatelessWidget {
                   DelayedAnimation(
                     delay: 1250,
                     child: SizedBox(
-                      height: 90,
-                      child: Image.asset('images/lvlmind.jpg'),
-                      // Our application's logo
+                      height: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.asset(
+                          'images/lvlind10.jpg',
+                        ),
+                      ),
                     ),
+                    // Our application's logo
                   ),
                 ],
               ),
