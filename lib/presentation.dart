@@ -21,7 +21,7 @@ class Presentation extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.blueAccent,
+            color: Color.fromARGB(255, 255, 255, 255),
             size: 30,
           ),
           onPressed: () {
@@ -58,29 +58,36 @@ class Presentation extends StatelessWidget {
           ),
           child: Column(
             children: [
+              Align(
+                alignment: Alignment.center,
+              ),
               SizedBox(
-                height: 40,
+                height: 50,
               ),
               DelayedAnimation(
                 delay: 1200,
                 child: SizedBox(
-                  height: 230,
+                  height: 200,
                   child: Image(
                     image: AssetImage('images/lvlmind.jpg'),
                   ), //Logo de notre application
                 ),
               ),
               DelayedAnimation(
+                delay: 1600,
+                child: SizedBox(
+                  height: 70,
+                ),
+              ),
+              DelayedAnimation(
                 delay: 1700,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 40,
-                    horizontal: 30,
-                  ),
+                  alignment: Alignment.center,
                   child: Column(
                     children: const [
                       Text(
                         "Your adventure begins here and now.",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Josefin',
                           fontSize: 30,
@@ -107,8 +114,8 @@ class Presentation extends StatelessWidget {
                 delay: 2500,
                 child: Container(
                   margin: const EdgeInsets.symmetric(
-                    vertical: 15,
-                    horizontal: 60,
+                    vertical: 20,
+                    horizontal: 50,
                   ),
                   child: Column(
                     children: [
