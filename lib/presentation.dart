@@ -58,6 +58,9 @@ class Presentation extends StatelessWidget {
           ),
           child: Column(
             children: [
+              SizedBox(
+                height: 40,
+              ),
               DelayedAnimation(
                 delay: 1200,
                 child: SizedBox(
@@ -65,19 +68,6 @@ class Presentation extends StatelessWidget {
                   child: Image(
                     image: AssetImage('images/lvlmind.jpg'),
                   ), //Logo de notre application
-                ),
-              ),
-              DelayedAnimation(
-                delay: 1300,
-                child: Text(
-                  "LVLMIND",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Adlam',
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 82, 7, 186),
-                  ),
                 ),
               ),
               DelayedAnimation(
@@ -95,7 +85,7 @@ class Presentation extends StatelessWidget {
                           fontFamily: 'Josefin',
                           fontSize: 30,
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 16, 162, 236),
+                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
                       SizedBox(height: 10),
@@ -106,7 +96,7 @@ class Presentation extends StatelessWidget {
                           fontFamily: 'Josefin',
                           fontSize: 20,
                           fontWeight: FontWeight.w400,
-                          color: Colors.blueAccent,
+                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
                     ],
@@ -133,7 +123,8 @@ class Presentation extends StatelessWidget {
                         },
                         style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
-                          backgroundColor: Colors.blueAccent,
+                          backgroundColor:
+                              const Color.fromARGB(255, 248, 248, 248),
                           padding: const EdgeInsets.all(13),
                         ),
                         child: Row(
@@ -147,7 +138,7 @@ class Presentation extends StatelessWidget {
                                 fontFamily: 'Josefin',
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.black,
+                                color: Colors.blueAccent,
                               ),
                             ),
                           ],
@@ -167,7 +158,7 @@ class Presentation extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'Josefin',
                                 fontWeight: FontWeight.w400,
-                                color: Colors.black,
+                                color: const Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),
                             TextButton(

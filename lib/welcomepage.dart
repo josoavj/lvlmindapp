@@ -131,7 +131,7 @@ class WelcomePage extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: d_color,
+                        backgroundColor: Colors.white,
                         shape: const StadiumBorder(),
                         padding: const EdgeInsets.all(13)),
                     // onHover: ,
@@ -147,7 +147,8 @@ class WelcomePage extends StatelessWidget {
                       'GET STARTED',
                       style: TextStyle(
                         fontFamily: 'TiltNeon',
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blueAccent,
                       ),
                     ),
                   ),
