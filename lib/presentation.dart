@@ -33,6 +33,7 @@ class Presentation extends StatelessWidget {
           },
         ),
       ),
+      // Tsara natao container
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -67,16 +68,19 @@ class Presentation extends StatelessWidget {
               DelayedAnimation(
                 delay: 1200,
                 child: SizedBox(
-                  height: 200,
-                  child: Image(
-                    image: AssetImage('images/lvlmind.jpg'),
+                  height: 150,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Image.asset(
+                      'images/lvlind10.jpg',
+                    ),
                   ), //Logo de notre application
                 ),
               ),
               DelayedAnimation(
                 delay: 1600,
                 child: SizedBox(
-                  height: 70,
+                  height: 55,
                 ),
               ),
               DelayedAnimation(
@@ -90,18 +94,18 @@ class Presentation extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Josefin',
-                          fontSize: 30,
+                          fontSize: 35,
                           fontWeight: FontWeight.w600,
                           color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 40),
                       Text(
                         "Train your mind to gain more knowledge with levelmind",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Josefin',
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.w400,
                           color: Color.fromARGB(255, 255, 255, 255),
                         ),
@@ -115,7 +119,7 @@ class Presentation extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.symmetric(
                     vertical: 20,
-                    horizontal: 50,
+                    horizontal: 40,
                   ),
                   child: Column(
                     children: [
@@ -143,7 +147,7 @@ class Presentation extends StatelessWidget {
                               'Connect with Personal ID',
                               style: TextStyle(
                                 fontFamily: 'Josefin',
-                                fontSize: 15,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.blueAccent,
                               ),
@@ -164,6 +168,7 @@ class Presentation extends StatelessWidget {
                               "Don't have an account?",
                               style: TextStyle(
                                 fontFamily: 'Josefin',
+                                fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: const Color.fromARGB(255, 255, 255, 255),
                               ),
@@ -183,8 +188,8 @@ class Presentation extends StatelessWidget {
                                     style: TextStyle(
                                       fontFamily: 'Josefin',
                                       fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.blueAccent,
+                                      fontWeight: FontWeight.w800,
+                                      color: Color.fromARGB(255, 255, 255, 255),
                                       decoration: TextDecoration.underline,
                                     )),
                               ),
