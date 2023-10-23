@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/gestures.dart';
+//import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
 import 'package:lvlmindbeta/loginpage.dart';
@@ -21,7 +21,7 @@ class Presentation extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.blueAccent,
+            color: Color.fromARGB(255, 255, 255, 255),
             size: 30,
           ),
           onPressed: () {
@@ -33,6 +33,7 @@ class Presentation extends StatelessWidget {
           },
         ),
       ),
+      // Tsara natao container
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -58,55 +59,55 @@ class Presentation extends StatelessWidget {
           ),
           child: Column(
             children: [
+              Align(
+                alignment: Alignment.center,
+              ),
+              SizedBox(
+                height: 50,
+              ),
               DelayedAnimation(
                 delay: 1200,
                 child: SizedBox(
-                  height: 230,
-                  child: Image(
-                    image: AssetImage('images/lvlmind.jpg'),
+                  height: 150,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Image.asset(
+                      'images/lvlind10.jpg',
+                    ),
                   ), //Logo de notre application
                 ),
               ),
               DelayedAnimation(
-                delay: 1300,
-                child: Text(
-                  "LVLMIND",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Adlam',
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 82, 7, 186),
-                  ),
+                delay: 1600,
+                child: SizedBox(
+                  height: 55,
                 ),
               ),
               DelayedAnimation(
                 delay: 1700,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 40,
-                    horizontal: 30,
-                  ),
+                  alignment: Alignment.center,
                   child: Column(
                     children: const [
                       Text(
                         "Your adventure begins here and now.",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Josefin',
-                          fontSize: 30,
+                          fontSize: 35,
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 16, 162, 236),
+                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 40),
                       Text(
                         "Train your mind to gain more knowledge with levelmind",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Josefin',
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.w400,
-                          color: Colors.blueAccent,
+                          color: Color.fromARGB(255, 255, 255, 255),
                         ),
                       ),
                     ],
@@ -117,8 +118,8 @@ class Presentation extends StatelessWidget {
                 delay: 2500,
                 child: Container(
                   margin: const EdgeInsets.symmetric(
-                    vertical: 15,
-                    horizontal: 60,
+                    vertical: 20,
+                    horizontal: 40,
                   ),
                   child: Column(
                     children: [
@@ -133,7 +134,8 @@ class Presentation extends StatelessWidget {
                         },
                         style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
-                          backgroundColor: Colors.blueAccent,
+                          backgroundColor:
+                              const Color.fromARGB(255, 248, 248, 248),
                           padding: const EdgeInsets.all(13),
                         ),
                         child: Row(
@@ -145,9 +147,9 @@ class Presentation extends StatelessWidget {
                               'Connect with Personal ID',
                               style: TextStyle(
                                 fontFamily: 'Josefin',
-                                fontSize: 15,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.black,
+                                color: Colors.blueAccent,
                               ),
                             ),
                           ],
@@ -166,8 +168,9 @@ class Presentation extends StatelessWidget {
                               "Don't have an account?",
                               style: TextStyle(
                                 fontFamily: 'Josefin',
+                                fontSize: 16,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.black,
+                                color: const Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),
                             TextButton(
@@ -185,8 +188,8 @@ class Presentation extends StatelessWidget {
                                     style: TextStyle(
                                       fontFamily: 'Josefin',
                                       fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.blueAccent,
+                                      fontWeight: FontWeight.w800,
+                                      color: Color.fromARGB(255, 255, 255, 255),
                                       decoration: TextDecoration.underline,
                                     )),
                               ),

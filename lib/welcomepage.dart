@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
-import 'package:lvlmindbeta/main.dart';
+//import 'package:lvlmindbeta/main.dart';
 import 'package:lvlmindbeta/presentation.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -55,7 +55,7 @@ class WelcomePage extends StatelessWidget {
                   const DelayedAnimation(
                     delay: 1250,
                     child: SizedBox(
-                      width: 90,
+                      width: 70,
                       child: null,
                     ),
                   ),
@@ -63,10 +63,15 @@ class WelcomePage extends StatelessWidget {
                   DelayedAnimation(
                     delay: 1250,
                     child: SizedBox(
-                      height: 90,
-                      child: Image.asset('images/lvlmind.jpg'),
-                      // Our application's logo
+                      height: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.asset(
+                          'images/lvlind10.jpg',
+                        ),
+                      ),
                     ),
+                    // Our application's logo
                   ),
                 ],
               ),
@@ -131,7 +136,7 @@ class WelcomePage extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: d_color,
+                        backgroundColor: Colors.white,
                         shape: const StadiumBorder(),
                         padding: const EdgeInsets.all(13)),
                     // onHover: ,
@@ -147,7 +152,8 @@ class WelcomePage extends StatelessWidget {
                       'GET STARTED',
                       style: TextStyle(
                         fontFamily: 'TiltNeon',
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blueAccent,
                       ),
                     ),
                   ),

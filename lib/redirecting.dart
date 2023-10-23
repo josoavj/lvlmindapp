@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
-import 'package:lvlmindbeta/presentation.dart';
-import 'package:flutter/gestures.dart';
+//import 'package:lvlmindbeta/presentation.dart';
+//import 'package:flutter/gestures.dart';
 
 class Redirecting extends StatelessWidget {
   const Redirecting({super.key});
