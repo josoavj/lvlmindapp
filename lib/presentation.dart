@@ -67,9 +67,12 @@ class Presentation extends StatelessWidget {
               DelayedAnimation(
                 delay: 1200,
                 child: SizedBox(
-                  height: 200,
-                  child: Image(
-                    image: AssetImage('images/lvlmind.jpg'),
+                  height: 150,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Image.asset(
+                      'images/lvlind10.jpg',
+                    ),
                   ), //Logo de notre application
                 ),
               ),
