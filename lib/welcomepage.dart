@@ -48,7 +48,7 @@ class WelcomePage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     DelayedAnimation(
-                      delay: 1200,
+                      delay: 1000,
                       child: SizedBox(
                         height: 75,
                         child: Image.asset('images/ispm.jpg'),
@@ -56,7 +56,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                     // Juste un espacement etre les deux logos
                     const DelayedAnimation(
-                      delay: 1250,
+                      delay: 1000,
                       child: SizedBox(
                         width: 70,
                         child: null,
@@ -64,7 +64,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                     // Pour notre logo
                     DelayedAnimation(
-                      delay: 1250,
+                      delay: 1000,
                       child: SizedBox(
                         height: 75,
                         child: ClipRRect(
@@ -83,7 +83,7 @@ class WelcomePage extends StatelessWidget {
 
                 const SizedBox(height: 20),
                 DelayedAnimation(
-                  delay: 1700,
+                  delay: 1400,
                   child: Container(
                     margin: const EdgeInsets.only(
                       top: 50,
@@ -100,7 +100,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 DelayedAnimation(
-                  delay: 1750,
+                  delay: 1450,
                   child: Container(
                     margin: const EdgeInsets.only(
                       bottom: 30,
@@ -116,7 +116,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 DelayedAnimation(
-                  delay: 1800,
+                  delay: 1500,
                   child: Container(
                     margin: const EdgeInsets.only(
                       top: 30,
@@ -134,7 +134,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 DelayedAnimation(
-                  delay: 2000,
+                  delay: 1600,
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
