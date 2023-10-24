@@ -24,75 +24,73 @@ class Redirecting extends StatelessWidget {
         ),
       ),
       // Juste un widget centré avec les deux logos suivi d'un lien de redirection
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 100,
-            horizontal: 80,
-          ),
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Align(
-                alignment: Alignment.center,
-              ),
-              SizedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    DelayedAnimation(
+      body: Container(
+        margin: const EdgeInsets.symmetric(
+          vertical: 100,
+          horizontal: 80,
+        ),
+        child: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Align(
+              alignment: Alignment.center,
+            ),
+            SizedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DelayedAnimation(
+                    delay: 100,
+                    child: Image(
+                        height: 100, image: AssetImage('images/ispm.jpg')),
+                  ),
+                  DelayedAnimation(
+                      delay: 100,
+                      child: SizedBox(
+                        height: 20,
+                      )),
+                  DelayedAnimation(
                       delay: 100,
                       child: Image(
-                          height: 100, image: AssetImage('images/ispm.jpg')),
-                    ),
-                    DelayedAnimation(
-                        delay: 100,
-                        child: SizedBox(
-                          height: 20,
-                        )),
-                    DelayedAnimation(
-                        delay: 100,
-                        child: Image(
-                          height: 100,
-                          image: AssetImage('images/lvlmind.jpg'),
-                        )),
-                  ],
-                ),
+                        height: 100,
+                        image: AssetImage('images/lvlmind.jpg'),
+                      )),
+                ],
               ),
-              SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                child: Row(
-                  // Placer les deux élements côte à côte
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize
-                      .min, // Pour diminuer l'espacement entre les deuc élements
-                  children: [
-                    Text(
-                      "Don't have an account?",
-                      style: TextStyle(
-                        fontFamily: 'Josefin',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            SizedBox(
+              child: Row(
+                // Placer les deux élements côte à côte
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize
+                    .min, // Pour diminuer l'espacement entre les deuc élements
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
                     ),
-                    Text(
-                      "Link",
-                      style: TextStyle(
-                        fontFamily: 'Josefin',
-                        color: Colors.blueAccent,
-                        fontSize: 20,
-                        decoration: TextDecoration.underline,
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+                  ),
+                  Text(
+                    "Link",
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontSize: 20,
+                      decoration: TextDecoration.underline,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
