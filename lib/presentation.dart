@@ -6,6 +6,7 @@ import 'package:lvlmindbeta/animation.dart';
 import 'package:lvlmindbeta/loginpage.dart';
 import 'package:lvlmindbeta/redirecting.dart';
 import 'package:lvlmindbeta/welcomepage.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class Presentation extends StatelessWidget {
   const Presentation({super.key});
@@ -37,8 +38,8 @@ class Presentation extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(
-            vertical: 100,
-            horizontal: 50,
+            vertical: 15,
+            horizontal: 0,
           ),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -68,7 +69,7 @@ class Presentation extends StatelessWidget {
               DelayedAnimation(
                 delay: 1200,
                 child: SizedBox(
-                  height: 150,
+                  height: 140,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(40),
                     child: Image.asset(
@@ -140,17 +141,21 @@ class Presentation extends StatelessWidget {
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             //Icon(Icons.send_sharp), //A modifier
-                            SizedBox(width: 10),
-                            Text(
+                            // SizedBox(width: 10),
+                            GradientText(
                               'Connect with Personal ID',
                               style: TextStyle(
                                 fontFamily: 'Josefin',
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.blueAccent,
                               ),
+                              gradientType: GradientType.linear,
+                              colors: const [
+                                Color(0xff2441e7),
+                                Color(0xffff1053)
+                              ],
                             ),
                           ],
                         ),
