@@ -49,7 +49,7 @@ class Redirecting extends StatelessWidget {
                     DelayedAnimation(
                         delay: 100,
                         child: SizedBox(
-                          height: 10,
+                          height: 20,
                         )),
                     DelayedAnimation(
                         delay: 100,
