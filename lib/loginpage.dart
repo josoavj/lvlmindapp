@@ -104,11 +104,25 @@ class LoginPage extends StatelessWidget {
                         DelayedAnimation(
                           delay: 1200,
                           child: Text(
-                            "It's recommended to connect with your ID.",
+                            "It's recommended to connect",
                             style: TextStyle(
                               fontFamily: 'Josefin',
                               fontSize: 20,
                               color: Color.fromARGB(95, 15, 12, 199),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: DelayedAnimation(
+                            delay: 1200,
+                            child: Text(
+                              "with your ID.",
+                              style: TextStyle(
+                                fontFamily: 'Josefin',
+                                fontSize: 20,
+                                color: Color.fromARGB(95, 15, 12, 199),
+                              ),
                             ),
                           ),
                         ),

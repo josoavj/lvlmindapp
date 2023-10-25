@@ -58,7 +58,8 @@ class Redirecting extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
+                borderRadius: BorderRadius.circular(20),
+              ),
               elevation: 5,
               color: Colors.black.withOpacity(0.3),
               child: Column(
@@ -81,7 +82,7 @@ class Redirecting extends StatelessWidget {
                         const DelayedAnimation(
                             delay: 100,
                             child: SizedBox(
-                              height: 100,
+                              width: 50,
                             )),
                         DelayedAnimation(
                           delay: 100,
@@ -99,6 +100,8 @@ class Redirecting extends StatelessWidget {
                     height: 20,
                   ),
                   SizedBox(
+                      child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: GradientText(
                       'ISPM ~ LevelMind',
                       style: const TextStyle(
@@ -111,7 +114,7 @@ class Redirecting extends StatelessWidget {
                         Color.fromARGB(255, 15, 225, 106)
                       ],
                     ),
-                  ),
+                  )),
                   const SizedBox(
                     child: Text(
                       "Online learning with us",
