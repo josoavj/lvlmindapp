@@ -4,6 +4,7 @@ import 'package:lvlmindbeta/animation.dart';
 //import 'package:lvlmindbeta/main.dart';
 import 'package:lvlmindbeta/presentation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -49,7 +50,7 @@ class WelcomePage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     DelayedAnimation(
-                      delay: 1000,
+                      delay: 800,
                       child: SizedBox(
                         height: 80,
                         child: Image.asset('images/ispm.jpg'),
@@ -57,7 +58,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                     // Juste un espacement etre les deux logos
                     const DelayedAnimation(
-                      delay: 1000,
+                      delay: 800,
                       child: SizedBox(
                         width: 70,
                         child: null,
@@ -65,7 +66,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                     // Pour notre logo
                     DelayedAnimation(
-                      delay: 1000,
+                      delay: 800,
                       child: SizedBox(
                         height: 80,
                         child: ClipRRect(
@@ -84,7 +85,7 @@ class WelcomePage extends StatelessWidget {
 
                 const SizedBox(height: 20),
                 DelayedAnimation(
-                  delay: 1400,
+                  delay: 950,
                   child: Container(
                     margin: const EdgeInsets.only(
                       top: 50,
@@ -101,23 +102,19 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 DelayedAnimation(
-                  delay: 1450,
+                  delay: 950,
                   child: Container(
                     margin: const EdgeInsets.only(
-                      bottom: 30,
+                      bottom: 20,
                     ),
-                    child: const Text('levelmind',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 45,
-                          fontWeight: FontWeight.w800,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        )),
+                    child: SvgPicture.asset(
+                      'images/LevelMind.svg',
+                      alignment: Alignment.bottomCenter,
+                    ),
                   ),
                 ),
                 DelayedAnimation(
-                  delay: 1500,
+                  delay: 1000,
                   child: Container(
                     margin: const EdgeInsets.only(
                       top: 30,
@@ -135,7 +132,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 DelayedAnimation(
-                  delay: 1600,
+                  delay: 1100,
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
