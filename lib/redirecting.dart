@@ -30,7 +30,7 @@ class Redirecting extends StatelessWidget {
       body: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(
-          vertical: 280,
+          vertical: 270,
           horizontal: 50,
         ),
         // Pour la background de cette page
@@ -55,7 +55,7 @@ class Redirecting extends StatelessWidget {
         // Le contenu de la page - Centré au centre
         child: Center(
           child: Align(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.center,
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
