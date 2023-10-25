@@ -86,7 +86,7 @@ class Redirecting extends StatelessWidget {
                         DelayedAnimation(
                           delay: 100,
                           child: ClipRRect(
-                              borderRadius: BorderRadius.circular(80),
+                              borderRadius: BorderRadius.circular(20),
                               child: const Image(
                                 height: 100,
                                 image: AssetImage('images/lvlind10.jpg'),
