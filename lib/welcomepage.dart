@@ -12,6 +12,7 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      // ignore: non_constant_identifier_names
       body: LayoutBuilder(builder: (context, Constraints) {
         return Center(
           child: Container(
@@ -50,7 +51,7 @@ class WelcomePage extends StatelessWidget {
                     DelayedAnimation(
                       delay: 1000,
                       child: SizedBox(
-                        height: 75,
+                        height: 80,
                         child: Image.asset('images/ispm.jpg'),
                       ),
                     ),
@@ -66,9 +67,9 @@ class WelcomePage extends StatelessWidget {
                     DelayedAnimation(
                       delay: 1000,
                       child: SizedBox(
-                        height: 75,
+                        height: 80,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
+                          borderRadius: BorderRadius.circular(20),
                           child: Image.asset(
                             'images/lvlind10.jpg',
                           ),
