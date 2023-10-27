@@ -115,7 +115,7 @@ class LoginPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: DelayedAnimation(
-                            delay: 900,
+                            delay: 850,
                             child: Flexible(
                               flex: 1,
                               child: Text(
@@ -131,7 +131,7 @@ class LoginPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: DelayedAnimation(
-                            delay: 900,
+                            delay: 850,
                             child: Flexible(
                               flex: 1,
                               child: Text(
@@ -151,7 +151,7 @@ class LoginPage extends StatelessWidget {
                 const LoginForm(),
                 const SizedBox(height: 50),
                 DelayedAnimation(
-                  delay: 1700,
+                  delay: 1100,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: const StadiumBorder(),
@@ -194,7 +194,7 @@ class LoginPage extends StatelessWidget {
                               ));
                         },
                         child: const DelayedAnimation(
-                          delay: 1200,
+                          delay: 1100,
                           child: Flexible(
                               flex: 2,
                               child: Text(
@@ -236,7 +236,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           DelayedAnimation(
-            delay: 1800,
+            delay: 1000,
             child: TextField(
               decoration: InputDecoration(
                 labelText: 'Your ID',
@@ -258,7 +258,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 30),
           DelayedAnimation(
-            delay: 1900,
+            delay: 1050,
             child: TextField(
               obscureText: _obscureText,
               decoration: InputDecoration(

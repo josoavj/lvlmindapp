@@ -65,11 +65,8 @@ class Presentation extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
               ),
-              SizedBox(
-                height: 50,
-              ),
               DelayedAnimation(
-                delay: 1200,
+                delay: 900,
                 child: SizedBox(
                   height: 140,
                   child: ClipRRect(
@@ -81,13 +78,13 @@ class Presentation extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 1600,
+                delay: 1000,
                 child: SizedBox(
                   height: 60,
                 ),
               ),
               DelayedAnimation(
-                delay: 1700,
+                delay: 1000,
                 child: Container(
                   alignment: Alignment.center,
                   child: Column(
@@ -118,7 +115,7 @@ class Presentation extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 2500,
+                delay: 1000,
                 child: Container(
                   margin: const EdgeInsets.symmetric(
                     vertical: 20,
@@ -196,7 +193,7 @@ class Presentation extends StatelessWidget {
                                   );
                                 },
                                 child: const DelayedAnimation(
-                                  delay: 2500,
+                                  delay: 1050,
                                   child: Text("Register",
                                       style: TextStyle(
                                         fontFamily: 'Josefin',

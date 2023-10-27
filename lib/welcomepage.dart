@@ -99,7 +99,7 @@ class WelcomePage extends StatelessWidget {
                   child: SizedBox(height: 20),
                 ),
                 DelayedAnimation(
-                    delay: 950,
+                    delay: 850,
                     child: Flexible(
                       flex: 1,
                       child: Container(
@@ -118,7 +118,7 @@ class WelcomePage extends StatelessWidget {
                       ),
                     )),
                 DelayedAnimation(
-                  delay: 950,
+                  delay: 850,
                   child: Container(
                       margin: const EdgeInsets.only(
                         bottom: 20,
@@ -132,7 +132,7 @@ class WelcomePage extends StatelessWidget {
                       )),
                 ),
                 DelayedAnimation(
-                  delay: 1000,
+                  delay: 950,
                   child: Container(
                       margin: const EdgeInsets.only(
                         top: 30,
@@ -152,7 +152,7 @@ class WelcomePage extends StatelessWidget {
                       )),
                 ),
                 DelayedAnimation(
-                    delay: 1100,
+                    delay: 1000,
                     child: Flexible(
                       flex: 2,
                       child: SizedBox(
