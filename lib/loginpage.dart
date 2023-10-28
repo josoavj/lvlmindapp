@@ -241,6 +241,7 @@ class _LoginFormState extends State<LoginForm> {
               decoration: InputDecoration(
                 labelText: 'Your ID',
                 labelStyle: TextStyle(
+                  fontFamily: 'Josefin',
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                   color: Colors.grey[400],
@@ -263,6 +264,7 @@ class _LoginFormState extends State<LoginForm> {
               obscureText: _obscureText,
               decoration: InputDecoration(
                   labelStyle: TextStyle(
+                    fontFamily: 'Josefin',
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey[400],

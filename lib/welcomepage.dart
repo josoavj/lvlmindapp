@@ -58,7 +58,7 @@ class WelcomePage extends StatelessWidget {
                         child: Flexible(
                           flex: 2,
                           child: SizedBox(
-                            height: 80,
+                            height: 85,
                             child: Image.asset('images/ispm.jpg'),
                           ),
                         )),

@@ -105,8 +105,9 @@ class Redirecting extends StatelessWidget {
                     child: GradientText(
                       'ISPM ~ LevelMind',
                       style: const TextStyle(
-                        fontFamily: 'Adlam',
-                        fontSize: 25,
+                        fontFamily: 'PatrickHand',
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
                       ),
                       gradientType: GradientType.linear,
                       colors: const [
@@ -149,7 +150,7 @@ class Redirecting extends StatelessWidget {
                         // Normalement, ceci aurait dû être un TextButton
                         // Qui, une fois cliqué, conduira l'utilisateur vers notre site web
                         Text(
-                          "Link",
+                          "Create",
                           style: TextStyle(
                             fontFamily: 'Josefin',
                             color: Color.fromARGB(255, 255, 255, 255),
