@@ -59,15 +59,14 @@ class Presentation extends StatelessWidget {
             ),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Align(
                 alignment: Alignment.center,
               ),
-              SizedBox(
-                height: 50,
-              ),
               DelayedAnimation(
-                delay: 1200,
+                delay: 900,
                 child: SizedBox(
                   height: 140,
                   child: ClipRRect(
@@ -79,13 +78,13 @@ class Presentation extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 1600,
+                delay: 1000,
                 child: SizedBox(
-                  height: 55,
+                  height: 60,
                 ),
               ),
               DelayedAnimation(
-                delay: 1700,
+                delay: 1000,
                 child: Container(
                   alignment: Alignment.center,
                   child: Column(
@@ -116,7 +115,7 @@ class Presentation extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 2500,
+                delay: 1000,
                 child: Container(
                   margin: const EdgeInsets.symmetric(
                     vertical: 20,
@@ -169,36 +168,44 @@ class Presentation extends StatelessWidget {
                           mainAxisSize: MainAxisSize
                               .min, // Pour diminuer l'espacement entre les deuc élements
                           children: [
-                            Text(
-                              "Don't have an account?",
-                              style: TextStyle(
-                                fontFamily: 'Josefin',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: const Color.fromARGB(255, 255, 255, 255),
+                            Flexible(
+                              flex: 1,
+                              child: Text(
+                                "Don't have an account?",
+                                style: TextStyle(
+                                  fontFamily: 'Josefin',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                ),
                               ),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Redirecting(),
-                                  ),
-                                );
-                              },
-                              child: const DelayedAnimation(
-                                delay: 2500,
-                                child: Text("Register",
-                                    style: TextStyle(
-                                      fontFamily: 'Josefin',
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w800,
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      decoration: TextDecoration.underline,
-                                    )),
+                            Flexible(
+                              flex: 1,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Redirecting(),
+                                    ),
+                                  );
+                                },
+                                child: const DelayedAnimation(
+                                  delay: 1050,
+                                  child: Text("Register",
+                                      style: TextStyle(
+                                        fontFamily: 'Josefin',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w800,
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                        decoration: TextDecoration.underline,
+                                      )),
+                                ),
                               ),
-                            ),
+                            )
                           ],
                         ),
                       ),

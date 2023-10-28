@@ -97,7 +97,7 @@ class Redirecting extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 5,
                   ),
                   SizedBox(
                       child: Container(
@@ -105,13 +105,14 @@ class Redirecting extends StatelessWidget {
                     child: GradientText(
                       'ISPM ~ LevelMind',
                       style: const TextStyle(
-                        fontFamily: 'Adlam',
-                        fontSize: 25,
+                        fontFamily: 'PatrickHand',
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
                       ),
                       gradientType: GradientType.linear,
                       colors: const [
-                        Color.fromARGB(255, 90, 112, 236),
-                        Color.fromARGB(255, 15, 225, 106)
+                        Color.fromARGB(255, 105, 123, 227),
+                        Color.fromARGB(255, 25, 233, 115)
                       ],
                     ),
                   )),
@@ -149,7 +150,7 @@ class Redirecting extends StatelessWidget {
                         // Normalement, ceci aurait dû être un TextButton
                         // Qui, une fois cliqué, conduira l'utilisateur vers notre site web
                         Text(
-                          "Link",
+                          "Create",
                           style: TextStyle(
                             fontFamily: 'Josefin',
                             color: Color.fromARGB(255, 255, 255, 255),
