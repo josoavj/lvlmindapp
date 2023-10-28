@@ -157,7 +157,7 @@ class LoginPage extends StatelessWidget {
                       shape: const StadiumBorder(),
                       // J'ai utilisé primary mais elle est obsolète
                       // Du coup je l'ai remplacé par backgroundColor
-                      backgroundColor: const Color.fromARGB(160, 255, 16, 84),
+                      backgroundColor: const Color.fromARGB(131, 249, 29, 88),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 90,
                         vertical: 15,

@@ -127,6 +127,7 @@ class WelcomePage extends StatelessWidget {
                         flex: 2,
                         child: SvgPicture.asset(
                           'images/LevelMind.svg',
+                          width: 250,
                           alignment: Alignment.bottomCenter,
                         ),
                       )),

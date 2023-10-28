@@ -97,7 +97,7 @@ class Redirecting extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 5,
                   ),
                   SizedBox(
                       child: Container(
@@ -111,8 +111,8 @@ class Redirecting extends StatelessWidget {
                       ),
                       gradientType: GradientType.linear,
                       colors: const [
-                        Color.fromARGB(255, 90, 112, 236),
-                        Color.fromARGB(255, 15, 225, 106)
+                        Color.fromARGB(255, 105, 123, 227),
+                        Color.fromARGB(255, 25, 233, 115)
                       ],
                     ),
                   )),
