@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
@@ -13,7 +11,7 @@ class Redirecting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
-    if (mediaQuery.size.width > 600) {
+    if (mediaQuery.size.width > 400) {
       // Pour les écrans plus larges que 600 pixels
       return Scaffold(
         // Utile surtout pour la background
@@ -79,11 +77,16 @@ class Redirecting extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const DelayedAnimation(
+                            DelayedAnimation(
                               delay: 100,
                               child: Image(
-                                  height: 100,
-                                  image: AssetImage('images/ispm.jpg')),
+                                height: 100,
+                                image: const AssetImage('images/ispm.jpg'),
+                                errorBuilder: (BuildContext context,
+                                    Object error, StackTrace? stackTrace) {
+                                  return const Text("Image loading problem");
+                                },
+                              ),
                             ),
                             const DelayedAnimation(
                                 delay: 100,
@@ -94,9 +97,15 @@ class Redirecting extends StatelessWidget {
                               delay: 100,
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
-                                  child: const Image(
+                                  child: Image(
                                     height: 100,
-                                    image: AssetImage('images/lvlind10.jpg'),
+                                    image:
+                                        const AssetImage('images/lvlind10.jpg'),
+                                    errorBuilder: (BuildContext context,
+                                        Object error, StackTrace? stackTrace) {
+                                      return const Text(
+                                          "Image loading problem");
+                                    },
                                   )),
                             ),
                           ],
