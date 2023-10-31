@@ -61,121 +61,111 @@ class Redirecting extends StatelessWidget {
           // Le contenu de la page - Centré au centre
           child: Center(
             child: Align(
-              alignment: Alignment.center,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                elevation: 5,
-                color: Colors.black.withOpacity(0.3),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Align(
-                      alignment: Alignment.center,
-                    ),
-                    SizedBox(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const DelayedAnimation(
-                            delay: 100,
-                            child: Image(
-                                height: 100,
-                                image: AssetImage('images/ispm.jpg')),
-                          ),
-                          const DelayedAnimation(
+                alignment: Alignment.center,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 5,
+                  color: Colors.black.withOpacity(0.3),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Align(
+                        alignment: Alignment.center,
+                      ),
+                      SizedBox(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const DelayedAnimation(
                               delay: 100,
-                              child: SizedBox(
-                                width: 50,
-                              )),
-                          DelayedAnimation(
-                            delay: 100,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: const Image(
+                              child: Image(
                                   height: 100,
-                                  image: AssetImage('images/lvlind10.jpg'),
+                                  image: AssetImage('images/ispm.jpg')),
+                            ),
+                            const DelayedAnimation(
+                                delay: 100,
+                                child: SizedBox(
+                                  width: 50,
                                 )),
+                            DelayedAnimation(
+                              delay: 100,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: const Image(
+                                    height: 100,
+                                    image: AssetImage('images/lvlind10.jpg'),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      SizedBox(
+                          child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: GradientText(
+                          'ISPM ~ LevelMind',
+                          style: const TextStyle(
+                            fontFamily: 'PatrickHand',
+                            fontSize: 30,
+                            fontWeight: FontWeight.w800,
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    SizedBox(
-                        child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: GradientText(
-                        'ISPM ~ LevelMind',
-                        style: const TextStyle(
-                          fontFamily: 'PatrickHand',
-                          fontSize: 30,
-                          fontWeight: FontWeight.w800,
+                          gradientType: GradientType.linear,
+                          colors: const [
+                            Color.fromARGB(255, 105, 123, 227),
+                            Color.fromARGB(255, 25, 233, 115)
+                          ],
                         ),
-                        gradientType: GradientType.linear,
-                        colors: const [
-                          Color.fromARGB(255, 105, 123, 227),
-                          Color.fromARGB(255, 25, 233, 115)
-                        ],
-                      ),
-                    )),
-                    const SizedBox(
-                      child: Text(
-                        "Online learning with us",
-                        style: TextStyle(
-                          fontFamily: 'Adlam',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.white,
+                      )),
+                      const SizedBox(
+                        child: Text(
+                          "Online learning with us",
+                          style: TextStyle(
+                            fontFamily: 'Adlam',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    SizedBox(
-                      child: Row(
-                        // Placer les deux élements côte à côte
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize
-                            .min, // Pour diminuer l'espacement entre les deuc élements
-                        children: [
-                          Text.rich(
-                            TextSpan(
-                                text: "Don't have an account?",
-                                style: const TextStyle(
-                                  fontFamily: 'Josefin',
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                ),
-                                children: [
-                                  TextSpan(
-                                      text: "Create",
-                                      style: const TextStyle(
-                                        fontFamily: 'Josefin',
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w800,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          //Redirection vers notre site web
-                                        })
-                                ]),
-                          )
-                        ],
+                      const SizedBox(
+                        height: 60,
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
+                      SizedBox(
+                        child: Text.rich(
+                          TextSpan(
+                              text: "Don't have an account?",
+                              style: const TextStyle(
+                                fontFamily: 'Josefin',
+                                fontSize: 17,
+                                fontWeight: FontWeight.w400,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                              children: [
+                                TextSpan(
+                                    text: "Create",
+                                    style: const TextStyle(
+                                      fontFamily: 'Josefin',
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w800,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        //Redirection vers notre site web
+                                      })
+                              ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
           ),
         ),
       );
