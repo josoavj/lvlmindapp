@@ -59,7 +59,13 @@ class WelcomePage extends StatelessWidget {
                           flex: 2,
                           child: SizedBox(
                             height: 85,
-                            child: Image.asset('images/ispm.jpg'),
+                            child: Image.asset(
+                              'images/ispm.jpg',
+                              errorBuilder: (BuildContext context, Object error,
+                                  StackTrace? stackTrace) {
+                                return const Text("Image loading problem");
+                              },
+                            ),
                           ),
                         )),
                     // Juste un espacement etre les deux logos
@@ -83,6 +89,10 @@ class WelcomePage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                               child: Image.asset(
                                 'images/lvlind10.jpg',
+                                errorBuilder: (BuildContext context,
+                                    Object error, StackTrace? stackTrace) {
+                                  return const Text("Image loading problem");
+                                },
                               ),
                             ),
                           ),

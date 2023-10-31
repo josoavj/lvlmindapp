@@ -278,50 +278,31 @@ class Redirecting extends StatelessWidget {
                         ],
                       ),
                     )),
-                    const SizedBox(
-                      child: Text(
-                        "Online learning with us",
-                        style: TextStyle(
-                          fontFamily: 'Adlam',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    const SizedBox(
-                      child: Row(
-                        // Placer les deux élements côte à côte
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize
-                            .min, // Pour diminuer l'espacement entre les deuc élements
-                        children: [
-                          Text(
-                            "Don't have an account?",
-                            style: TextStyle(
+                    SizedBox(
+                      child: Text.rich(
+                        TextSpan(
+                            text: "Don't have an account?",
+                            style: const TextStyle(
                               fontFamily: 'Josefin',
-                              fontSize: 17,
+                              fontSize: 15,
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(255, 255, 255, 255),
                             ),
-                          ),
-
-                          // Normalement, ceci aurait dû être un TextButton
-                          // Qui, une fois cliqué, conduira l'utilisateur vers notre site web
-                          Text(
-                            "Create",
-                            style: TextStyle(
-                              fontFamily: 'Josefin',
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 17,
-                              fontWeight: FontWeight.w800,
-                              decoration: TextDecoration.underline,
-                            ),
-                          )
-                        ],
+                            children: [
+                              TextSpan(
+                                  text: "Create",
+                                  style: const TextStyle(
+                                    fontFamily: 'Josefin',
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      //Redirection vers notre site web
+                                    })
+                            ]),
                       ),
                     )
                   ],

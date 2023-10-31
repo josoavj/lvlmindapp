@@ -16,14 +16,33 @@ class Homepage extends StatefulWidget {
 
   Widget build(BuildContext) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(),
       body: Container(
         child: const Column(
           children: [
             Row(
               children: [
-                SizedBox(
-                  child: Text('None'),
-                )
+                Text.rich(TextSpan(
+                    text: "Hi honey \n",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Josefin',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "Let's start a day exciting \n while learning",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Josefin',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      )
+                    ])),
+                SizedBox(),
               ],
             )
           ],
