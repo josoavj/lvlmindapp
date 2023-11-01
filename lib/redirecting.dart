@@ -61,6 +61,7 @@ class Redirecting extends StatelessWidget {
             child: Align(
                 alignment: Alignment.center,
                 child: Card(
+                  clipBehavior: Clip.antiAlias,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -74,7 +75,6 @@ class Redirecting extends StatelessWidget {
                       ),
                       const SizedBox(
                         height: 5,
-                        width: 10,
                       ),
                       SizedBox(
                         child: Row(

@@ -1,30 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:lvlmindbeta/loginpage.dart';
-import 'package:lvlmindbeta/Models/Courses.dart';
+import 'package:lvlmindbeta/Models/Models.dart';
 
 class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+  Homepage({super.key});
+
+  // Importation de la liste
+  //List<CName> cname = [];
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 50,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text.rich(TextSpan(
                     text: "Hi there \n",
                     style: TextStyle(
                       fontFamily: 'Josefin',
-                      color: Color.fromARGB(111, 0, 0, 0),
+                      color: Color.fromARGB(180, 0, 0, 0),
                       fontSize: 25,
                       fontWeight: FontWeight.w800,
                     ),
@@ -35,7 +38,7 @@ class Homepage extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'Josefin',
                             fontSize: 17,
-                            color: Color.fromARGB(97, 0, 0, 0),
+                            color: Color.fromARGB(171, 0, 0, 0),
                           ))
                     ])),
                 SizedBox(
@@ -47,6 +50,77 @@ class Homepage extends StatelessWidget {
                 )
               ],
             ),
+            const SizedBox(
+              height: 50,
+            ),
+            // Catégories
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //const Padding(padding: EdgeInsets.all(30)),
+                /*
+                ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return const Card(
+                      color: Colors.purpleAccent,
+                      child: Text(
+                        "TOP",
+                        style: TextStyle(fontFamily: 'Josefin'),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 10,
+                  ),
+                  itemCount: 3,
+                ),
+                */
+                Card(
+                  elevation: 5,
+                  clipBehavior: Clip.antiAlias,
+                  color: Colors.purpleAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "TOP",
+                      style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                  child: Text("Electronics",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500)),
+                ),
+                const SizedBox(
+                  height: 20,
+                  child: Text("Programming",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500)),
+                ),
+                const Icon(
+                  Icons.menu,
+                  weight: 20,
+                  color: Colors.blueAccent,
+                )
+              ],
+            )
           ],
         ),
       ),

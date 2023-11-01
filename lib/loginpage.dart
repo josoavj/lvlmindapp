@@ -4,7 +4,6 @@ import 'package:lvlmindbeta/animation.dart';
 import 'package:lvlmindbeta/homepage.dart';
 import 'package:lvlmindbeta/presentation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'dart:async';
 // Suite à une erreur sur les polices que j'ai télechargé
 // J'ai du revenir à googlefonts
 
@@ -175,7 +174,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Homepage(),
+                          builder: (context) => Homepage(),
                         ),
                       );
                     },
