@@ -80,23 +80,25 @@ class Homepage extends StatelessWidget {
                 Card(
                   elevation: 5,
                   clipBehavior: Clip.antiAlias,
-                  color: Colors.purpleAccent,
+                  color: const Color.fromARGB(255, 121, 38, 238),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(13),
-                    // TextButton
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      "TOP",
-                      style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.all(1),
+                      // TextButton
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          textAlign: TextAlign.center,
+                          "TOP",
+                          style: TextStyle(
+                              fontFamily: 'Josefin',
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                      )),
                 ),
                 const SizedBox(
                   height: 20,
@@ -122,13 +124,7 @@ class Homepage extends StatelessWidget {
                 // en fonction du section
                 SizedBox(
                     child: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Homepage(),
-                        ));
-                  },
+                  onPressed: () {},
                   alignment: Alignment.topCenter,
                   icon: const Icon(
                     Icons.menu,
@@ -139,22 +135,45 @@ class Homepage extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 50,
+              height: 40,
             ),
 
             // Passons aux catégories
-            Container(
-              alignment: Alignment.topLeft,
-              child: const Text(
-                "Category",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontFamily: 'Josefin',
-                  fontSize: 25,
-                  fontWeight: FontWeight.w700,
-                  color: Color.fromARGB(119, 0, 0, 0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: const Text(
+                    "Category",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 25,
+                      fontWeight: FontWeight.w700,
+                      color: Color.fromARGB(166, 0, 0, 0),
+                    ),
+                  ),
                 ),
-              ),
+                Container(
+                    alignment: Alignment.topRight,
+                    child: TextButton(
+                      // Redirection vers une page contenant toutes les catégories
+                      // Categories = Matières
+                      onPressed: () {},
+                      child: const Text(
+                        "See all",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 21,
+                          fontWeight: FontWeight.w700,
+                          color: Color.fromARGB(223, 222, 75, 161),
+                        ),
+                      ),
+                    ))
+              ],
             )
           ],
         ),
