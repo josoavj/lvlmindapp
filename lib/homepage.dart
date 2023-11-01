@@ -14,8 +14,8 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 50,
+          horizontal: 30,
+          vertical: 80,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -82,22 +82,25 @@ class Homepage extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   color: Colors.purpleAccent,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(13),
+                    // TextButton
                     child: Text(
                       textAlign: TextAlign.center,
                       "TOP",
                       style: TextStyle(
                           fontFamily: 'Josefin',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500),
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
+                  // TextButton
                   child: Text("Electronics",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -107,6 +110,7 @@ class Homepage extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 20,
+                  // TextButton
                   child: Text("Programming",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -114,11 +118,24 @@ class Homepage extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.w500)),
                 ),
-                const Icon(
-                  Icons.menu,
-                  weight: 20,
-                  color: Colors.blueAccent,
-                )
+                // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
+                // en fonction du section
+                SizedBox(
+                    child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Homepage(),
+                        ));
+                  },
+                  alignment: Alignment.topCenter,
+                  icon: const Icon(
+                    Icons.menu,
+                    weight: 20,
+                    color: Colors.blueAccent,
+                  ),
+                ))
               ],
             )
           ],
