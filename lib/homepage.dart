@@ -137,6 +137,24 @@ class Homepage extends StatelessWidget {
                   ),
                 ))
               ],
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+
+            // Passons aux catégories
+            Container(
+              alignment: Alignment.topLeft,
+              child: const Text(
+                "Category",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'Josefin',
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                  color: Color.fromARGB(119, 0, 0, 0),
+                ),
+              ),
             )
           ],
         ),
