@@ -1,155 +1,129 @@
-// ignore_for_file: no_logic_in_create_state, unused_import, avoid_unnecessary_containers
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/main.dart';
-import 'package:lvlmindbeta/animation.dart';
+import 'package:async/async.dart';
 import 'package:lvlmindbeta/loginpage.dart';
-import 'package:lvlmindbeta/Models/Courses.dart';
+import 'package:lvlmindbeta/Models/Models.dart';
 
 class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+  Homepage({super.key});
+
+  // Importation de la liste
+  //List<CName> cname = [];
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-
-  /*
-  @override
-  Widget build(BuildContext context) {
-    List<CoursesModels> courses = [];
     return Scaffold(
-      extendBodyBehindAppBar: false,
-      appBar: AppBar(),
-      body: Container(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 50,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                    padding: EdgeInsets.only(
-                  top: 30,
-                  left: 10,
-                  right: 10,
-                )),
                 Text.rich(TextSpan(
                     text: "Hi there \n",
                     style: TextStyle(
-                      color: Colors.blueGrey,
-                      fontFamily: 'Adlam',
+                      fontFamily: 'Josefin',
+                      color: Color.fromARGB(180, 0, 0, 0),
                       fontSize: 25,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w800,
                     ),
                     children: [
                       TextSpan(
-                        text: "Let's start a day exciting \n while learning",
-                        style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontFamily: 'Adlam',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      )
+                          text:
+                              "Let's start a day exciting \n while learning with us",
+                          style: TextStyle(
+                            fontFamily: 'Josefin',
+                            fontSize: 17,
+                            color: Color.fromARGB(171, 0, 0, 0),
+                          ))
                     ])),
                 SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 SizedBox(
-                  width: 90,
-                  child: Image(
-                    image: AssetImage('images/logomin.jpg'),
-                  ),
-                ),
+                  height: 60,
+                  child: Image(image: AssetImage('images/lvlmind.jpg')),
+                )
               ],
             ),
             const SizedBox(
-              height: 10,
+              height: 50,
             ),
-            Expanded(
-              child: ListView.separated(
+            // Catégories
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //const Padding(padding: EdgeInsets.all(30)),
+                /*
+                ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  itemCount: courses.length,
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return ElevatedButton(
-                      onPressed: () {},
+                  itemBuilder: (context, index) {
+                    return const Card(
+                      color: Colors.purpleAccent,
                       child: Text(
-                        courses[index].name,
-                        style: const TextStyle(
-                          fontFamily: 'Josefin',
-                          fontWeight: FontWeight.w300,
-                          color: Color.fromARGB(255, 99, 98, 98),
-                          fontSize: 15,
-                        ),
+                        "TOP",
+                        style: TextStyle(fontFamily: 'Josefin'),
                       ),
                     );
                   },
                   separatorBuilder: (context, index) => const SizedBox(
-                        height: 10,
-                      )),
-            ),
-            const Courseslist(),
-            const SizedBox(
-              height: 10,
-            ),
+                    height: 10,
+                  ),
+                  itemCount: 3,
+                ),
+                */
+                Card(
+                  elevation: 5,
+                  clipBehavior: Clip.antiAlias,
+                  color: Colors.purpleAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "TOP",
+                      style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                  child: Text("Electronics",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500)),
+                ),
+                const SizedBox(
+                  height: 20,
+                  child: Text("Programming",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500)),
+                ),
+                const Icon(
+                  Icons.menu,
+                  weight: 20,
+                  color: Colors.blueAccent,
+                )
+              ],
+            )
           ],
         ),
       ),
     );
   }
-  */
 }
-
-/*
-class Courseslist extends StatefulWidget {
-  const Courseslist({super.key});
-
-  @override
-  CourseslistState createState() => CourseslistState();
-}
-
-class CourseslistState extends State<Courseslist> {
-  @override
-  Widget build(BuildContext context) {
-    List<CoursesModels> courses = [];
-    /*
-    void _getCoursesModels() {
-    courses = CoursesModels.getCoursesModels();
-    }
-     */
-    return SizedBox(
-      height: 30,
-      child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: courses.length,
-          padding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                courses[index].name,
-                style: const TextStyle(
-                  fontFamily: 'Josefin',
-                  fontWeight: FontWeight.w300,
-                  color: Color.fromARGB(255, 99, 98, 98),
-                  fontSize: 15,
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(
-                height: 10,
-              )),
-    );
-  }
-}
-*/
