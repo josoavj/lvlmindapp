@@ -174,7 +174,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Homepage(),
+                          builder: (context) => Homepage(),
                         ),
                       );
                     },
@@ -196,7 +196,7 @@ class LoginPage extends StatelessWidget {
                         child: const DelayedAnimation(
                           delay: 1100,
                           child: Flexible(
-                              flex: 2,
+                              flex: 1,
                               child: Text(
                                 "Return",
                                 style: TextStyle(

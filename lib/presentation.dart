@@ -73,6 +73,10 @@ class Presentation extends StatelessWidget {
                     borderRadius: BorderRadius.circular(40),
                     child: Image.asset(
                       'images/lvlind10.jpg',
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        return Text("Image loading problem");
+                      },
                     ),
                   ), //Logo de notre application
                 ),
