@@ -10,6 +10,13 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+
+  /*
+  @override
+  Widget build(BuildContext context) {
     List<CoursesModels> courses = [];
     return Scaffold(
       extendBodyBehindAppBar: false,
@@ -96,8 +103,10 @@ class Homepage extends StatelessWidget {
       ),
     );
   }
+  */
 }
 
+/*
 class Courseslist extends StatefulWidget {
   const Courseslist({super.key});
 
@@ -143,3 +152,4 @@ class CourseslistState extends State<Courseslist> {
     );
   }
 }
+*/

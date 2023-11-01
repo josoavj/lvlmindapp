@@ -1,8 +1,9 @@
 name: lvlmindbeta
-description: A new Flutter project.
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
+description: A e-learning app project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+repository: https://github.com/Josoa886/lvlmindapp/
+homepage: https://github.com/Josoa886/lvlmindapp
+maintainer: Josoa (@Josoa886) & Fiatoa (foulburst)
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -38,7 +39,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
-  
+  flutter_launcher_icons: ^0.11.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -49,13 +51,17 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  
+flutter_launcher_icons:
+    android: true
+    ios: true
+    image_path: "images/lvlmindico.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -75,8 +81,7 @@ flutter:
     - images/Vector (1).svg
     - images/Vector (2).svg
     - images/LevelMind.svg
-    - icon/
-    - icon/lvlmindico.png
+    - images/lvlmindico.png
     - fonts/
   
   # An image asset can refer to one or more resolution-specific "variants", see
