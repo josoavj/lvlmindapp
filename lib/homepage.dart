@@ -14,8 +14,8 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 50,
+          horizontal: 30,
+          vertical: 80,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -80,24 +80,29 @@ class Homepage extends StatelessWidget {
                 Card(
                   elevation: 5,
                   clipBehavior: Clip.antiAlias,
-                  color: Colors.purpleAccent,
+                  color: const Color.fromARGB(255, 121, 38, 238),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      "TOP",
-                      style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.all(1),
+                      // TextButton
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          textAlign: TextAlign.center,
+                          "TOP",
+                          style: TextStyle(
+                              fontFamily: 'Josefin',
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                      )),
                 ),
                 const SizedBox(
                   height: 20,
+                  // TextButton
                   child: Text("Electronics",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -107,6 +112,7 @@ class Homepage extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 20,
+                  // TextButton
                   child: Text("Programming",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -114,11 +120,59 @@ class Homepage extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.w500)),
                 ),
-                const Icon(
-                  Icons.menu,
-                  weight: 20,
-                  color: Colors.blueAccent,
-                )
+                // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
+                // en fonction du section
+                SizedBox(
+                    child: IconButton(
+                  onPressed: () {},
+                  alignment: Alignment.topCenter,
+                  icon: const Icon(
+                    Icons.menu,
+                    weight: 20,
+                    color: Colors.blueAccent,
+                  ),
+                ))
+              ],
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+
+            // Passons aux catégories
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: const Text(
+                    "Category",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 25,
+                      fontWeight: FontWeight.w700,
+                      color: Color.fromARGB(166, 0, 0, 0),
+                    ),
+                  ),
+                ),
+                Container(
+                    alignment: Alignment.topRight,
+                    child: TextButton(
+                      // Redirection vers une page contenant toutes les catégories
+                      // Categories = Matières
+                      onPressed: () {},
+                      child: const Text(
+                        "See all",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 21,
+                          fontWeight: FontWeight.w700,
+                          color: Color.fromARGB(223, 222, 75, 161),
+                        ),
+                      ),
+                    ))
               ],
             )
           ],

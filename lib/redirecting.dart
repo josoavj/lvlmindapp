@@ -2,11 +2,22 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 //import 'package:lvlmindbeta/presentation.dart';
 //import 'package:flutter/gestures.dart';
 
 class Redirecting extends StatelessWidget {
-  const Redirecting({super.key});
+  Redirecting({super.key});
+
+//url vers notre site web
+  String url = "https://www.lvlmind.com";
+  void _launchURL() async {
+    if (await canLaunchUrl(url as Uri)) {
+      await launchUrl(url as Uri);
+    } else {
+      throw 'Cannot open the link';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +45,7 @@ class Redirecting extends StatelessWidget {
         body: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(
-            vertical: 270,
+            vertical: 250,
             horizontal: 50,
           ),
           // Pour la background de cette page
@@ -149,33 +160,33 @@ class Redirecting extends StatelessWidget {
                       const SizedBox(
                         height: 60,
                       ),
-                      SizedBox(
-                        child: Text.rich(
-                          TextSpan(
-                              text: "Don't have an account?",
-                              style: const TextStyle(
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              "Don't have an account?",
+                              style: TextStyle(
                                 fontFamily: 'Josefin',
                                 fontSize: 17,
                                 fontWeight: FontWeight.w400,
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              children: [
-                                TextSpan(
-                                    text: "Create",
-                                    style: const TextStyle(
-                                      fontFamily: 'Josefin',
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w800,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        //Redirection vers notre site web
-                                      })
-                              ]),
-                        ),
-                      ),
+                            ),
+                            TextButton(
+                              onPressed: _launchURL, // Appel de l'url
+                              child: const Text(
+                                "Create",
+                                style: TextStyle(
+                                  fontFamily: 'Josefin',
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w800,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ])
                     ],
                   ),
                 )),
@@ -291,33 +302,33 @@ class Redirecting extends StatelessWidget {
                         ],
                       ),
                     )),
-                    SizedBox(
-                      child: Text.rich(
-                        TextSpan(
-                            text: "Don't have an account?",
-                            style: const TextStyle(
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "Don't have an account?",
+                            style: TextStyle(
                               fontFamily: 'Josefin',
-                              fontSize: 15,
+                              fontSize: 17,
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(255, 255, 255, 255),
                             ),
-                            children: [
-                              TextSpan(
-                                  text: "Create",
-                                  style: const TextStyle(
-                                    fontFamily: 'Josefin',
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w800,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      //Redirection vers notre site web
-                                    })
-                            ]),
-                      ),
-                    )
+                          ),
+                          TextButton(
+                            onPressed: _launchURL, // Appel de l'url
+                            child: const Text(
+                              "Create",
+                              style: TextStyle(
+                                fontFamily: 'Josefin',
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontSize: 17,
+                                fontWeight: FontWeight.w800,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ])
                   ],
                 ),
               ),
