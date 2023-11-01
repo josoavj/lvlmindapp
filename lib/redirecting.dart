@@ -64,13 +64,16 @@ class Redirecting extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  elevation: 5,
+                  elevation: 10,
                   color: Colors.black.withOpacity(0.3),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Align(
                         alignment: Alignment.center,
+                      ),
+                      const SizedBox(
+                        height: 5,
                       ),
                       SizedBox(
                         child: Row(
@@ -184,7 +187,7 @@ class Redirecting extends StatelessWidget {
         // Utile surtout pour la background
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          elevation: 0,
+          elevation: 5,
           backgroundColor: Colors.white.withOpacity(0),
           leading: IconButton(
             icon: const Icon(
@@ -247,7 +250,7 @@ class Redirecting extends StatelessWidget {
                           const DelayedAnimation(
                             delay: 100,
                             child: Image(
-                                height: 100,
+                                height: 80,
                                 image: AssetImage('images/ispm.jpg')),
                           ),
                           const DelayedAnimation(
@@ -260,7 +263,7 @@ class Redirecting extends StatelessWidget {
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: const Image(
-                                  height: 100,
+                                  height: 80,
                                   image: AssetImage('images/lvlind10.jpg'),
                                 )),
                           ),

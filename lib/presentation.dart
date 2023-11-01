@@ -173,7 +173,7 @@ class Presentation extends StatelessWidget {
                               .min, // Pour diminuer l'espacement entre les deuc élements
                           children: [
                             Flexible(
-                              flex: 1,
+                              flex: 2,
                               child: Text(
                                 "Don't have an account?",
                                 style: TextStyle(

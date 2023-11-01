@@ -5,17 +5,15 @@ import 'package:lvlmindbeta/animation.dart';
 import 'package:lvlmindbeta/loginpage.dart';
 import 'package:lvlmindbeta/Models/Courses.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
     throw UnimplementedError();
   }
 
-  /*
-  @override
   Widget build(BuildContext context) {
     List<CoursesModels> courses = [];
     return Scaffold(
@@ -69,30 +67,32 @@ class Homepage extends StatelessWidget {
               height: 10,
             ),
             Expanded(
-              child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: courses.length,
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        courses[index].name,
-                        style: const TextStyle(
-                          fontFamily: 'Josefin',
-                          fontWeight: FontWeight.w300,
-                          color: Color.fromARGB(255, 99, 98, 98),
-                          fontSize: 15,
+              child: Card(
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: courses.length,
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          courses[index].name,
+                          style: const TextStyle(
+                            fontFamily: 'Josefin',
+                            fontWeight: FontWeight.w300,
+                            color: Color.fromARGB(255, 99, 98, 98),
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) => const SizedBox(
-                        height: 10,
-                      )),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(
+                          height: 10,
+                        )),
+              ),
             ),
             const Courseslist(),
             const SizedBox(
@@ -103,10 +103,8 @@ class Homepage extends StatelessWidget {
       ),
     );
   }
-  */
 }
 
-/*
 class Courseslist extends StatefulWidget {
   const Courseslist({super.key});
 
@@ -123,8 +121,7 @@ class CourseslistState extends State<Courseslist> {
     courses = CoursesModels.getCoursesModels();
     }
      */
-    return SizedBox(
-      height: 30,
+    return Card(
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: courses.length,
@@ -152,4 +149,3 @@ class CourseslistState extends State<Courseslist> {
     );
   }
 }
-*/
