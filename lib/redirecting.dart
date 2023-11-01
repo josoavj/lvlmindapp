@@ -74,6 +74,7 @@ class Redirecting extends StatelessWidget {
                       ),
                       const SizedBox(
                         height: 5,
+                        width: 10,
                       ),
                       SizedBox(
                         child: Row(
