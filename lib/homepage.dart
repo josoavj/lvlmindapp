@@ -100,32 +100,36 @@ class Homepage extends StatelessWidget {
                         ),
                       )),
                 ),
-                const SizedBox(
-                  height: 20,
-                  // TextButton
-                  child: Text("Electronics",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500)),
-                ),
-                const SizedBox(
-                  height: 20,
-                  // TextButton
-                  child: Text("Programming",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500)),
-                ),
+                SizedBox(
+                    height: 30,
+                    // TextButton
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text("Electronics",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Josefin',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500)),
+                    )),
+                SizedBox(
+                    height: 30,
+                    // TextButton
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text("Programming",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Josefin',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500)),
+                    )),
                 // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
                 // en fonction du section
                 SizedBox(
                     child: IconButton(
                   onPressed: () {},
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.center,
                   icon: const Icon(
                     Icons.menu,
                     weight: 20,
