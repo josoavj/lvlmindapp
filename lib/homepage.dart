@@ -58,25 +58,6 @@ class Homepage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                //const Padding(padding: EdgeInsets.all(30)),
-                /*
-                ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return const Card(
-                      color: Colors.purpleAccent,
-                      child: Text(
-                        "TOP",
-                        style: TextStyle(fontFamily: 'Josefin'),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 10,
-                  ),
-                  itemCount: 3,
-                ),
-                */
                 Card(
                   elevation: 5,
                   clipBehavior: Clip.antiAlias,
@@ -174,10 +155,53 @@ class Homepage extends StatelessWidget {
                       ),
                     ))
               ],
+            ),
+
+            // Liste des catégories
+            const SizedBox(
+              // Pour limiter la hauteur de la liste
+              // Permet d'éviter la présence des erreurs au niveau du rendu
+              // Recommandé lors de
+              height: 800,
+              child: Category(),
             )
           ],
         ),
       ),
     );
+  }
+}
+
+class Category extends StatefulWidget {
+  const Category({super.key});
+
+  @override
+  State<Category> createState() => CategoryState();
+}
+
+class CategoryState extends State<Category> {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, crossAxisSpacing: 10),
+        itemCount: 8,
+        itemBuilder: (context, index) {
+          return Card(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    image: DecorationImage(
+                        image: AssetImage('/images/logomin.jpg')),
+                  ),
+                ),
+                const Text("Program"),
+              ],
+            ),
+          );
+        });
   }
 }
