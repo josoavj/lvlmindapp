@@ -11,20 +11,26 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-          backgroundColor: const Color.fromARGB(255, 205, 219, 226),
-          elevation: 5,
-          indicatorColor: const Color.fromARGB(255, 255, 255, 255),
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Iconsax.home),
-              label: 'Home',
-            ),
-            NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
-            NavigationDestination(icon: Icon(Iconsax.folder_2), label: 'Files'),
-            NavigationDestination(
-                icon: Icon(Iconsax.profile_circle), label: 'Profile')
-          ]),
+      bottomNavigationBar: ClipRRect(
+        // Pour obtenir des bords arrondis
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+        child: NavigationBar(
+            backgroundColor: const Color.fromARGB(255, 205, 219, 226),
+            elevation: 5,
+            indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Iconsax.home),
+                label: 'Home',
+              ),
+              NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
+              NavigationDestination(
+                  icon: Icon(Iconsax.folder_2), label: 'Files'),
+              NavigationDestination(
+                  icon: Icon(Iconsax.profile_circle), label: 'Profile')
+            ]),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           horizontal: 30,
