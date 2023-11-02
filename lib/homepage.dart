@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lvlmindbeta/loginpage.dart';
 import 'package:lvlmindbeta/Models/Models.dart';
+import 'package:lvlmindbeta/pages/edt.dart';
+import 'package:lvlmindbeta/pages/files.dart';
+import 'package:lvlmindbeta/pages/profile.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/pages/files.dart';
 
@@ -17,12 +22,16 @@ class Homepage extends StatelessWidget {
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         child: NavigationBar(
-            backgroundColor: const Color.fromARGB(255, 205, 219, 226),
-            elevation: 5,
+            onDestinationSelected: (index) => {},
+            backgroundColor: const Color.fromARGB(148, 55, 188, 255),
+            elevation: 0,
+            height: 75,
+            selectedIndex: 0,
             indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+            //onDestinationSelected: (index) => ,
             destinations: const [
               NavigationDestination(
-                icon: Icon(Iconsax.home),
+                icon: Icon(Iconsax.home_2),
                 label: 'Home',
               ),
               NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
@@ -178,7 +187,10 @@ class Homepage extends StatelessWidget {
                     child: TextButton(
                       // Redirection vers une page contenant toutes les catégories
                       // Categories = Matières
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Files()));
+                      },
                       child: const Text(
                         "See all",
                         textAlign: TextAlign.left,
