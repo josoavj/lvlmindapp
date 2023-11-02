@@ -82,6 +82,8 @@ flutter:
     - images/Vector (2).svg
     - images/LevelMind.svg
     - images/lvlmindico.png
+    - images/avatar1.jpg
+    - images/menubutton.jpg
     - fonts/
     - videos/
     - json/matiere.json
