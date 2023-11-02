@@ -11,20 +11,26 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-          backgroundColor: const Color.fromARGB(255, 205, 219, 226),
-          elevation: 5,
-          indicatorColor: const Color.fromARGB(255, 255, 255, 255),
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Iconsax.home),
-              label: 'Home',
-            ),
-            NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
-            NavigationDestination(icon: Icon(Iconsax.folder_2), label: 'Files'),
-            NavigationDestination(
-                icon: Icon(Iconsax.profile_circle), label: 'Profile')
-          ]),
+      bottomNavigationBar: ClipRRect(
+        // Pour obtenir des bords arrondis
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+        child: NavigationBar(
+            backgroundColor: const Color.fromARGB(255, 205, 219, 226),
+            elevation: 5,
+            indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Iconsax.home),
+                label: 'Home',
+              ),
+              NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
+              NavigationDestination(
+                  icon: Icon(Iconsax.folder_2), label: 'Files'),
+              NavigationDestination(
+                  icon: Icon(Iconsax.profile_circle), label: 'Profile')
+            ]),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           horizontal: 30,
@@ -94,32 +100,36 @@ class Homepage extends StatelessWidget {
                         ),
                       )),
                 ),
-                const SizedBox(
-                  height: 20,
-                  // TextButton
-                  child: Text("Electronics",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500)),
-                ),
-                const SizedBox(
-                  height: 20,
-                  // TextButton
-                  child: Text("Programming",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500)),
-                ),
+                SizedBox(
+                    height: 30,
+                    // TextButton
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text("Electronics",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Josefin',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500)),
+                    )),
+                SizedBox(
+                    height: 30,
+                    // TextButton
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text("Programming",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Josefin',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500)),
+                    )),
                 // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
                 // en fonction du section
                 SizedBox(
                     child: IconButton(
                   onPressed: () {},
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.center,
                   icon: const Icon(
                     Icons.menu,
                     weight: 20,
