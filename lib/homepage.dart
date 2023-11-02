@@ -182,26 +182,7 @@ class Category extends StatefulWidget {
 class CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, crossAxisSpacing: 10),
-        itemCount: 8,
-        itemBuilder: (context, index) {
-          return Card(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                        image: AssetImage('/images/logomin.jpg')),
                   ),
-                ),
-                const Text("Program"),
-              ],
-            ),
-          );
-        });
   }
 }
