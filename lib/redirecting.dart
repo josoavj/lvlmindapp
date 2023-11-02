@@ -218,7 +218,7 @@ class Redirecting extends StatelessWidget {
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(
             vertical: 220,
-            horizontal: 35,
+            horizontal: 40,
           ),
           // Pour la background de cette page
           width: MediaQuery.of(context).size.width,
