@@ -10,7 +10,8 @@ class Redirecting extends StatelessWidget {
   Redirecting({super.key});
 
 //url vers notre site web
-  String url = "https://www.lvlmind.com";
+  String url =
+      "http://192.168.43.128:8000/account/student-register/business-marketing";
   void _launchURL() async {
     if (await canLaunchUrl(url as Uri)) {
       await launchUrl(url as Uri);
@@ -150,7 +151,7 @@ class Redirecting extends StatelessWidget {
                         child: Text(
                           "Online learning with us",
                           style: TextStyle(
-                            fontFamily: 'Adlam',
+                            fontFamily: 'Josefin',
                             fontSize: 15,
                             fontWeight: FontWeight.w300,
                             color: Colors.white,
@@ -216,8 +217,8 @@ class Redirecting extends StatelessWidget {
         body: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(
-            vertical: 240,
-            horizontal: 30,
+            vertical: 210,
+            horizontal: 45,
           ),
           // Pour la background de cette page
           width: MediaQuery.of(context).size.width,
@@ -253,6 +254,9 @@ class Redirecting extends StatelessWidget {
                   children: [
                     const Align(
                       alignment: Alignment.center,
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     SizedBox(
                       child: Row(
@@ -310,7 +314,7 @@ class Redirecting extends StatelessWidget {
                             "Don't have an account?",
                             style: TextStyle(
                               fontFamily: 'Josefin',
-                              fontSize: 17,
+                              fontSize: 13,
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(255, 255, 255, 255),
                             ),
@@ -322,7 +326,7 @@ class Redirecting extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'Josefin',
                                 color: Color.fromARGB(255, 255, 255, 255),
-                                fontSize: 17,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w800,
                                 decoration: TextDecoration.underline,
                               ),

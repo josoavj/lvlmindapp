@@ -22,12 +22,6 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.1.0 <4.0.0'
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
@@ -41,6 +35,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
   flutter_launcher_icons: ^0.11.0
+  video_player: ^2.8.1
+  chewie: ^1.5.0
+  image_picker: ^1.0.4
+  popover: ^0.2.8+2
+  iconsax_flutter: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +83,8 @@ flutter:
     - images/LevelMind.svg
     - images/lvlmindico.png
     - fonts/
+    - videos/
+    - json/matiere.json
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
