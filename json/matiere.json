@@ -1,0 +1,57 @@
+[
+    {
+        "name": "Electronic",
+        "courses": [
+            {
+                "title": "Chapter 1",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 2",
+                "video": "videos/"
+            }
+        ],
+        "courses_number": "2"
+
+    },
+    {
+        "name": "Data Structure",
+        "courses": [
+            {
+                "title": "Chapter 1",
+                "video": "videos/"
+            }
+        ],
+        "courses_number": "1"
+    },
+    {
+        "name": "Algorithme",
+        "courses": [
+            {
+                "title": "Chapter 1",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 2",
+                "video": "videos/"
+            }
+        ],
+        
+        "courses_number": "2"
+    },
+    {
+        "name": "AI",
+        "courses": [
+            {
+                "title": "Chapter 1",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 2",
+                "video": "videos/"
+            }
+        ],
+        
+        "courses_number": "2"
+    }
+]
