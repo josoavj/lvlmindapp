@@ -2,16 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:lvlmindbeta/loginpage.dart';
 import 'package:lvlmindbeta/Models/Models.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lvlmindbeta/pages/files.dart';
 
 class Homepage extends StatelessWidget {
-  Homepage({super.key});
-
-  // Importation de la liste
-  //List<CName> cname = [];
+  const Homepage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: NavigationBar(
+          backgroundColor: const Color.fromARGB(255, 205, 219, 226),
+          elevation: 5,
+          indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Iconsax.home),
+              label: 'Home',
+            ),
+            NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
+            NavigationDestination(icon: Icon(Iconsax.folder_2), label: 'Files'),
+            NavigationDestination(
+                icon: Icon(Iconsax.profile_circle), label: 'Profile')
+          ]),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           horizontal: 30,
@@ -162,7 +175,7 @@ class Homepage extends StatelessWidget {
               // Pour limiter la hauteur de la liste
               // Permet d'éviter la présence des erreurs au niveau du rendu
               // Recommandé lors de
-              height: 800,
+              height: 450,
               child: Category(),
             )
           ],
@@ -185,7 +198,7 @@ class CategoryState extends State<Category> {
     return GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, crossAxisSpacing: 10),
-        itemCount: 8,
+        itemCount: 6,
         itemBuilder: (context, index) {
           return Card(
             child: Column(
@@ -196,7 +209,7 @@ class CategoryState extends State<Category> {
                     shape: BoxShape.rectangle,
                   ),
                 ),
-                const Text("Program"),
+                const Text("Category"),
               ],
             ),
           );

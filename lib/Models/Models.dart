@@ -16,8 +16,8 @@ class Courses {
     ));
     courses.add(Courses(name: "Data Structure", number: 6));
     courses.add(Courses(name: "Algorithm", number: 8));
-    //courses.add(CoursesModels(name: "UI/UX" ,number: 2));
-    //courses.add(CoursesModels(name: "Project Management", number: 8));
+    courses.add(Courses(name: "UI/UX", number: 2));
+    courses.add(Courses(name: "Project Management", number: 8));
     return courses;
   }
 }
@@ -25,7 +25,6 @@ class Courses {
 // Pour la liste de catégories
 class CName {
   String cname;
-
   CName({
     required this.cname,
   });

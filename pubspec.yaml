@@ -38,6 +38,8 @@ dependencies:
   video_player: ^2.8.1
   chewie: ^1.5.0
   image_picker: ^1.0.4
+  popover: ^0.2.8+2
+  iconsax_flutter: ^1.0.0
 
 dev_dependencies:
   flutter_test:
