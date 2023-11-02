@@ -151,7 +151,7 @@ class Redirecting extends StatelessWidget {
                         child: Text(
                           "Online learning with us",
                           style: TextStyle(
-                            fontFamily: 'Adlam',
+                            fontFamily: 'Josefin',
                             fontSize: 15,
                             fontWeight: FontWeight.w300,
                             color: Colors.white,
@@ -217,8 +217,8 @@ class Redirecting extends StatelessWidget {
         body: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(
-            vertical: 220,
-            horizontal: 40,
+            vertical: 210,
+            horizontal: 45,
           ),
           // Pour la background de cette page
           width: MediaQuery.of(context).size.width,
@@ -254,6 +254,9 @@ class Redirecting extends StatelessWidget {
                   children: [
                     const Align(
                       alignment: Alignment.center,
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     SizedBox(
                       child: Row(
@@ -311,7 +314,7 @@ class Redirecting extends StatelessWidget {
                             "Don't have an account?",
                             style: TextStyle(
                               fontFamily: 'Josefin',
-                              fontSize: 15,
+                              fontSize: 13,
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(255, 255, 255, 255),
                             ),
@@ -323,7 +326,7 @@ class Redirecting extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'Josefin',
                                 color: Color.fromARGB(255, 255, 255, 255),
-                                fontSize: 15,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w800,
                                 decoration: TextDecoration.underline,
                               ),
