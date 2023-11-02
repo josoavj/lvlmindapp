@@ -21,19 +21,3 @@ class Courses {
     return courses;
   }
 }
-
-// Pour la liste de catégories
-class CName {
-  String cname;
-  CName({
-    required this.cname,
-  });
-
-  List<CName> getName() {
-    List<CName> cnames = [];
-    cnames.add(CName(cname: "TOP"));
-    cnames.add(CName(cname: "Electronic"));
-    cnames.add(CName(cname: "Programming"));
-    return cnames;
-  }
-}

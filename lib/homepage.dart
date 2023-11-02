@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lvlmindbeta/loginpage.dart';
 import 'package:lvlmindbeta/Models/Models.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -39,11 +40,21 @@ class Homepage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Row(
+            const Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: 50,
+                child: Image(image: AssetImage('images/menubutton.jpg')),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text.rich(TextSpan(
-                    text: "Hi there \n",
+                const Text.rich(TextSpan(
+                    text: "Hi there \n\n",
                     style: TextStyle(
                       fontFamily: 'Josefin',
                       color: Color.fromARGB(180, 0, 0, 0),
@@ -60,13 +71,15 @@ class Homepage extends StatelessWidget {
                             color: Color.fromARGB(171, 0, 0, 0),
                           ))
                     ])),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 SizedBox(
-                  height: 60,
-                  child: Image(image: AssetImage('images/lvlmind.jpg')),
-                )
+                    width: 90,
+                    child: Image.asset(
+                      'images/avatar1.jpg',
+                      alignment: Alignment.topRight,
+                    ))
               ],
             ),
             const SizedBox(
