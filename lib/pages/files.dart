@@ -79,14 +79,15 @@ class Files extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 20,
+            height: 100,
+            width: 600,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               itemCount: professor.length,
               itemBuilder: (context, index) {
                 return Container(
-                  width: 60,
+                  width: 80,
                   height: 90,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -95,12 +96,15 @@ class Files extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                            width: 20,
-                            height: 25,
+                            width: 50,
+                            height: 40,
                             child: Image(
                               height: 30,
                               image: AssetImage(professor[index].iconpath),
                             )),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         Text(
                           professor[index].pname,
                           style: const TextStyle(
