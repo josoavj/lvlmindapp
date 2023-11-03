@@ -4,6 +4,7 @@ import 'package:lvlmindbeta/homepage.dart';
 import 'package:lvlmindbeta/pages/edt.dart';
 import 'package:lvlmindbeta/pages/profile.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
+import 'package:lvlmindbeta/Models/matiere.dart';
 
 class Files extends StatelessWidget {
   Files({super.key});

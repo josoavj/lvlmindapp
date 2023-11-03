@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lvlmindbeta/loginpage.dart';
-import 'package:lvlmindbeta/Models/Models.dart';
+import 'package:lvlmindbeta/Models/matiere.dart';
 import 'package:lvlmindbeta/pages/edt.dart';
 import 'package:lvlmindbeta/pages/files.dart';
 import 'package:lvlmindbeta/pages/profile.dart';
@@ -107,7 +107,7 @@ class Homepage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
-                      padding: const EdgeInsets.all(1),
+                      padding: const EdgeInsets.all(0.5),
                       // TextButton
                       child: TextButton(
                         onPressed: () {},
@@ -237,7 +237,7 @@ class Category extends StatefulWidget {
 class CategoryState extends State<Category> {
   final List<category_img> category = [
     category_img(
-      'images/Other03.jpg',
+      'images/Other17.jpg',
       'Electronic',
     ),
     category_img('images/Other03.jpg', 'Programation'),
