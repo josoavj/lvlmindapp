@@ -4,6 +4,7 @@ import 'package:lvlmindbeta/homepage.dart';
 import 'package:lvlmindbeta/pages/edt.dart';
 import 'package:lvlmindbeta/pages/profile.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
+import 'package:lvlmindbeta/Models/matiere.dart';
 
 class Files extends StatelessWidget {
   Files({super.key});
@@ -128,14 +129,16 @@ class Files extends StatelessWidget {
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         child: NavigationBar(
-            backgroundColor: const Color.fromARGB(255, 205, 219, 226),
+            onDestinationSelected: (index) => {},
+            backgroundColor: const Color.fromARGB(148, 55, 188, 255),
             elevation: 0,
             height: 75,
-            selectedIndex: 2,
+            selectedIndex: 0,
             indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+            //onDestinationSelected: (index) => ,
             destinations: const [
               NavigationDestination(
-                icon: Icon(Iconsax.home),
+                icon: Icon(Iconsax.home_2),
                 label: 'Home',
               ),
               NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
