@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/homepage.dart';
 import 'package:lvlmindbeta/pages/edt.dart';
@@ -8,6 +9,11 @@ import 'package:lvlmindbeta/Models/matiere.dart';
 
 class Files extends StatelessWidget {
   Files({super.key});
+  List<Matiere> matiere = [];
+  void getCoursesModel() {
+    matiere = Matiere.getCoursesModels();
+  }
+
   List<Profs> professor = [];
   void getProfs() {
     professor = Profs.getProfs();
@@ -15,6 +21,7 @@ class Files extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getCoursesModel();
     getProfs();
     return Scaffold(
       appBar: AppBar(
@@ -40,9 +47,12 @@ class Files extends StatelessWidget {
           const Align(
               alignment: Alignment.center,
               child: SizedBox(
-                width: 550,
+                width: 650,
                 child: Image(image: AssetImage('images/welcome.jpg')),
               )),
+          const SizedBox(
+            height: 30,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
@@ -71,7 +81,7 @@ class Files extends StatelessWidget {
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Josefin',
-                        fontSize: 21,
+                        fontSize: 20,
                         fontWeight: FontWeight.w700,
                         color: Color.fromARGB(223, 222, 75, 161),
                       ),
@@ -80,15 +90,15 @@ class Files extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 100,
-            width: 600,
+            height: 110,
+            width: 550,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.only(left: 10, right: 10),
               itemCount: professor.length,
               itemBuilder: (context, index) {
                 return Container(
-                  width: 80,
+                  width: 90,
                   height: 90,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -121,6 +131,55 @@ class Files extends StatelessWidget {
                 width: 20,
               ),
             ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          const Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "Courses",
+              style: TextStyle(
+                  fontFamily: 'Josefin',
+                  fontSize: 25,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromARGB(168, 0, 0, 0)),
+            ),
+          ),
+          SizedBox(
+            height: 500,
+            width: 100,
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              itemCount: matiere.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                            child: Image(
+                          height: 20,
+                          image: AssetImage(matiere[index].image),
+                        )),
+                        Text(
+                          matiere[index].name,
+                          style: const TextStyle(
+                            fontFamily: 'Josefin',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        Text(
+                          matiere[index].number,
+                          style: const TextStyle(
+                              fontFamily: 'Josefin', fontSize: 10),
+                        ),
+                      ]),
+                );
+              },
+            ),
           )
         ]),
       ),
@@ -135,7 +194,7 @@ class Files extends StatelessWidget {
             height: 75,
             selectedIndex: 0,
             indicatorColor: const Color.fromARGB(255, 255, 255, 255),
-            //onDestinationSelected: (index) => ,
+            //onDestinatib ,
             destinations: const [
               NavigationDestination(
                 icon: Icon(Iconsax.home_2),

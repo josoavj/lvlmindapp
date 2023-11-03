@@ -36,7 +36,15 @@ class Homepage extends StatelessWidget {
               ),
               NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
               NavigationDestination(
-                  icon: Icon(Iconsax.folder_2), label: 'Files'),
+                icon: Icon(Iconsax.folder_2),
+                label: 'Files',
+                /*
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Files()));
+                },
+                */
+              ),
               NavigationDestination(
                   icon: Icon(Iconsax.profile_circle), label: 'Profile')
             ]),
