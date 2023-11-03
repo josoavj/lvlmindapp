@@ -15,7 +15,6 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        //toolbarHeight: 70,
         elevation: 0,
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
@@ -174,7 +173,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Homepage(),
+                          builder: (context) => const Homepage(),
                         ),
                       );
                     },
