@@ -201,10 +201,10 @@ class Category extends StatefulWidget {
 
 class CategoryState extends State<Category> {
   final List<category_img> category = [
-    category_img("images/Other 03.jpg", "Electronic"),
-    category_img("images/Other 03.jpg", "Programation"),
-    category_img("images/Other 09.jpg", "Management"),
-    category_img("images/Other 11.jpg", "Mathématic")
+    category_img('images/Other03.jpg', 'Electronic'),
+    category_img('images/Other03.jpg', 'Programation'),
+    category_img('images/Other09.jpg', 'Management'),
+    category_img('images/Other11.jpg', 'Mathématic')
   ];
   @override
   Widget build(BuildContext context) {
