@@ -189,7 +189,7 @@ class category_img {
   String title;
   String image;
 
-  category_img(this.title, this.image);
+  category_img(this.image, this.title);
 }
 
 class Category extends StatefulWidget {
@@ -218,11 +218,11 @@ class CategoryState extends State<Category> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(category[index].image),
-                /*Container(
+                Container(
                   decoration: const BoxDecoration(
                     shape: BoxShape.rectangle,
                   ),
-                ),*/
+                ),
                 Text(category[index].title),
               ],
             ),
