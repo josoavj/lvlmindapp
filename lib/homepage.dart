@@ -131,7 +131,7 @@ class Homepage extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontFamily: 'Josefin',
-                              fontSize: 15,
+                              fontSize: 14,
                               fontWeight: FontWeight.w500)),
                     )),
                 SizedBox(
@@ -143,7 +143,7 @@ class Homepage extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontFamily: 'Josefin',
-                              fontSize: 15,
+                              fontSize: 14,
                               fontWeight: FontWeight.w500)),
                     )),
                 // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
