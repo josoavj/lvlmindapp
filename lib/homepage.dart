@@ -12,7 +12,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/pages/files.dart';
 
 class Homepage extends StatelessWidget {
-  Homepage({super.key});
+  const Homepage({super.key});
 
   @override
   Widget build(BuildContext context) {

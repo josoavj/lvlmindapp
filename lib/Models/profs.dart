@@ -18,7 +18,7 @@ class Profs {
         .add(Profs(pname: "Mme Maeva", iconpath: 'images/profs/prof2.jpg'));
     professor.add(Profs(pname: "Mr Toky", iconpath: 'images/profs/prof3.png'));
     professor
-        .add(Profs(pname: "Mr Michel", iconpath: 'images/profs/Prof4.png'));
+        .add(Profs(pname: "Mr Michel", iconpath: 'images/profs/prof4.png'));
     return professor;
   }
 }
