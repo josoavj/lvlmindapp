@@ -236,7 +236,10 @@ class Category extends StatefulWidget {
 
 class CategoryState extends State<Category> {
   final List<category_img> category = [
-    category_img('images/Other03.jpg', 'Electronic'),
+    category_img(
+      'images/Other03.jpg',
+      'Electronic',
+    ),
     category_img('images/Other03.jpg', 'Programation'),
     category_img('images/Other09.jpg', 'Management'),
     category_img('images/Other11.jpg', 'Mathématic')
@@ -244,24 +247,32 @@ class CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 10),
-        itemCount: category.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(category[index].image),
-                Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.rectangle,
-                  ),
-                ),
-                Text(category[index].title),
-              ],
-            ),
-          );
-        });
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, crossAxisSpacing: 10),
+      itemCount: category.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+            onTap: () {},
+            child: Card(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(category[index].image),
+                    Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.rectangle,
+                      ),
+                    ),
+                    Text(
+                      category[index].title,
+                      style: const TextStyle(
+                        fontFamily: 'Josefin',
+                        fontSize: 15,
+                      ),
+                    ),
+                  ]),
+            ));
+      },
+    );
   }
 }
