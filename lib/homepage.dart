@@ -7,7 +7,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/pages/files.dart';
 
 class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+  Homepage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -208,6 +208,13 @@ class Homepage extends StatelessWidget {
   }
 }
 
+class category_img {
+  String title;
+  String image;
+
+  category_img(this.image, this.title);
+}
+
 class Category extends StatefulWidget {
   const Category({super.key});
 
@@ -216,23 +223,30 @@ class Category extends StatefulWidget {
 }
 
 class CategoryState extends State<Category> {
+  final List<category_img> category = [
+    category_img('images/Other03.jpg', 'Electronic'),
+    category_img('images/Other03.jpg', 'Programation'),
+    category_img('images/Other09.jpg', 'Management'),
+    category_img('images/Other11.jpg', 'Mathématic')
+  ];
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, crossAxisSpacing: 10),
-        itemCount: 6,
+        itemCount: category.length,
         itemBuilder: (context, index) {
           return Card(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image.asset(category[index].image),
                 Container(
                   decoration: const BoxDecoration(
                     shape: BoxShape.rectangle,
                   ),
                 ),
-                const Text("Category"),
+                Text(category[index].title),
               ],
             ),
           );
