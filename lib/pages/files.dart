@@ -154,28 +154,26 @@ class Files extends StatelessWidget {
               itemCount: matiere.length,
               itemBuilder: (context, index) {
                 return Card(
-                  child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                            child: Image(
-                          height: 20,
-                          image: AssetImage(matiere[index].image),
-                        )),
-                        Text(
-                          matiere[index].name,
-                          style: const TextStyle(
-                            fontFamily: 'Josefin',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                        Text(
-                          matiere[index].number,
-                          style: const TextStyle(
-                              fontFamily: 'Josefin', fontSize: 10),
-                        ),
-                      ]),
+                  child: Row(children: [
+                    SizedBox(
+                        child: Image(
+                      height: 20,
+                      image: AssetImage(matiere[index].image),
+                    )),
+                    Text(
+                      matiere[index].name,
+                      style: const TextStyle(
+                        fontFamily: 'Josefin',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    Text(
+                      matiere[index].number,
+                      style:
+                          const TextStyle(fontFamily: 'Josefin', fontSize: 10),
+                    ),
+                  ]),
                 );
               },
             ),

@@ -59,7 +59,7 @@ class Redirecting extends StatelessWidget {
               colors: [Color(0xff2441e7), Color(0xffff1053)],
             ),
             image: DecorationImage(
-              image: const AssetImage('images/fond1 1.jpg'),
+              image: const AssetImage('images/background/fond1.jpg'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.5),
@@ -97,7 +97,8 @@ class Redirecting extends StatelessWidget {
                               children: [
                                 Image(
                                   height: 100,
-                                  image: const AssetImage('images/ispm.jpg'),
+                                  image:
+                                      const AssetImage('images/logo/ispm.jpg'),
                                   errorBuilder: (BuildContext context,
                                       Object error, StackTrace? stackTrace) {
                                     return const Text("Image loading problem");
@@ -111,7 +112,7 @@ class Redirecting extends StatelessWidget {
                                     child: Image(
                                       height: 100,
                                       image: const AssetImage(
-                                          'images/lvlind10.jpg'),
+                                          'images/logo/lvlind10.jpg'),
                                       errorBuilder: (BuildContext context,
                                           Object error,
                                           StackTrace? stackTrace) {
@@ -243,7 +244,7 @@ class Redirecting extends StatelessWidget {
               colors: [Color(0xff2441e7), Color(0xffff1053)],
             ),
             image: DecorationImage(
-              image: const AssetImage('images/fond1 1.jpg'),
+              image: const AssetImage('images/backgroung/fond1.jpg'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.5),
@@ -280,7 +281,7 @@ class Redirecting extends StatelessWidget {
                           children: [
                             const Image(
                                 height: 80,
-                                image: AssetImage('images/ispm.jpg')),
+                                image: AssetImage('images/logo/ispm.jpg')),
                             const SizedBox(
                               width: 50,
                             ),
@@ -288,7 +289,7 @@ class Redirecting extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20),
                                 child: const Image(
                                   height: 80,
-                                  image: AssetImage('images/lvlind10.jpg'),
+                                  image: AssetImage('images/logo/lvlind10.jpg'),
                                 )),
                           ],
                         ),

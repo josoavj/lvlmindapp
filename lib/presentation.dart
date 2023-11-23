@@ -50,7 +50,7 @@ class Presentation extends StatelessWidget {
               colors: [Color(0xff2441e7), Color(0xffff1053)],
             ),
             image: DecorationImage(
-              image: const AssetImage('images/fond1 1.jpg'),
+              image: const AssetImage('images/background/fond1.jpg'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.5),
@@ -72,7 +72,7 @@ class Presentation extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(40),
                     child: Image.asset(
-                      'images/lvlind10.jpg',
+                      'images/logo/lvlind10.jpg',
                       errorBuilder: (BuildContext context, Object error,
                           StackTrace? stackTrace) {
                         return Text("Image loading problem");
