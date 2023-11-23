@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/homepage.dart';
 import 'package:lvlmindbeta/pages/edt.dart';
@@ -38,7 +37,7 @@ class Files extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Homepage(),
+                      builder: (context) => const Homepage(),
                     ));
               })),
       body: Container(
@@ -149,19 +148,31 @@ class Files extends StatelessWidget {
           SizedBox(
             height: 500,
             width: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1, mainAxisSpacing: 10),
               padding: const EdgeInsets.only(left: 10, right: 10),
               itemCount: matiere.length,
               itemBuilder: (context, index) {
                 return Card(
                   child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
                             child: Image(
                           height: 20,
-                          image: AssetImage(matiere[index].image),
+                          image: AssetImage(
+                            matiere[index].image,
+                          ),
+                          errorBuilder: (BuildContext context, Object error,
+                              StackTrace? stackTrace) {
+                            return const Text(
+                              "Image loading problem",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 3, 93, 6),
+                                  fontSize: 10),
+                            );
+                          },
                         )),
                         Text(
                           matiere[index].name,
@@ -183,29 +194,39 @@ class Files extends StatelessWidget {
           )
         ]),
       ),
-      bottomNavigationBar: ClipRRect(
-        // Pour obtenir des bords arrondis
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-        child: NavigationBar(
-            onDestinationSelected: (index) => {},
-            backgroundColor: const Color.fromARGB(148, 55, 188, 255),
-            elevation: 0,
-            height: 75,
-            selectedIndex: 0,
-            indicatorColor: const Color.fromARGB(255, 255, 255, 255),
-            //onDestinatib ,
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Iconsax.home_2),
-                label: 'Home',
-              ),
-              NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
-              NavigationDestination(
-                  icon: Icon(Iconsax.folder_2), label: 'Files'),
-              NavigationDestination(
-                  icon: Icon(Iconsax.profile_circle), label: 'Profile')
-            ]),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.5),
+              blurRadius: 25,
+              offset: const Offset(0, 20))
+        ]),
+        child: ClipRRect(
+          // Pour obtenir des bords arrondis
+          borderRadius: BorderRadius.circular(30),
+          child: NavigationBar(
+              onDestinationSelected: (index) => {},
+              backgroundColor: const Color.fromARGB(148, 55, 188, 255),
+              elevation: 0,
+              height: 75,
+              selectedIndex: 0,
+              indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+              destinations: const [
+                NavigationDestination(
+                  icon: Icon(Iconsax.home_2),
+                  label: 'Home',
+                ),
+                NavigationDestination(
+                    icon: Icon(Iconsax.calendar), label: 'EDT'),
+                NavigationDestination(
+                  icon: Icon(Iconsax.folder_2),
+                  label: 'Files',
+                ),
+                NavigationDestination(
+                    icon: Icon(Iconsax.profile_circle), label: 'Profile')
+              ]),
+        ),
       ),
     );
   }

@@ -71,26 +71,31 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
-    - images/ispm.jpg
-    - images/lvlmind.jpg
-    - images/logomin.jpg
-    - images/lvlind10.jpg
-    - images/fond1 1.jpg
-    - images/fond3 1.jpg
-    - images/Ellipse 2.svg
-    - images/Vector.svg
-    - images/Vector (1).svg
-    - images/Vector (2).svg
+    - images/logo/
+    - images/logo/ispm.jpg
+    - images/logo/logomin.jpg
+    - images/logo/lvlind10.jpg
+    - images/logo/lvlmind.jpg
+    - images/decoration/
+    - images/decoration/Ellipse.svg
+    - images/decoration/Vector.svg
+    - images/decoration/Vector (1).svg
+    - images/decoration/Vector (2).svg
     - images/LevelMind.svg
     - images/lvlmindico.png
     - images/avatar1.jpg
     - images/menubutton.jpg
     - images/welcome.jpg
+    - images/background/
+    - images/background/fond1.jpg
+    - images/background/fond2.jpg
+    - images/matieres/
     - images/profs/
     - images/profs/prof1.jpg
     - images/profs/prof2.jpg
     - images/profs/prof3.png
     - images/profs/prof4.png
+    - images/category/
     - fonts/
     - videos/
     - json/matiere.json

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter/rendering.dart';
 import 'package:lvlmindbeta/animation.dart';
-//import 'package:lvlmindbeta/main.dart';
 import 'package:lvlmindbeta/presentation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,7 +32,7 @@ class WelcomePage extends StatelessWidget {
                 colors: [Color(0xff2441e7), Color(0xffff1053)],
               ),
               image: DecorationImage(
-                image: const AssetImage('images/fond3 1.jpg'),
+                image: const AssetImage('images/background/fond2.jpg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.5),
@@ -60,7 +58,7 @@ class WelcomePage extends StatelessWidget {
                           child: SizedBox(
                             height: 85,
                             child: Image.asset(
-                              'images/ispm.jpg',
+                              'images/logo/ispm.jpg',
                               errorBuilder: (BuildContext context, Object error,
                                   StackTrace? stackTrace) {
                                 return const Text("Image loading problem");
@@ -88,7 +86,7 @@ class WelcomePage extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.asset(
-                                'images/lvlind10.jpg',
+                                'images/logo/lvlind10.jpg',
                                 errorBuilder: (BuildContext context,
                                     Object error, StackTrace? stackTrace) {
                                   return const Text("Image loading problem");
