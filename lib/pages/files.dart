@@ -148,32 +148,46 @@ class Files extends StatelessWidget {
           SizedBox(
             height: 500,
             width: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1, mainAxisSpacing: 10),
               padding: const EdgeInsets.only(left: 10, right: 10),
               itemCount: matiere.length,
               itemBuilder: (context, index) {
                 return Card(
-                  child: Row(children: [
-                    SizedBox(
-                        child: Image(
-                      height: 20,
-                      image: AssetImage(matiere[index].image),
-                    )),
-                    Text(
-                      matiere[index].name,
-                      style: const TextStyle(
-                        fontFamily: 'Josefin',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Text(
-                      matiere[index].number,
-                      style:
-                          const TextStyle(fontFamily: 'Josefin', fontSize: 10),
-                    ),
-                  ]),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            child: Image(
+                          height: 20,
+                          image: AssetImage(
+                            matiere[index].image,
+                          ),
+                          errorBuilder: (BuildContext context, Object error,
+                              StackTrace? stackTrace) {
+                            return const Text(
+                              "Image loading problem",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 3, 93, 6),
+                                  fontSize: 10),
+                            );
+                          },
+                        )),
+                        Text(
+                          matiere[index].name,
+                          style: const TextStyle(
+                            fontFamily: 'Josefin',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        Text(
+                          matiere[index].number,
+                          style: const TextStyle(
+                              fontFamily: 'Josefin', fontSize: 10),
+                        ),
+                      ]),
                 );
               },
             ),
