@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/homepage.dart';
 import 'package:lvlmindbeta/pages/edt.dart';
@@ -38,7 +37,7 @@ class Files extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Homepage(),
+                      builder: (context) => const Homepage(),
                     ));
               })),
       body: Container(

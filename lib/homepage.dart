@@ -1,15 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:async/async.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lvlmindbeta/loginpage.dart';
-import 'package:lvlmindbeta/Models/matiere.dart';
-import 'package:lvlmindbeta/pages/edt.dart';
 import 'package:lvlmindbeta/pages/files.dart';
-import 'package:lvlmindbeta/pages/profile.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:lvlmindbeta/pages/files.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -242,6 +233,7 @@ class Category extends StatefulWidget {
   State<Category> createState() => CategoryState();
 }
 
+// Liste de suggestion des matières
 class CategoryState extends State<Category> {
   final List<category_img> category = [
     category_img(
