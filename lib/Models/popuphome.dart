@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class Section {
-  static const String add = 'Add';
-  static const String modify = 'Modify';
-  static const List<String> Choice = <String>[add, modify];
+  final IconData icon;
+  String name;
 
-  //icons
-  static const Map<String, IconData> ChoiceIcon = <String, IconData>{
-    add: Iconsax.add_circle,
-    modify: Iconsax.pen_tool,
-  };
+  Section({
+    required this.icon,
+    required this.name,
+  });
+
+  static List<Section> getSection() {
+    List<Section> secteur = [];
+    secteur.add(Section(icon: Iconsax.add_square, name: "Add"));
+    secteur.add(Section(icon: Iconsax.pen_add, name: "Modify"));
+    return secteur;
+  }
 }

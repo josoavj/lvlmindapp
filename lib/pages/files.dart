@@ -38,7 +38,7 @@ class Files extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Homepage(),
+                      builder: (context) => Homepage(),
                     ));
               })),
       body: Container(
@@ -214,10 +214,8 @@ class Files extends StatelessWidget {
               onDestinationSelected: (index) {
                 switch (index) {
                   case 0:
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Homepage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Homepage()));
                     break;
                   case 1:
                     Navigator.push(
