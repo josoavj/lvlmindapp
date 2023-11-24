@@ -48,7 +48,7 @@ class Files extends StatelessWidget {
               alignment: Alignment.center,
               child: SizedBox(
                 width: 650,
-                child: Image(image: AssetImage('images/welcome.jpg')),
+                child: Image(image: AssetImage('images/icons/welcome.jpg')),
               )),
           const SizedBox(
             height: 30,

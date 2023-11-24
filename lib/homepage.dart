@@ -86,7 +86,8 @@ class Homepage extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: SizedBox(
                   width: 50,
-                  child: Image(image: AssetImage('images/menubutton.jpg')),
+                  child:
+                      Image(image: AssetImage('images/icons/menubutton.jpg')),
                 ),
               ),
               const SizedBox(
@@ -119,7 +120,7 @@ class Homepage extends StatelessWidget {
                   SizedBox(
                       width: 90,
                       child: Image.asset(
-                        'images/avatar1.jpg',
+                        'images/icons/avatar1.jpg',
                         alignment: Alignment.topRight,
                       ))
                 ],
@@ -551,12 +552,12 @@ class Category extends StatefulWidget {
 class CategoryState extends State<Category> {
   final List<category_img> category = [
     category_img(
-      'images/Other17.jpg',
+      'images/icons/Electronic.jpg',
       'Electronic',
     ),
-    category_img('images/Other03.jpg', 'Programming'),
-    category_img('images/Other09.jpg', 'Management'),
-    category_img('images/Other11.jpg', 'Mathematic')
+    category_img('images/icons/Programming.jpg', 'Programming'),
+    category_img('images/icons/management.jpg', 'Management'),
+    category_img('images/icons/math.jpg', 'Mathematic')
   ];
   @override
   Widget build(BuildContext context) {
