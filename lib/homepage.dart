@@ -364,6 +364,7 @@ class Homepage extends StatelessWidget {
                       )),
                   // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
                   // en fonction du section
+                  // ToDo: Un menu flottant
                   SizedBox(
                       child: IconButton(
                     onPressed: () {},
@@ -380,7 +381,7 @@ class Homepage extends StatelessWidget {
                 height: 40,
               ),
 
-              // Passons aux catégories
+              // Category section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
@@ -423,9 +424,6 @@ class Homepage extends StatelessWidget {
 
               // Liste des catégories
               const SizedBox(
-                // Pour limiter la hauteur de la liste
-                // Permet d'éviter la présence des erreurs au niveau du rendu
-                // Recommandé lors de
                 width: 500,
                 height: 200,
                 child: Category(),

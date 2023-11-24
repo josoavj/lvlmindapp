@@ -180,14 +180,17 @@ class Files extends StatelessWidget {
                             matiere[index].name,
                             style: const TextStyle(
                               fontFamily: 'Josefin',
-                              fontSize: 15,
+                              fontSize: 17,
                               fontWeight: FontWeight.w300,
+                              color: Color.fromARGB(255, 65, 64, 64),
                             ),
                           ),
                           Text(
                             matiere[index].number,
                             style: const TextStyle(
-                                fontFamily: 'Josefin', fontSize: 10),
+                                fontFamily: 'Josefin',
+                                fontSize: 13,
+                                color: Colors.greenAccent),
                           ),
                         ],
                       )),
@@ -206,7 +209,6 @@ class Files extends StatelessWidget {
               offset: const Offset(0, 20))
         ]),
         child: ClipRRect(
-          // Pour obtenir des bords arrondis
           borderRadius: BorderRadius.circular(30),
           child: NavigationBar(
               onDestinationSelected: (index) => {},
