@@ -38,7 +38,7 @@ class Files extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Homepage(),
+                      builder: (context) => Homepage(),
                     ));
               })),
       body: Container(
@@ -48,7 +48,7 @@ class Files extends StatelessWidget {
               alignment: Alignment.center,
               child: SizedBox(
                 width: 650,
-                child: Image(image: AssetImage('images/welcome.jpg')),
+                child: Image(image: AssetImage('images/icons/welcome.jpg')),
               )),
           const SizedBox(
             height: 30,
@@ -214,10 +214,8 @@ class Files extends StatelessWidget {
               onDestinationSelected: (index) {
                 switch (index) {
                   case 0:
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Homepage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Homepage()));
                     break;
                   case 1:
                     Navigator.push(

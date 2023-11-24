@@ -76,16 +76,13 @@ flutter:
     - images/logo/logomin.jpg
     - images/logo/lvlind10.jpg
     - images/logo/lvlmind.jpg
+    - images/logo/LevelMind.svg
+    - images/logo/lvlmindico.png
     - images/decoration/
     - images/decoration/Ellipse.svg
     - images/decoration/Vector.svg
     - images/decoration/Vector (1).svg
     - images/decoration/Vector (2).svg
-    - images/LevelMind.svg
-    - images/lvlmindico.png
-    - images/avatar1.jpg
-    - images/menubutton.jpg
-    - images/welcome.jpg
     - images/background/
     - images/background/fond1.jpg
     - images/background/fond2.jpg
@@ -96,6 +93,14 @@ flutter:
     - images/profs/prof3.png
     - images/profs/prof4.png
     - images/category/
+    - images/icons/
+    - images/icons/avatar1.jpg
+    - images/icons/Electronic.jpg
+    - images/icons/math.jpg
+    - images/icons/menubutton.jpg
+    - images/icons/welcome.jpg
+    - images/icons/management.jpg
+    - images/icons/Programming.jpg
     - fonts/
     - videos/
     - json/matiere.json

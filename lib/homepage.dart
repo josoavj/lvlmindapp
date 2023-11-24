@@ -6,10 +6,15 @@ import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/pages/profile.dart';
 
 class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+  Homepage({super.key});
+  List<Section> section = [];
+  void getSection() {
+    section = Section.getSection();
+  }
 
   @override
   Widget build(BuildContext context) {
+    getSection();
     MediaQueryData mediaQuery = MediaQuery.of(context);
     if (mediaQuery.size.width > 400) {
       return Scaffold(
@@ -81,7 +86,8 @@ class Homepage extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: SizedBox(
                   width: 50,
-                  child: Image(image: AssetImage('images/menubutton.jpg')),
+                  child:
+                      Image(image: AssetImage('images/icons/menubutton.jpg')),
                 ),
               ),
               const SizedBox(
@@ -114,7 +120,7 @@ class Homepage extends StatelessWidget {
                   SizedBox(
                       width: 90,
                       child: Image.asset(
-                        'images/avatar1.jpg',
+                        'images/icons/avatar1.jpg',
                         alignment: Alignment.topRight,
                       ))
                 ],
@@ -181,8 +187,36 @@ class Homepage extends StatelessWidget {
                     onPressed: () {
                       showMenu(
                           context: context,
-                          position: RelativeRect.fill,
-                          items: [PopupMenuItem(child: ListTile())]);
+                          position: const RelativeRect.fromLTRB(500, 320, 0, 0),
+                          items: [
+                            PopupMenuItem(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 1, vertical: 1),
+                                child: SizedBox(
+                                  width: 150,
+                                  height: 100,
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                          onTap: () {},
+                                          title: Text(
+                                            section[index].name,
+                                            style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 63, 63, 63),
+                                              fontFamily: 'Josefin',
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          leading: Icon(
+                                            section[index].icon,
+                                            size: 20,
+                                          ));
+                                    },
+                                    itemCount: section.length,
+                                  ),
+                                ))
+                          ]);
                     },
                     alignment: Alignment.center,
                     icon: const Icon(
@@ -402,7 +436,35 @@ class Homepage extends StatelessWidget {
                       showMenu(
                           context: context,
                           position: RelativeRect.fill,
-                          items: [PopupMenuItem(child: ListTile())]);
+                          items: [
+                            PopupMenuItem(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 1, vertical: 1),
+                                child: SizedBox(
+                                  width: 150,
+                                  height: 80,
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                          onTap: () {},
+                                          title: Text(
+                                            section[index].name,
+                                            style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 63, 63, 63),
+                                              fontFamily: 'Josefin',
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          leading: Icon(
+                                            section[index].icon,
+                                            size: 20,
+                                          ));
+                                    },
+                                    itemCount: section.length,
+                                  ),
+                                ))
+                          ]);
                     },
                     alignment: Alignment.center,
                     icon: const Icon(
@@ -490,12 +552,12 @@ class Category extends StatefulWidget {
 class CategoryState extends State<Category> {
   final List<category_img> category = [
     category_img(
-      'images/Other17.jpg',
+      'images/icons/Electronic.jpg',
       'Electronic',
     ),
-    category_img('images/Other03.jpg', 'Programming'),
-    category_img('images/Other09.jpg', 'Management'),
-    category_img('images/Other11.jpg', 'Mathematic')
+    category_img('images/icons/Programming.jpg', 'Programming'),
+    category_img('images/icons/management.jpg', 'Management'),
+    category_img('images/icons/math.jpg', 'Mathematic')
   ];
   @override
   Widget build(BuildContext context) {
