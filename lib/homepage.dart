@@ -435,7 +435,35 @@ class Homepage extends StatelessWidget {
                       showMenu(
                           context: context,
                           position: RelativeRect.fill,
-                          items: [PopupMenuItem(child: ListTile())]);
+                          items: [
+                            PopupMenuItem(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 1, vertical: 1),
+                                child: SizedBox(
+                                  width: 150,
+                                  height: 80,
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                          onTap: () {},
+                                          title: Text(
+                                            section[index].name,
+                                            style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 63, 63, 63),
+                                              fontFamily: 'Josefin',
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          leading: Icon(
+                                            section[index].icon,
+                                            size: 20,
+                                          ));
+                                    },
+                                    itemCount: section.length,
+                                  ),
+                                ))
+                          ]);
                     },
                     alignment: Alignment.center,
                     icon: const Icon(
