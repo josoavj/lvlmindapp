@@ -207,7 +207,10 @@ class Homepage extends StatelessWidget {
                                               fontSize: 15,
                                             ),
                                           ),
-                                          leading: Icon(section[index].icon));
+                                          leading: Icon(
+                                            section[index].icon,
+                                            size: 20,
+                                          ));
                                     },
                                     itemCount: section.length,
                                   ),
