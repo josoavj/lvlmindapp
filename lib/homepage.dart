@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lvlmindbeta/pages/edt.dart';
 import 'package:lvlmindbeta/pages/files.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
+import 'package:lvlmindbeta/pages/profile.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -23,7 +25,29 @@ class Homepage extends StatelessWidget {
             // Pour obtenir des bords arrondis
             borderRadius: BorderRadius.circular(30),
             child: NavigationBar(
-                onDestinationSelected: (index) => {},
+                onDestinationSelected: (index) {
+                  switch (index) {
+                    case 0:
+                      // Accueil
+                      break;
+                    case 1:
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Schedule()));
+                      break;
+                    case 2:
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Files()));
+                      break;
+                    case 3:
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Profile()));
+                      break;
+                  }
+                },
                 backgroundColor: const Color.fromARGB(148, 55, 188, 255),
                 elevation: 0,
                 height: 75,
@@ -154,7 +178,12 @@ class Homepage extends StatelessWidget {
                   // en fonction du section
                   SizedBox(
                       child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showMenu(
+                          context: context,
+                          position: RelativeRect.fill,
+                          items: [PopupMenuItem(child: ListTile())]);
+                    },
                     alignment: Alignment.center,
                     icon: const Icon(
                       Icons.menu,

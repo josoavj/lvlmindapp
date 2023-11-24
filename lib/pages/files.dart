@@ -211,11 +211,35 @@ class Files extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
           child: NavigationBar(
-              onDestinationSelected: (index) => {},
+              onDestinationSelected: (index) {
+                switch (index) {
+                  case 0:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Homepage()));
+                    break;
+                  case 1:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Schedule()));
+                    break;
+                  case 2:
+                    // Cette page
+                    break;
+                  case 3:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Profile()));
+                    break;
+                }
+              },
               backgroundColor: const Color.fromARGB(148, 55, 188, 255),
               elevation: 0,
               height: 75,
-              selectedIndex: 0,
+              selectedIndex: 2,
               indicatorColor: const Color.fromARGB(255, 255, 255, 255),
               destinations: const [
                 NavigationDestination(

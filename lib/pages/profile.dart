@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lvlmindbeta/pages/edt.dart';
+import 'package:lvlmindbeta/pages/files.dart';
+import 'package:lvlmindbeta/homepage.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -19,11 +22,33 @@ class Profile extends StatelessWidget {
           // Pour obtenir des bords arrondis
           borderRadius: BorderRadius.circular(30),
           child: NavigationBar(
-              onDestinationSelected: (index) => {},
+              onDestinationSelected: (index) {
+                switch (index) {
+                  case 0:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Homepage()));
+                    break;
+                  case 1:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Schedule()));
+                    break;
+                  case 2:
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Files()));
+                    break;
+                  case 3:
+                    // Cette Page
+                    break;
+                }
+              },
               backgroundColor: const Color.fromARGB(148, 55, 188, 255),
               elevation: 0,
               height: 75,
-              selectedIndex: 0,
+              selectedIndex: 3,
               indicatorColor: const Color.fromARGB(255, 255, 255, 255),
               destinations: const [
                 NavigationDestination(
