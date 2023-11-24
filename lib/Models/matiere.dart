@@ -24,7 +24,7 @@ class Matiere {
         .add(Matiere(name: "Algorithm", number: "8 Chapters", image: ''));
     listmatiere.add(Matiere(name: "UI/UX", number: "2 Chapters", image: ''));
     listmatiere.add(
-        Matiere(name: "Project Management", number: "8 Chapters", image: ''));
+        Matiere(name: "Project \nManagement", number: "8 Chapters", image: ''));
     return listmatiere;
   }
 }

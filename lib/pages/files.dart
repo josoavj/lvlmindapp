@@ -20,6 +20,7 @@ class Files extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
     getCoursesModel();
     getProfs();
     return Scaffold(
@@ -146,20 +147,17 @@ class Files extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 500,
-            width: 100,
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1, mainAxisSpacing: 10),
-              padding: const EdgeInsets.only(left: 10, right: 10),
+            height: 234,
+            width: 1000,
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 25),
               itemCount: matiere.length,
               itemBuilder: (context, index) {
                 return Card(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            child: Image(
+                  child: ListTile(
+                      onTap: () {},
+                      leading: SizedBox(
+                        child: Image(
                           height: 20,
                           image: AssetImage(
                             matiere[index].image,
@@ -173,25 +171,33 @@ class Files extends StatelessWidget {
                                   fontSize: 10),
                             );
                           },
-                        )),
-                        Text(
-                          matiere[index].name,
-                          style: const TextStyle(
-                            fontFamily: 'Josefin',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            matiere[index].name,
+                            style: const TextStyle(
+                              fontFamily: 'Josefin',
+                              fontSize: 17,
+                              fontWeight: FontWeight.w300,
+                              color: Color.fromARGB(255, 65, 64, 64),
+                            ),
                           ),
-                        ),
-                        Text(
-                          matiere[index].number,
-                          style: const TextStyle(
-                              fontFamily: 'Josefin', fontSize: 10),
-                        ),
-                      ]),
+                          Text(
+                            matiere[index].number,
+                            style: const TextStyle(
+                                fontFamily: 'Josefin',
+                                fontSize: 13,
+                                color: Colors.greenAccent),
+                          ),
+                        ],
+                      )),
                 );
               },
             ),
-          )
+          ),
         ]),
       ),
       bottomNavigationBar: Container(
@@ -203,14 +209,37 @@ class Files extends StatelessWidget {
               offset: const Offset(0, 20))
         ]),
         child: ClipRRect(
-          // Pour obtenir des bords arrondis
           borderRadius: BorderRadius.circular(30),
           child: NavigationBar(
-              onDestinationSelected: (index) => {},
+              onDestinationSelected: (index) {
+                switch (index) {
+                  case 0:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Homepage()));
+                    break;
+                  case 1:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Schedule()));
+                    break;
+                  case 2:
+                    // Cette page
+                    break;
+                  case 3:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Profile()));
+                    break;
+                }
+              },
               backgroundColor: const Color.fromARGB(148, 55, 188, 255),
               elevation: 0,
               height: 75,
-              selectedIndex: 0,
+              selectedIndex: 2,
               indicatorColor: const Color.fromARGB(255, 255, 255, 255),
               destinations: const [
                 NavigationDestination(

@@ -6,12 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
-// Ajout d'un clé au constructeur
   @override
   Widget build(BuildContext context) {
-    /*
-    
-     */
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       // ignore: non_constant_identifier_names
@@ -44,7 +40,7 @@ class WelcomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                /* aligmement des logos */
+                /* Aligmement des logos */
                 Row(
                   // Pour le logo de l'ISPM
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -99,9 +95,6 @@ class WelcomePage extends StatelessWidget {
                         ),
                   ],
                 ),
-
-                // Juste pour l'espacement
-
                 const Flexible(
                   flex: 1,
                   child: SizedBox(height: 20),
