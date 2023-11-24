@@ -20,6 +20,7 @@ class Files extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
     getCoursesModel();
     getProfs();
     return Scaffold(
@@ -146,20 +147,17 @@ class Files extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 500,
-            width: 100,
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1, mainAxisSpacing: 10),
-              padding: const EdgeInsets.only(left: 10, right: 10),
+            height: 234,
+            width: 1000,
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 25),
               itemCount: matiere.length,
               itemBuilder: (context, index) {
                 return Card(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            child: Image(
+                  child: ListTile(
+                      onTap: () {},
+                      leading: SizedBox(
+                        child: Image(
                           height: 20,
                           image: AssetImage(
                             matiere[index].image,
@@ -173,25 +171,30 @@ class Files extends StatelessWidget {
                                   fontSize: 10),
                             );
                           },
-                        )),
-                        Text(
-                          matiere[index].name,
-                          style: const TextStyle(
-                            fontFamily: 'Josefin',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            matiere[index].name,
+                            style: const TextStyle(
+                              fontFamily: 'Josefin',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
-                        ),
-                        Text(
-                          matiere[index].number,
-                          style: const TextStyle(
-                              fontFamily: 'Josefin', fontSize: 10),
-                        ),
-                      ]),
+                          Text(
+                            matiere[index].number,
+                            style: const TextStyle(
+                                fontFamily: 'Josefin', fontSize: 10),
+                          ),
+                        ],
+                      )),
                 );
               },
             ),
-          )
+          ),
         ]),
       ),
       bottomNavigationBar: Container(
