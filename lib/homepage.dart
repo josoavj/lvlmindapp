@@ -459,9 +459,9 @@ class CategoryState extends State<Category> {
       'images/Other17.jpg',
       'Electronic',
     ),
-    category_img('images/Other03.jpg', 'Programation'),
+    category_img('images/Other03.jpg', 'Programming'),
     category_img('images/Other09.jpg', 'Management'),
-    category_img('images/Other11.jpg', 'Mathématic')
+    category_img('images/Other11.jpg', 'Mathematic')
   ];
   @override
   Widget build(BuildContext context) {
