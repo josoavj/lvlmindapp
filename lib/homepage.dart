@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/pages/files.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lvlmindbeta/Models/popuphome.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -365,9 +366,15 @@ class Homepage extends StatelessWidget {
                   // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
                   // en fonction du section
                   // ToDo: Un menu flottant
+                  // Popup Menu
                   SizedBox(
                       child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showMenu(
+                          context: context,
+                          position: RelativeRect.fill,
+                          items: [PopupMenuItem(child: ListTile())]);
+                    },
                     alignment: Alignment.center,
                     icon: const Icon(
                       Icons.menu,
