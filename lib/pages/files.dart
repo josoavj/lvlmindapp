@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/homepage.dart';
@@ -20,6 +22,7 @@ class Files extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     MediaQueryData mediaQuery = MediaQuery.of(context);
     getCoursesModel();
     getProfs();
