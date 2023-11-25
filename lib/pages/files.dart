@@ -79,11 +79,11 @@ class Files extends StatelessWidget {
             width: 550,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 5, right: 5),
               itemCount: professor.length,
               itemBuilder: (context, index) {
                 return Container(
-                    width: 90,
+                    width: 100,
                     height: 90,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
