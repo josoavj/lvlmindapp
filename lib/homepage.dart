@@ -1,9 +1,12 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/pages/edt.dart';
 import 'package:lvlmindbeta/pages/files.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/pages/profile.dart';
+import 'package:lvlmindbeta/Models/matiere.dart';
 
 class Homepage extends StatelessWidget {
   Homepage({super.key});
@@ -12,68 +15,19 @@ class Homepage extends StatelessWidget {
     section = Section.getSection();
   }
 
+  List<Matiere> listmatiere = [];
+  void getCoursesModels() {
+    listmatiere = Matiere.getCoursesModels();
+  }
+
   @override
   Widget build(BuildContext context) {
-    getSection();
+    getSection(); // Pour le contenu du menu popup
+    getCoursesModels(); // Pour la liste des matières
     MediaQueryData mediaQuery = MediaQuery.of(context);
     if (mediaQuery.size.width > 400) {
       return Scaffold(
-        bottomNavigationBar: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                blurRadius: 25,
-                offset: const Offset(0, 20))
-          ]),
-          child: ClipRRect(
-            // Pour obtenir des bords arrondis
-            borderRadius: BorderRadius.circular(30),
-            child: NavigationBar(
-                onDestinationSelected: (index) {
-                  switch (index) {
-                    case 0:
-                      // Accueil
-                      break;
-                    case 1:
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Schedule()));
-                      break;
-                    case 2:
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Files()));
-                      break;
-                    case 3:
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Profile()));
-                      break;
-                  }
-                },
-                backgroundColor: const Color.fromARGB(148, 55, 188, 255),
-                elevation: 0,
-                height: 75,
-                selectedIndex: 0,
-                indicatorColor: const Color.fromARGB(255, 255, 255, 255),
-                destinations: const [
-                  NavigationDestination(
-                    icon: Icon(Iconsax.home_2),
-                    label: 'Home',
-                  ),
-                  NavigationDestination(
-                      icon: Icon(Iconsax.calendar), label: 'EDT'),
-                  NavigationDestination(
-                    icon: Icon(Iconsax.folder_2),
-                    label: 'Files',
-                  ),
-                  NavigationDestination(
-                      icon: Icon(Iconsax.profile_circle), label: 'Profile')
-                ]),
-          ),
-        ),
+        bottomNavigationBar: navbar(context),
         body: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 30,
@@ -156,30 +110,9 @@ class Homepage extends StatelessWidget {
                           ),
                         )),
                   ),
-                  SizedBox(
-                      height: 30,
-                      // TextButton
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text("Electronics",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Josefin',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500)),
-                      )),
-                  SizedBox(
-                      height: 30,
-                      // TextButton
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text("Programming",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Josefin',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500)),
-                      )),
+                  //Sliding menu
+                  listebestmatiere(),
+
                   // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
                   // en fonction du section
                   SizedBox(
@@ -287,40 +220,7 @@ class Homepage extends StatelessWidget {
       );
     } else {
       return Scaffold(
-        bottomNavigationBar: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                blurRadius: 25,
-                offset: const Offset(0, 20))
-          ]),
-          child: ClipRRect(
-            // Pour obtenir des bords arrondis
-            borderRadius: BorderRadius.circular(30),
-            child: NavigationBar(
-                onDestinationSelected: (index) => {},
-                backgroundColor: const Color.fromARGB(148, 55, 188, 255),
-                elevation: 0,
-                height: 75,
-                selectedIndex: 0,
-                indicatorColor: const Color.fromARGB(255, 255, 255, 255),
-                destinations: const [
-                  NavigationDestination(
-                    icon: Icon(Iconsax.home_2),
-                    label: 'Home',
-                  ),
-                  NavigationDestination(
-                      icon: Icon(Iconsax.calendar), label: 'EDT'),
-                  NavigationDestination(
-                    icon: Icon(Iconsax.folder_2),
-                    label: 'Files',
-                  ),
-                  NavigationDestination(
-                      icon: Icon(Iconsax.profile_circle), label: 'Profile')
-                ]),
-          ),
-        ),
+        bottomNavigationBar: navbar(context),
         body: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 30,
@@ -333,7 +233,8 @@ class Homepage extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: SizedBox(
                   width: 50,
-                  child: Image(image: AssetImage('images/menubutton.jpg')),
+                  child:
+                      Image(image: AssetImage('images/icons/menubutton.jpg')),
                 ),
               ),
               const SizedBox(
@@ -366,7 +267,7 @@ class Homepage extends StatelessWidget {
                   SizedBox(
                       width: 90,
                       child: Image.asset(
-                        'images/avatar1.jpg',
+                        'images/icons/avatar1.jpg',
                         alignment: Alignment.topRight,
                       ))
                 ],
@@ -402,30 +303,7 @@ class Homepage extends StatelessWidget {
                           ),
                         )),
                   ),
-                  SizedBox(
-                      height: 30,
-                      // TextButton
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text("Electronics",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Josefin',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500)),
-                      )),
-                  SizedBox(
-                      height: 30,
-                      // TextButton
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text("Programming",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Josefin',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500)),
-                      )),
+                  listebestmatiere(),
                   // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
                   // en fonction du section
                   // ToDo: Un menu flottant
@@ -531,6 +409,97 @@ class Homepage extends StatelessWidget {
         ),
       );
     }
+  }
+
+  // Liste des matières
+  SizedBox listebestmatiere() {
+    return SizedBox(
+      width: 200,
+      height: 38,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        separatorBuilder: (context, index) => const SizedBox(width: 5),
+        itemCount: listmatiere.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {},
+            child: SizedBox(
+              width: 95,
+              height: 38,
+              child: Card(
+                  elevation: 2,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(listmatiere[index].name,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontFamily: 'Josefin',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blue)),
+                  )),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  // Barre de navigation
+  Container navbar(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 25,
+            offset: const Offset(0, 20))
+      ]),
+      child: ClipRRect(
+        // Pour obtenir des bords arrondis
+        borderRadius: BorderRadius.circular(30),
+        child: NavigationBar(
+            onDestinationSelected: (index) {
+              switch (index) {
+                case 0:
+                  // Accueil
+                  break;
+                case 1:
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Schedule()));
+                  break;
+                case 2:
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Files()));
+                  break;
+                case 3:
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Profile()));
+                  break;
+              }
+            },
+            backgroundColor: const Color.fromARGB(148, 55, 188, 255),
+            elevation: 0,
+            height: 75,
+            selectedIndex: 0,
+            indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Iconsax.home_2),
+                label: 'Home',
+              ),
+              NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
+              NavigationDestination(
+                icon: Icon(Iconsax.folder_2),
+                label: 'Files',
+              ),
+              NavigationDestination(
+                  icon: Icon(Iconsax.profile_circle), label: 'Profile')
+            ]),
+      ),
+    );
   }
 }
 
