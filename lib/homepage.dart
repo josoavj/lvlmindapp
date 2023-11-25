@@ -15,15 +15,15 @@ class Homepage extends StatelessWidget {
     section = Section.getSection();
   }
 
-  List<Matiere> listmatiere = [];
-  void getCoursesModels() {
-    listmatiere = Matiere.getCoursesModels();
+  List<Secteur> listsecteur = [];
+  void getSecteur() {
+    listsecteur = Secteur.getSecteur();
   }
 
   @override
   Widget build(BuildContext context) {
     getSection(); // Pour le contenu du menu popup
-    getCoursesModels(); // Pour la liste des matières
+    getSecteur(); // Pour la liste des sections
     MediaQueryData mediaQuery = MediaQuery.of(context);
     if (mediaQuery.size.width > 400) {
       return Scaffold(
@@ -419,7 +419,7 @@ class Homepage extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         separatorBuilder: (context, index) => const SizedBox(width: 5),
-        itemCount: listmatiere.length,
+        itemCount: listsecteur.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {},
@@ -430,7 +430,7 @@ class Homepage extends StatelessWidget {
                   elevation: 2,
                   child: Align(
                     alignment: Alignment.center,
-                    child: Text(listmatiere[index].name,
+                    child: Text(listsecteur[index].name,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                             fontFamily: 'Josefin',
