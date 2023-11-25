@@ -83,34 +83,40 @@ class Files extends StatelessWidget {
               itemCount: professor.length,
               itemBuilder: (context, index) {
                 return Container(
-                  width: 90,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            width: 50,
-                            height: 40,
-                            child: Image(
-                              height: 30,
-                              image: AssetImage(professor[index].iconpath),
-                            )),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          professor[index].pname,
-                          style: const TextStyle(
-                            fontFamily: 'Josefin',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ]),
-                );
+                    width: 90,
+                    height: 90,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Card(
+                        elevation: 2,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  width: 50,
+                                  height: 40,
+                                  child: Image(
+                                    height: 30,
+                                    image:
+                                        AssetImage(professor[index].iconpath),
+                                  )),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Text(
+                                professor[index].pname,
+                                style: const TextStyle(
+                                  fontFamily: 'Josefin',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ));
               },
               separatorBuilder: (context, index) => const SizedBox(
                 width: 20,
