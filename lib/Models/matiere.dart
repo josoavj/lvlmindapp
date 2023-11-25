@@ -28,3 +28,39 @@ class Matiere {
     return listmatiere;
   }
 }
+
+// Destiné à la catégorie secteur
+class Secteur {
+  String name; // Pour le nom du secteur
+  String image;
+  // Création du constructeur pour la classe
+  Secteur({
+    required this.name,
+    required this.image,
+  });
+
+  static List<Secteur> getSecteur() {
+    List<Secteur> listsecteur = [];
+    listsecteur.add(Secteur(name: "Hacking", image: ''));
+    listsecteur.add(Secteur(name: "Web Dev", image: ''));
+    listsecteur.add(Secteur(name: "Networking", image: ''));
+    listsecteur.add(Secteur(name: "Trading", image: ''));
+
+    listsecteur.add(Secteur(name: "Design", image: ''));
+
+    listsecteur.add(Secteur(name: "Digital Art", image: ''));
+
+    listsecteur.add(Secteur(name: "Painting", image: ''));
+
+    listsecteur.add(Secteur(name: "Astrology", image: ''));
+
+    listsecteur.add(Secteur(name: "Artifical Intelligence", image: ''));
+
+    listsecteur.add(Secteur(name: "Mobile", image: ''));
+
+    listsecteur.add(Secteur(name: "DevOps", image: ''));
+
+    listsecteur.add(Secteur(name: "BIOTECH", image: ''));
+    return listsecteur;
+  }
+}
