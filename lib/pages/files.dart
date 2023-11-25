@@ -24,24 +24,9 @@ class Files extends StatelessWidget {
     getCoursesModel();
     getProfs();
     return Scaffold(
-      appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          title: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.blueAccent,
-                size: 25,
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Homepage(),
-                    ));
-              })),
+      appBar: appbar(context),
       body: Container(
+        decoration: const BoxDecoration(color: Colors.white),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(children: [
           const Align(
@@ -200,60 +185,97 @@ class Files extends StatelessWidget {
           ),
         ]),
       ),
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              blurRadius: 25,
-              offset: const Offset(0, 20))
-        ]),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: NavigationBar(
-              onDestinationSelected: (index) {
-                switch (index) {
-                  case 0:
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Homepage()));
-                    break;
-                  case 1:
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Schedule()));
-                    break;
-                  case 2:
-                    // Cette page
-                    break;
-                  case 3:
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Profile()));
-                    break;
-                }
-              },
-              backgroundColor: const Color.fromARGB(148, 55, 188, 255),
-              elevation: 0,
-              height: 75,
-              selectedIndex: 2,
-              indicatorColor: const Color.fromARGB(255, 255, 255, 255),
-              destinations: const [
-                NavigationDestination(
-                  icon: Icon(Iconsax.home_2),
-                  label: 'Home',
-                ),
-                NavigationDestination(
-                    icon: Icon(Iconsax.calendar), label: 'EDT'),
-                NavigationDestination(
-                  icon: Icon(Iconsax.folder_2),
-                  label: 'Files',
-                ),
-                NavigationDestination(
-                    icon: Icon(Iconsax.profile_circle), label: 'Profile')
-              ]),
+      bottomNavigationBar: navbar(context),
+    );
+  }
+
+  // Barre d'application
+  AppBar appbar(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Colors.white,
+      automaticallyImplyLeading: false,
+      leading: Container(
+        alignment: Alignment.center,
+        child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.blueAccent,
+              size: 20,
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Homepage(),
+                  ));
+            }),
+      ),
+      centerTitle: true,
+      title: const Text(
+        'Course materials',
+        style: TextStyle(
+          fontFamily: 'Josefin',
+          fontSize: 20,
+          color: Colors.blue,
+          fontWeight: FontWeight.w700,
         ),
+      ),
+    );
+  }
+
+  // Barre de navigation
+  Container navbar(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 25,
+            offset: const Offset(0, 20))
+      ]),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: NavigationBar(
+            onDestinationSelected: (index) {
+              switch (index) {
+                case 0:
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Homepage()));
+                  break;
+                case 1:
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Schedule()));
+                  break;
+                case 2:
+                  // Cette page
+                  break;
+                case 3:
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Profile()));
+                  break;
+              }
+            },
+            backgroundColor: const Color.fromARGB(148, 55, 188, 255),
+            elevation: 0,
+            height: 75,
+            selectedIndex: 2,
+            indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Iconsax.home_2),
+                label: 'Home',
+              ),
+              NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
+              NavigationDestination(
+                icon: Icon(Iconsax.folder_2),
+                label: 'Files',
+              ),
+              NavigationDestination(
+                  icon: Icon(Iconsax.profile_circle), label: 'Profile')
+            ]),
       ),
     );
   }
