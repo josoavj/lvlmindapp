@@ -1,5 +1,4 @@
-//import 'package:flutter/animation.dart';
-import 'dart:async'; // Bibliothèque utile pour l'ensemble du code
+/import 'dart:async'; // Bibliothèque utile pour l'ensemble du code
 import 'package:flutter/material.dart';
 
 class DelayedAnimation extends StatefulWidget {
@@ -11,7 +10,7 @@ class DelayedAnimation extends StatefulWidget {
   // ignore: library_private_types_in_public_api
   _DelayedAnimationState createState() => _DelayedAnimationState();
 }
-
+// Pour animer les pages
 class _DelayedAnimationState extends State<DelayedAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
