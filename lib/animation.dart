@@ -20,24 +20,40 @@ class _DelayedAnimationState extends State<DelayedAnimation>
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    );
+    controller();
 
-    final curve = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.decelerate,
-    );
+    final curve = curvedAnimate();
 
-    _animOffset = Tween<Offset>(
-      begin: const Offset(0.0, -0.35),
-      end: Offset.zero,
-    ).animate(curve);
+    animateOffset(curve);
 
-    Timer(Duration(milliseconds: widget.delay), () {
-      _controller.forward();
-    });
+    time();
+  }
+
+  Timer time() {
+    return Timer(Duration(milliseconds: widget.delay), () {
+    _controller.forward();
+  });
+  }
+
+  Animation<Offset> animateOffset(CurvedAnimation curve) {
+    return _animOffset = Tween<Offset>(
+    begin: const Offset(0.0, -0.35),
+    end: Offset.zero,
+  ).animate(curve);
+  }
+
+  CurvedAnimation curvedAnimate() {
+    return CurvedAnimation(
+    parent: _controller,
+    curve: Curves.decelerate,
+  );
+  }
+
+  AnimationController controller() {
+    return _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 800),
+  );
   }
 
   @override
