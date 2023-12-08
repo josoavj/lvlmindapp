@@ -1,4 +1,4 @@
-/import 'dart:async'; // Bibliothèque utile pour l'ensemble du code
+import 'dart:async'; // Bibliothèque utile pour l'ensemble du code
 import 'package:flutter/material.dart';
 
 class DelayedAnimation extends StatefulWidget {
