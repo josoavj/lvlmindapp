@@ -7,6 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 // Suite à une erreur sur les polices que j'ai télechargé
 // J'ai du revenir à googlefonts
 
+
+/*
+  ToDo: Ajout d'un API pour identifier et authentifier l'utilisateur
+ */
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 

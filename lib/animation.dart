@@ -1,4 +1,3 @@
-//import 'package:flutter/animation.dart';
 import 'dart:async'; // Bibliothèque utile pour l'ensemble du code
 import 'package:flutter/material.dart';
 
@@ -11,7 +10,7 @@ class DelayedAnimation extends StatefulWidget {
   // ignore: library_private_types_in_public_api
   _DelayedAnimationState createState() => _DelayedAnimationState();
 }
-
+// Pour animer les pages
 class _DelayedAnimationState extends State<DelayedAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
@@ -20,24 +19,40 @@ class _DelayedAnimationState extends State<DelayedAnimation>
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    );
+    controller();
 
-    final curve = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.decelerate,
-    );
+    final curve = curvedAnimate();
 
-    _animOffset = Tween<Offset>(
-      begin: const Offset(0.0, -0.35),
-      end: Offset.zero,
-    ).animate(curve);
+    animateOffset(curve);
 
-    Timer(Duration(milliseconds: widget.delay), () {
-      _controller.forward();
-    });
+    time();
+  }
+
+  Timer time() {
+    return Timer(Duration(milliseconds: widget.delay), () {
+    _controller.forward();
+  });
+  }
+
+  Animation<Offset> animateOffset(CurvedAnimation curve) {
+    return _animOffset = Tween<Offset>(
+    begin: const Offset(0.0, -0.35),
+    end: Offset.zero,
+  ).animate(curve);
+  }
+
+  CurvedAnimation curvedAnimate() {
+    return CurvedAnimation(
+    parent: _controller,
+    curve: Curves.decelerate,
+  );
+  }
+
+  AnimationController controller() {
+    return _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 800),
+  );
   }
 
   @override

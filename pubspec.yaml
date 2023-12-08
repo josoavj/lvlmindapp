@@ -86,13 +86,11 @@ flutter:
     - images/background/
     - images/background/fond1.jpg
     - images/background/fond2.jpg
-    - images/matieres/
     - images/profs/
     - images/profs/prof1.jpg
     - images/profs/prof2.jpg
     - images/profs/prof3.png
-    - images/profs/prof4.png
-    - images/category/
+    - images/profs/Prof4.png
     - images/icons/
     - images/icons/avatar1.jpg
     - images/icons/Electronic.jpg
@@ -102,7 +100,6 @@ flutter:
     - images/icons/management.jpg
     - images/icons/Programming.jpg
     - fonts/
-    - videos/
     - json/matiere.json
   
   # An image asset can refer to one or more resolution-specific "variants", see
