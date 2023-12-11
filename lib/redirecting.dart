@@ -13,11 +13,14 @@ class Redirecting extends StatelessWidget {
 //url vers notre site web
   String url =
       "http://192.168.43.128:8000/account/student-register/business-marketing";
+      // URL obsolète
+      // Recommendation: Ajouter un autre
   void _launchURL() async {
     if (await canLaunchUrl(url as Uri)) {
       await launchUrl(url as Uri);
     } else {
       throw 'Cannot open the link';
+      // Nécessite une demande de naviguer vers une autre application
     }
   }
 
@@ -68,6 +71,7 @@ class Redirecting extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.pop(context);
+            // Bouton retour
           },
         ),
       ),
