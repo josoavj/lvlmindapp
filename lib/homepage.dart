@@ -27,7 +27,7 @@ class Homepage extends StatelessWidget {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     if (mediaQuery.size.width > 400) {
       return Scaffold(
-        bottomNavigationBar: navbar(context),
+        //bottomNavigationBar: navbar(context),
         body: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 30,
@@ -220,7 +220,7 @@ class Homepage extends StatelessWidget {
       );
     } else {
       return Scaffold(
-        bottomNavigationBar: navbar(context),
+        //bottomNavigationBar: navbar(context),
         body: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 30,
@@ -446,6 +446,7 @@ class Homepage extends StatelessWidget {
   }
 
   // Barre de navigation
+  /*
   Container navbar(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -503,6 +504,8 @@ class Homepage extends StatelessWidget {
   }
 }
 
+  */
+}
 class category_img {
   String title;
   String image;
