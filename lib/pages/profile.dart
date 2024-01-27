@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:lvlmindbeta/pages/edt.dart';
-import 'package:lvlmindbeta/pages/files.dart';
-import 'package:lvlmindbeta/homepage.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});

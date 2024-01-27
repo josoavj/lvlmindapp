@@ -1,7 +1,6 @@
 //import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animation.dart';
-import 'package:lvlmindbeta/homepage.dart';
 import 'package:lvlmindbeta/navbar/presentation.dart';
 import 'package:lvlmindbeta/presentation.dart';
 import 'package:flutter_svg/flutter_svg.dart';

@@ -1,11 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/pages/edt.dart';
 import 'package:lvlmindbeta/pages/files.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
-import 'package:lvlmindbeta/pages/profile.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 
 class Homepage extends StatelessWidget {
