@@ -194,7 +194,7 @@ class Files extends StatelessWidget {
           ),
         ]),
       ),
-      bottomNavigationBar: navbar(context),
+      //bottomNavigationBar: navbar(context),
     );
   }
 
@@ -232,8 +232,8 @@ class Files extends StatelessWidget {
       ),
     );
   }
-
-  // Barre de navigation
+/*
+ // Barre de navigation
   Container navbar(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -287,5 +287,6 @@ class Files extends StatelessWidget {
             ]),
       ),
     );
-  }
+
+*/ 
 }
