@@ -11,6 +11,12 @@ class Transition extends StatefulWidget {
 
 class _TransitionState extends State<Transition> {
   @override
+  void initState(){
+    goto();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(

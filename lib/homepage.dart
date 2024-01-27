@@ -28,194 +28,188 @@ class Homepage extends StatelessWidget {
     if (mediaQuery.size.width > 400) {
       return Scaffold(
         //bottomNavigationBar: navbar(context),
-        body: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 30,
-            vertical: 50,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Align(
-                alignment: Alignment.topLeft,
-                child: SizedBox(
-                  width: 50,
-                  child:
-                      Image(image: AssetImage('images/icons/menubutton.jpg')),
-                ),
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          children: [
+            const Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: 50,
+                child:
+                    Image(image: AssetImage('images/icons/menubutton.jpg')),
               ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text.rich(TextSpan(
-                      text: "Hi there \n\n",
-                      style: TextStyle(
-                        fontFamily: 'Josefin',
-                        color: Color.fromARGB(180, 0, 0, 0),
-                        fontSize: 25,
-                        fontWeight: FontWeight.w800,
-                      ),
-                      children: [
-                        TextSpan(
-                            text:
-                                "Let's start a day exciting \n while learning with us",
-                            style: TextStyle(
-                              fontFamily: 'Josefin',
-                              fontSize: 17,
-                              color: Color.fromARGB(171, 0, 0, 0),
-                            ))
-                      ])),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  SizedBox(
-                      width: 90,
-                      child: Image.asset(
-                        'images/icons/avatar1.jpg',
-                        alignment: Alignment.topRight,
-                      ))
-                ],
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              // Catégories
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Card(
-                    elevation: 5,
-                    clipBehavior: Clip.antiAlias,
-                    color: const Color.fromARGB(255, 121, 38, 238),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text.rich(TextSpan(
+                    text: "Hi there \n\n",
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      color: Color.fromARGB(180, 0, 0, 0),
+                      fontSize: 25,
+                      fontWeight: FontWeight.w800,
                     ),
-                    child: Padding(
-                        padding: const EdgeInsets.all(0.5),
-                        // TextButton
-                        child: TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            textAlign: TextAlign.center,
-                            "TOP",
-                            style: TextStyle(
-                                fontFamily: 'Josefin',
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ),
-                        )),
-                  ),
-                  //Sliding menu
-                  listebestmatiere(),
-
-                  // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
-                  // en fonction du section
-                  SizedBox(
-                      child: IconButton(
-                    onPressed: () {
-                      showMenu(
-                          context: context,
-                          position: const RelativeRect.fromLTRB(500, 320, 0, 0),
-                          items: [
-                            PopupMenuItem(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 1, vertical: 1),
-                                child: SizedBox(
-                                  width: 150,
-                                  height: 100,
-                                  child: ListView.builder(
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                          onTap: () {},
-                                          title: Text(
-                                            section[index].name,
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 63, 63, 63),
-                                              fontFamily: 'Josefin',
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                          leading: Icon(
-                                            section[index].icon,
-                                            size: 20,
-                                          ));
-                                    },
-                                    itemCount: section.length,
-                                  ),
-                                ))
-                          ]);
-                    },
-                    alignment: Alignment.center,
-                    icon: const Icon(
-                      Icons.menu,
-                      weight: 20,
-                      color: Colors.blueAccent,
-                    ),
-                  ))
-                ],
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-
-              // Passons aux catégories
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: const Text(
-                      "Category",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'Josefin',
-                        fontSize: 25,
-                        fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(166, 0, 0, 0),
-                      ),
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.topRight,
-                      child: TextButton(
-                        // Redirection vers une page contenant toutes les catégories
-                        // Categories = Matières
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Files()));
-                        },
-                        child: const Text(
-                          "See all",
-                          textAlign: TextAlign.left,
+                    children: [
+                      TextSpan(
+                          text:
+                              "Let's start a day exciting \n while learning with us",
                           style: TextStyle(
                             fontFamily: 'Josefin',
-                            fontSize: 21,
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(223, 222, 75, 161),
-                          ),
+                            fontSize: 17,
+                            color: Color.fromARGB(171, 0, 0, 0),
+                          ))
+                    ])),
+                const SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                    width: 90,
+                    child: Image.asset(
+                      'images/icons/avatar1.jpg',
+                      alignment: Alignment.topRight,
+                    ))
+              ],
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            // Catégories
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Card(
+                  elevation: 5,
+                  clipBehavior: Clip.antiAlias,
+                  color: const Color.fromARGB(255, 121, 38, 238),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.all(0.5),
+                      // TextButton
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          textAlign: TextAlign.center,
+                          "TOP",
+                          style: TextStyle(
+                              fontFamily: 'Josefin',
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
                         ),
-                      ))
-                ],
-              ),
-
-              // Liste des catégories
-              const SizedBox(
-                // Pour limiter la hauteur de la liste
-                // Permet d'éviter la présence des erreurs au niveau du rendu
-                // Recommandé lors de
-                width: 500,
-                height: 295,
-                child: Category(),
-              )
-            ],
-          ),
+                      )),
+                ),
+                //Sliding menu
+                listebestmatiere(),
+                      
+                // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
+                // en fonction du section
+                SizedBox(
+                    child: IconButton(
+                  onPressed: () {
+                    showMenu(
+                        context: context,
+                        position: const RelativeRect.fromLTRB(500, 320, 0, 0),
+                        items: [
+                          PopupMenuItem(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 1, vertical: 1),
+                              child: SizedBox(
+                                width: 150,
+                                height: 100,
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                        onTap: () {},
+                                        title: Text(
+                                          section[index].name,
+                                          style: const TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 63, 63, 63),
+                                            fontFamily: 'Josefin',
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        leading: Icon(
+                                          section[index].icon,
+                                          size: 20,
+                                        ));
+                                  },
+                                  itemCount: section.length,
+                                ),
+                              ))
+                        ]);
+                  },
+                  alignment: Alignment.center,
+                  icon: const Icon(
+                    Icons.menu,
+                    weight: 20,
+                    color: Colors.blueAccent,
+                  ),
+                ))
+              ],
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+                      
+            // Passons aux catégories
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: const Text(
+                    "Category",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 25,
+                      fontWeight: FontWeight.w700,
+                      color: Color.fromARGB(166, 0, 0, 0),
+                    ),
+                  ),
+                ),
+                Container(
+                    alignment: Alignment.topRight,
+                    child: TextButton(
+                      // Redirection vers une page contenant toutes les catégories
+                      // Categories = Matières
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Files()));
+                      },
+                      child: const Text(
+                        "See all",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 21,
+                          fontWeight: FontWeight.w700,
+                          color: Color.fromARGB(223, 222, 75, 161),
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+                      
+            // Liste des catégories
+            const SizedBox(
+              // Pour limiter la hauteur de la liste
+              // Permet d'éviter la présence des erreurs au niveau du rendu
+              // Recommandé lors de
+              width: 500,
+              height: 350,
+              child: Category(),
+            ),
+          ] 
         ),
       );
     } else {
@@ -401,7 +395,7 @@ class Homepage extends StatelessWidget {
               // Liste des catégories
               const SizedBox(
                 width: 500,
-                height: 200,
+                height: 400,
                 child: Category(),
               )
             ],

@@ -28,13 +28,17 @@ final list_screens = [
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        decoration: BoxDecoration(boxShadow: [
+        height: 70,
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        /*
+        decoration: BoxDecoration(
+            boxShadow: [
             BoxShadow(
                color: Colors.black.withOpacity(0.5),
                blurRadius: 25,
                offset: const Offset(0, 20))
         ]),
+        */ 
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
           child: BottomNavigationBar(
@@ -49,8 +53,10 @@ final list_screens = [
                 pageIndex = value;
               });
             },
+            type: BottomNavigationBarType.fixed,
             selectedItemColor: Colors.white, 
-            selectedFontSize: 10,
+            selectedFontSize: 15,
+            iconSize: 25,
             currentIndex: pageIndex,
             backgroundColor: Colors.blueAccent,
             showUnselectedLabels: false, 

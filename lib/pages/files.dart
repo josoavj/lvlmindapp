@@ -28,10 +28,9 @@ class Files extends StatelessWidget {
     getProfs();
     return Scaffold(
       appBar: appbar(context),
-      body: Container(
-        decoration: const BoxDecoration(color: Colors.white),
+      body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: Column(children: [
+        children:[
           const Align(
               alignment: Alignment.center,
               child: SizedBox(
@@ -104,7 +103,15 @@ class Files extends StatelessWidget {
                                   child: Image(
                                     height: 30,
                                     image:
-                                        AssetImage(professor[index].iconpath),
+                                        AssetImage(professor[index].iconpath, ),
+                                        errorBuilder: (BuildContext context, Object error,
+                              StackTrace? stackTrace) {
+                            return const Text(
+                              "Image loading problem",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 3, 93, 6),
+                                  fontSize: 10),
+                            );}
                                   )),
                               const SizedBox(
                                 height: 15,
@@ -141,7 +148,7 @@ class Files extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 234,
+            height: 450,
             width: 1000,
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 25),
@@ -192,8 +199,7 @@ class Files extends StatelessWidget {
               },
             ),
           ),
-        ]),
-      ),
+        ]), 
       //bottomNavigationBar: navbar(context),
     );
   }
