@@ -53,6 +53,6 @@ class _TransitionState extends State<Transition> {
   }
   Future<void> goto() async{
     await Future.delayed( const Duration(seconds: 5));
-    var onPushReplacement = Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+       var onPushReplacement = Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavBar()));
   }
 }

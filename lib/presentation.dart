@@ -246,7 +246,6 @@ class Presentation extends StatelessWidget {
             fontSize: 15,
             fontWeight: FontWeight.w800,
             color: Color.fromARGB(255, 255, 255, 255),
-            decoration: TextDecoration.underline,
           ),
         ),
       ),
