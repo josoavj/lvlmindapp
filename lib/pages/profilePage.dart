@@ -5,15 +5,24 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body:  Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image(image: AssetImage('avatar1.jpg')),
+    return  Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        children: const [
+          SizedBox(
+            height: 50,
+            child: Card(
+              color: Colors.blueAccent,
+              elevation: 5,
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children:[
+              CircleAvatar(
+              radius: 30,
+              child: Image(image: AssetImage("")),
+            ),
             Text(
-              "Josoa Vonjiniaina",
+              "Josoa Vonjiniaina", // Student or Professor name
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontFamily: 'Josefin',
@@ -21,9 +30,15 @@ class Profile extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: Colors.black45),
             ),
-          ],
-        ),
-      ),
-    );
+            ]
+          ),
+            ),
+          ),
+          // Liste des cours les plus suivies
+      
+          // Statistique d'activité hebdomadaire
+        ],
+      )
+        );
   }
 }

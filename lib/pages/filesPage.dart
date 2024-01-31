@@ -26,7 +26,7 @@ class Files extends StatelessWidget {
     return Scaffold(
       appBar: appbar(context),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         children:[
           const Align(
               alignment: Alignment.center,
