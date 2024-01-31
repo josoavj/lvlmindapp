@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:lvlmindbeta/Models/screenModels/matiereScreen.dart';
 import 'package:lvlmindbeta/pages/homePage.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
@@ -59,7 +60,9 @@ class Files extends StatelessWidget {
                   child: TextButton(
                     // Redirection vers une page contenant toutes les catégories
                     // Categories = Matières
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: ((context) => const MatContent())));
+                    },
                     child: const Text(
                       "See all",
                       textAlign: TextAlign.left,
@@ -93,7 +96,7 @@ class Files extends StatelessWidget {
                         elevation: 2,
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                            children: [ 
                               SizedBox(
                                   width: 50,
                                   height: 40,
