@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animations/animation.dart';
+import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
 import 'package:lvlmindbeta/screens/loginpage.dart';
 import 'package:lvlmindbeta/screens/redirecting.dart';
 import 'package:lvlmindbeta/screens/welcomepage.dart';

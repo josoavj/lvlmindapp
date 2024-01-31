@@ -1,7 +1,7 @@
 //import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animations/animation.dart';
-import 'package:lvlmindbeta/navbar/presentation.dart';
+import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
+import 'package:lvlmindbeta/navbar/transition.dart';
 import 'package:lvlmindbeta/screens/presentation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // Suite à une erreur sur les polices que j'ai télechargé
@@ -190,7 +190,7 @@ class LoginPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Transition(),
+                    builder: (context) => const Transition(),
                   ),
                 );
               },
