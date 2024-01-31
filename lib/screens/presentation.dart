@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animation.dart';
-import 'package:lvlmindbeta/loginpage.dart';
-import 'package:lvlmindbeta/redirecting.dart';
-import 'package:lvlmindbeta/welcomepage.dart';
+import 'package:lvlmindbeta/animations/animation.dart';
+import 'package:lvlmindbeta/screens/loginpage.dart';
+import 'package:lvlmindbeta/screens/redirecting.dart';
+import 'package:lvlmindbeta/screens/welcomepage.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class Presentation extends StatelessWidget {

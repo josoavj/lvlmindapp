@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animation.dart';
-import 'package:lvlmindbeta/presentation.dart';
+import 'package:lvlmindbeta/animations/animation.dart';
+import 'package:lvlmindbeta/screens/presentation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

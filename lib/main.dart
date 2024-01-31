@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/welcomepage.dart';
+import 'package:lvlmindbeta/screens/welcomepage.dart';
 
 // ignore: constant_identifier_names
 const d_color = Colors.blueAccent;
