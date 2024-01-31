@@ -1,7 +1,10 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:lvlmindbeta/Models/screenModels/coursesFile.dart';
 import 'package:lvlmindbeta/Models/screenModels/matiereScreen.dart';
+import 'package:lvlmindbeta/Models/screenModels/profInfo.dart';
+import 'package:lvlmindbeta/Models/screenModels/profsList.dart';
 import 'package:lvlmindbeta/pages/homePage.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
@@ -58,10 +61,8 @@ class Files extends StatelessWidget {
               Container(
                   alignment: Alignment.topRight,
                   child: TextButton(
-                    // Redirection vers une page contenant toutes les catégories
-                    // Categories = Matières
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: ((context) => const MatContent())));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const ProfListedProfile()));
                     },
                     child: const Text(
                       "See all",
@@ -91,7 +92,9 @@ class Files extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const ProfProfile()));
+                      },
                       child: Card(
                         elevation: 2,
                         child: Column(
@@ -156,7 +159,9 @@ class Files extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const CoursesContent()));
+                      },
                       leading: SizedBox(
                         child: Image(
                           height: 20,
@@ -200,7 +205,6 @@ class Files extends StatelessWidget {
             ),
           ),
         ]), 
-      //bottomNavigationBar: navbar(context),
     );
   }
 
@@ -238,61 +242,4 @@ class Files extends StatelessWidget {
       ),
     );
   }
-/*
- // Barre de navigation
-  Container navbar(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            blurRadius: 25,
-            offset: const Offset(0, 20))
-      ]),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: NavigationBar(
-            onDestinationSelected: (index) {
-              switch (index) {
-                case 0:
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Homepage()));
-                  break;
-                case 1:
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Schedule()));
-                  break;
-                case 2:
-                  // Cette page
-                  break;
-                case 3:
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Profile()));
-                  break;
-              }
-            },
-            backgroundColor: const Color.fromARGB(148, 55, 188, 255),
-            elevation: 0,
-            height: 75,
-            selectedIndex: 2,
-            indicatorColor: const Color.fromARGB(255, 255, 255, 255),
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Iconsax.home_2),
-                label: 'Home',
-              ),
-              NavigationDestination(icon: Icon(Iconsax.calendar), label: 'EDT'),
-              NavigationDestination(
-                icon: Icon(Iconsax.folder_2),
-                label: 'Files',
-              ),
-              NavigationDestination(
-                  icon: Icon(Iconsax.profile_circle), label: 'Profile')
-            ]),
-      ),
-    );
-
-*/ 
 }

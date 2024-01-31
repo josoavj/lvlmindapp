@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:lvlmindbeta/Models/screenModels/matiereScreen.dart';
 import 'package:lvlmindbeta/pages/filesPage.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
@@ -372,7 +373,7 @@ class Homepage extends StatelessWidget {
                         // Categories = Matières
                         onPressed: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Files()));
+                             MaterialPageRoute(builder: ((context) => const MatContent())));
                         },
                         child: const Text(
                           "See all",
