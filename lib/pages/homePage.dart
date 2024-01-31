@@ -24,7 +24,6 @@ class Homepage extends StatelessWidget {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     if (mediaQuery.size.width > 400) {
       return Scaffold(
-        //bottomNavigationBar: navbar(context),
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           children: [

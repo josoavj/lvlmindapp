@@ -63,34 +63,29 @@ class LoginPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Flexible(
-            flex: 1,
-            child: IconButton(
-              icon: const Icon(
-                Icons.close,
-                color: Colors.blueAccent,
-                size: 25,
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Presentation(),
-                    ));
-              },
+          IconButton(
+            icon: const Icon(
+              Icons.close,
+              color: Colors.blueAccent,
+              size: 25,
             ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Presentation(),
+                  ));
+            },
           ),
           const SizedBox(
             height: 10,
           ),
-          const Flexible(
-              flex: 2,
-              child: Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Image(
-                    height: 50,
-                    image: AssetImage('images/logo/logomin.jpg'),
-                  )))
+          const Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Image(
+                height: 50,
+                image: AssetImage('images/logo/logomin.jpg'),
+              ))
         ],
       ),
       titleSpacing: 0,
@@ -132,15 +127,12 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: DelayedAnimation(
                       delay: 850,
-                      child: Flexible(
-                        flex: 1,
-                        child: Text(
-                          "It's recommended to connect",
-                          style: TextStyle(
-                            fontFamily: 'Josefin',
-                            fontSize: 20,
-                            color: Color.fromARGB(95, 15, 12, 199),
-                          ),
+                      child: Text(
+                        "It's recommended to connect",
+                        style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 20,
+                          color: Color.fromARGB(95, 15, 12, 199),
                         ),
                       )),
                 ),
@@ -148,15 +140,12 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: DelayedAnimation(
                       delay: 850,
-                      child: Flexible(
-                        flex: 1,
-                        child: Text(
-                          "with your ID.",
-                          style: TextStyle(
-                            fontFamily: 'Josefin',
-                            fontSize: 20,
-                            color: Color.fromARGB(95, 15, 12, 199),
-                          ),
+                      child: Text(
+                        "with your ID.",
+                        style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 20,
+                          color: Color.fromARGB(95, 15, 12, 199),
                         ),
                       )),
                 ),
