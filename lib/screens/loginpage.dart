@@ -1,8 +1,8 @@
 //import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animation.dart';
-import 'package:lvlmindbeta/navbar/presentation.dart';
-import 'package:lvlmindbeta/presentation.dart';
+import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
+import 'package:lvlmindbeta/navbar/transition.dart';
+import 'package:lvlmindbeta/screens/presentation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // Suite à une erreur sur les polices que j'ai télechargé
 // J'ai du revenir à googlefonts
@@ -63,34 +63,29 @@ class LoginPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Flexible(
-            flex: 1,
-            child: IconButton(
-              icon: const Icon(
-                Icons.close,
-                color: Colors.blueAccent,
-                size: 25,
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Presentation(),
-                    ));
-              },
+          IconButton(
+            icon: const Icon(
+              Icons.close,
+              color: Colors.blueAccent,
+              size: 25,
             ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Presentation(),
+                  ));
+            },
           ),
           const SizedBox(
             height: 10,
           ),
-          const Flexible(
-              flex: 2,
-              child: Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Image(
-                    height: 50,
-                    image: AssetImage('images/logo/logomin.jpg'),
-                  )))
+          const Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Image(
+                height: 50,
+                image: AssetImage('images/logo/logomin.jpg'),
+              ))
         ],
       ),
       titleSpacing: 0,
@@ -132,15 +127,12 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: DelayedAnimation(
                       delay: 850,
-                      child: Flexible(
-                        flex: 1,
-                        child: Text(
-                          "It's recommended to connect",
-                          style: TextStyle(
-                            fontFamily: 'Josefin',
-                            fontSize: 20,
-                            color: Color.fromARGB(95, 15, 12, 199),
-                          ),
+                      child: Text(
+                        "It's recommended to connect",
+                        style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 20,
+                          color: Color.fromARGB(95, 15, 12, 199),
                         ),
                       )),
                 ),
@@ -148,15 +140,12 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: DelayedAnimation(
                       delay: 850,
-                      child: Flexible(
-                        flex: 1,
-                        child: Text(
-                          "with your ID.",
-                          style: TextStyle(
-                            fontFamily: 'Josefin',
-                            fontSize: 20,
-                            color: Color.fromARGB(95, 15, 12, 199),
-                          ),
+                      child: Text(
+                        "with your ID.",
+                        style: TextStyle(
+                          fontFamily: 'Josefin',
+                          fontSize: 20,
+                          color: Color.fromARGB(95, 15, 12, 199),
                         ),
                       )),
                 ),
@@ -190,7 +179,7 @@ class LoginPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Transition(),
+                    builder: (context) => const Transition(),
                   ),
                 );
               },

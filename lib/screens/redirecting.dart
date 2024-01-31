@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animation.dart';
+import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 //import 'package:lvlmindbeta/presentation.dart';

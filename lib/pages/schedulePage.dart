@@ -7,7 +7,14 @@ class Schedule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar(),
-      //bottomNavigationBar: navbar(context),
+      body: ListView(
+        children: [
+          const SizedBox(
+            child: Card(),
+          ),
+          Table()
+        ],
+      ),
     );
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animation.dart';
-import 'package:lvlmindbeta/presentation.dart';
+import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
+import 'package:lvlmindbeta/screens/presentation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -28,10 +28,7 @@ class WelcomePage extends StatelessWidget {
               children: [
                 // Pour les logo
                 logolist(),
-                const Flexible(
-                  flex: 1,
-                  child: SizedBox(height: 20),
-                ),
+                const SizedBox(height: 20),
                 DelayedAnimation(
                     delay: 850,
                     child: Flexible(
@@ -48,12 +45,9 @@ class WelcomePage extends StatelessWidget {
                 ),
                 DelayedAnimation(
                     delay: 1000,
-                    child: Flexible(
-                      flex: 2,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: startbutton(context),
-                      ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: startbutton(context),
                     )),
               ],
             ),
@@ -92,28 +86,22 @@ class WelcomePage extends StatelessWidget {
       children: [
         DelayedAnimation(
             delay: 800,
-            child: Flexible(
-              flex: 2,
-              child: SizedBox(
-                height: 85,
-                child: Image.asset(
-                  'images/logo/ispm.jpg',
-                  errorBuilder: (BuildContext context, Object error,
-                      StackTrace? stackTrace) {
-                    return const Text("Image loading problem");
-                  },
-                ),
+            child: SizedBox(
+              height: 85,
+              child: Image.asset(
+                'images/logo/ispm.jpg',
+                errorBuilder: (BuildContext context, Object error,
+                    StackTrace? stackTrace) {
+                  return const Text("Image loading problem");
+                },
               ),
             )),
         // Juste un espacement etre les deux logos
         const DelayedAnimation(
             delay: 800,
-            child: Flexible(
-              flex: 1,
-              child: SizedBox(
-                width: 70,
-                child: null,
-              ),
+            child: SizedBox(
+              width: 70,
+              child: null,
             )),
         // Pour notre logo
         DelayedAnimation(
@@ -164,13 +152,10 @@ class WelcomePage extends StatelessWidget {
         margin: const EdgeInsets.only(
           bottom: 20,
         ),
-        child: Flexible(
-          flex: 2,
-          child: SvgPicture.asset(
-            'images/logo/LevelMind.svg',
-            width: 250,
-            alignment: Alignment.bottomCenter,
-          ),
+        child: SvgPicture.asset(
+          'images/logo/LevelMind.svg',
+          width: 250,
+          alignment: Alignment.bottomCenter,
         ));
   }
 
@@ -181,18 +166,15 @@ class WelcomePage extends StatelessWidget {
           top: 30,
           bottom: 20,
         ),
-        child: const Flexible(
-          flex: 2,
-          child: Text(
-              "Build skills with courses, certificates and degrees online from world class universities",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Josefin',
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Color.fromARGB(255, 255, 255, 255),
-              )),
-        ));
+        child: const Text(
+            "Build skills with courses, certificates and degrees online from world class universities",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Josefin',
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: Color.fromARGB(255, 255, 255, 255),
+            )));
   }
 
   //Pour le bouton Get Started
