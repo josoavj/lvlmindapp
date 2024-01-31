@@ -2,10 +2,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:lvlmindbeta/pages/homepage.dart';
-import 'package:lvlmindbeta/pages/edt.dart';
-import 'package:lvlmindbeta/pages/files.dart';
-import 'package:lvlmindbeta/pages/profile.dart';
+import 'package:lvlmindbeta/pages/homePage.dart';
+import 'package:lvlmindbeta/pages/schedulePage.dart';
+import 'package:lvlmindbeta/pages/filesPage.dart';
+import 'package:lvlmindbeta/pages/profilePage.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});

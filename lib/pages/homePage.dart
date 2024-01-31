@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/pages/files.dart';
+import 'package:lvlmindbeta/pages/filesPage.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 
