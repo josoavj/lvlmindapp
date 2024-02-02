@@ -2,35 +2,55 @@
 
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/Models/screenModels/coursesFile.dart';
-import 'package:lvlmindbeta/Models/screenModels/matiereScreen.dart';
 import 'package:lvlmindbeta/Models/screenModels/profInfo.dart';
 import 'package:lvlmindbeta/Models/screenModels/profsList.dart';
-import 'package:lvlmindbeta/pages/homePage.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 
-class Files extends StatelessWidget {
-  Files({super.key});
+
+
+class Files extends StatefulWidget {
+  Files({Key? key}) : super(key: key);
+
+  @override
+  _FilesState createState() => _FilesState();
+}
+
+class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   List<Matiere> matiere = [];
-  void getCoursesModel() {
-    matiere = Matiere.getCoursesModels();
+  List<Profs> professor = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getCoursesModel();
+    getProfs();
   }
 
-  List<Profs> professor = [];
+  void getCoursesModel() {
+    setState(() {
+      matiere = Matiere.getCoursesModels();
+    });
+  }
+
   void getProfs() {
-    professor = Profs.getProfs();
+    setState(() {
+      professor = Profs.getProfs();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
+    // ... le reste du code
     MediaQueryData mediaQuery = MediaQuery.of(context);
     getCoursesModel();
     getProfs();
     return Scaffold(
       appBar: appbar(context),
       body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         children:[
           const Align(
               alignment: Alignment.center,
@@ -171,7 +191,7 @@ class Files extends StatelessWidget {
                           errorBuilder: (BuildContext context, Object error,
                               StackTrace? stackTrace) {
                             return const Text(
-                              "Image loading problem",
+                              "Error while \n getting data",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 3, 93, 6),
                                   fontSize: 10),
@@ -208,28 +228,14 @@ class Files extends StatelessWidget {
     );
   }
 
+  }
+
   // Barre d'application
   AppBar appbar(BuildContext context) {
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
-      leading: Container(
-        alignment: Alignment.center,
-        child: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.blueAccent,
-              size: 20,
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Homepage(),
-                  ));
-            }),
-      ),
       centerTitle: true,
       title: const Text(
         'Course materials',
@@ -242,4 +248,3 @@ class Files extends StatelessWidget {
       ),
     );
   }
-}

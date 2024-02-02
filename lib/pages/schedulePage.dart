@@ -22,6 +22,7 @@ class Schedule extends StatelessWidget {
   AppBar appbar() {
     return AppBar(
       elevation: 0,
+      automaticallyImplyLeading: false,
       centerTitle: true,
       backgroundColor: Colors.white,
       title: const Text(

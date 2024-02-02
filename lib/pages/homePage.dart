@@ -6,14 +6,25 @@ import 'package:lvlmindbeta/pages/filesPage.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
   Homepage({super.key});
+
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   List<Section> section = [];
+
   void getSection() {
     section = Section.getSection();
   }
 
   List<Secteur> listsecteur = [];
+
   void getSecteur() {
     listsecteur = Secteur.getSecteur();
   }
@@ -199,9 +210,6 @@ class Homepage extends StatelessWidget {
                       
             // Liste des catégories
             const SizedBox(
-              // Pour limiter la hauteur de la liste
-              // Permet d'éviter la présence des erreurs au niveau du rendu
-              // Recommandé lors de
               width: 500,
               height: 350,
               child: Category(),
@@ -435,8 +443,6 @@ class Homepage extends StatelessWidget {
       ),
     );
   }
-
- 
 }
 class category_img {
   String title;
