@@ -30,7 +30,7 @@ class Files extends StatelessWidget {
     return Scaffold(
       appBar: appbar(context),
       body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         children:[
           const Align(
               alignment: Alignment.center,
@@ -214,7 +214,8 @@ class Files extends StatelessWidget {
       elevation: 0,
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
-      leading: Container(
+      /**
+       * leading: Container(
         alignment: Alignment.center,
         child: IconButton(
             icon: const Icon(
@@ -230,6 +231,7 @@ class Files extends StatelessWidget {
                   ));
             }),
       ),
+       */
       centerTitle: true,
       title: const Text(
         'Course materials',

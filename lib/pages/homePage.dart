@@ -199,9 +199,6 @@ class Homepage extends StatelessWidget {
                       
             // Liste des catégories
             const SizedBox(
-              // Pour limiter la hauteur de la liste
-              // Permet d'éviter la présence des erreurs au niveau du rendu
-              // Recommandé lors de
               width: 500,
               height: 350,
               child: Category(),
