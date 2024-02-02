@@ -2,10 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/Models/screenModels/coursesFile.dart';
-import 'package:lvlmindbeta/Models/screenModels/matiereScreen.dart';
 import 'package:lvlmindbeta/Models/screenModels/profInfo.dart';
 import 'package:lvlmindbeta/Models/screenModels/profsList.dart';
-import 'package:lvlmindbeta/pages/homePage.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 
