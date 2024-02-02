@@ -16,6 +16,7 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
   List<Section> section = [];
 
   void getSection() {

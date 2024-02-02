@@ -16,7 +16,9 @@ class  CoursesContentState extends State <CoursesContent> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(CupertinoIcons.back),
-          onPressed: ()=> Files(),),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> Files()));
+          },),
           title: const Text(
             "Video",
             style: TextStyle(
@@ -27,7 +29,7 @@ class  CoursesContentState extends State <CoursesContent> {
             ),
           ),
           centerTitle: true,
-          actions: [
+          actions: const [
             Icon(CupertinoIcons.dot_square_fill)
           ],
       ),
