@@ -29,15 +29,6 @@ final list_screens = [
       bottomNavigationBar: Container(
         height: 70,
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        /*
-        decoration: BoxDecoration(
-            boxShadow: [
-            BoxShadow(
-               color: Colors.black.withOpacity(0.5),
-               blurRadius: 25,
-               offset: const Offset(0, 20))
-        ]),
-        */ 
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
           child: BottomNavigationBar(
