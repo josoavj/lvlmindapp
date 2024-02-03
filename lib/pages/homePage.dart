@@ -31,6 +31,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     getSection(); // Pour le contenu du menu popup
     getSecteur(); // Pour la liste des sections
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -44,7 +45,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
               child: SizedBox(
                 width: 50,
                 child:
-                    Image(image: AssetImage('images/icons/menubutton.jpg')),
+                    Image(image: AssetImage('assets/images/icons/menubutton.jpg')),
               ),
             ),
             const SizedBox(
@@ -77,7 +78,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                 SizedBox(
                     width: 90,
                     child: Image.asset(
-                      'images/icons/avatar1.jpg',
+                      'assets/images/icons/avatar1.jpg',
                       alignment: Alignment.topRight,
                     ))
               ],
@@ -233,7 +234,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                 child: SizedBox(
                   width: 50,
                   child:
-                      Image(image: AssetImage('images/icons/menubutton.jpg')),
+                      Image(image: AssetImage('assets/images/icons/menubutton.jpg')),
                 ),
               ),
               const SizedBox(
@@ -266,7 +267,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   SizedBox(
                       width: 90,
                       child: Image.asset(
-                        'images/icons/avatar1.jpg',
+                        'assets/images/icons/avatar1.jpg',
                         alignment: Alignment.topRight,
                       ))
                 ],
@@ -462,12 +463,12 @@ class Category extends StatefulWidget {
 class CategoryState extends State<Category> {
   final List<category_img> category = [
     category_img(
-      'images/icons/Electronic.jpg',
+      'assets/images/icons/Electronic.jpg',
       'Electronic',
     ),
-    category_img('images/icons/Programming.jpg', 'Programming'),
-    category_img('images/icons/management.jpg', 'Management'),
-    category_img('images/icons/math.jpg', 'Mathematic')
+    category_img('assets/images/icons/Programming.jpg', 'Programming'),
+    category_img('assets/images/icons/management.jpg', 'Management'),
+    category_img('assets/images/icons/math.jpg', 'Mathematic')
   ];
   @override
   Widget build(BuildContext context) {

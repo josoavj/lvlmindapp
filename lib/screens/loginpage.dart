@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: SvgPicture.asset(
-              'images/decoration/Vector.svg',
+              'assets/images/decoration/Vector.svg',
               width: 150,
               fit: BoxFit.fitHeight,
             ),
@@ -32,19 +32,19 @@ class LoginPage extends StatelessWidget {
           Align(
               alignment: Alignment.topRight,
               child: SvgPicture.asset(
-                'images/decoration/Vector (1).svg',
+                'assets/images/decoration/Vector (1).svg',
                 width: 200,
               )),
           Align(
               alignment: Alignment.bottomCenter,
               child: SvgPicture.asset(
-                'images/decoration/Vector (2).svg',
+                'assets/images/decoration/Vector (2).svg',
                 width: 150,
               )),
           Align(
               alignment: Alignment.bottomCenter,
               child: SvgPicture.asset(
-                'images/decoration/Ellipse.svg',
+                'assets/images/decoration/Ellipse.svg',
                 width: 200,
               )),
           loginbody(context),
@@ -84,7 +84,7 @@ class LoginPage extends StatelessWidget {
               padding: EdgeInsets.only(top: 10),
               child: Image(
                 height: 50,
-                image: AssetImage('images/logo/logomin.jpg'),
+                image: AssetImage('assets/images/logo/logomin.jpg'),
               ))
         ],
       ),

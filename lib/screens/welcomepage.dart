@@ -66,7 +66,7 @@ class WelcomePage extends StatelessWidget {
         colors: [Color(0xff2441e7), Color(0xffff1053)],
       ),
       image: DecorationImage(
-        image: const AssetImage('images/background/fond2.jpg'),
+        image: const AssetImage('assets/images/background/fond2.jpg'),
         fit: BoxFit.cover,
         colorFilter: ColorFilter.mode(
           Colors.black.withOpacity(0.5),
@@ -89,7 +89,7 @@ class WelcomePage extends StatelessWidget {
             child: SizedBox(
               height: 85,
               child: Image.asset(
-                'images/logo/ispm.jpg',
+                'assets/images/logo/ispm.jpg',
                 errorBuilder: (BuildContext context, Object error,
                     StackTrace? stackTrace) {
                   return const Text("Image loading problem");
@@ -113,7 +113,7 @@ class WelcomePage extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.asset(
-                    'images/logo/lvlind10.jpg',
+                    'assets/images/logo/lvlind10.jpg',
                     errorBuilder: (BuildContext context, Object error,
                         StackTrace? stackTrace) {
                       return const Text("Image loading problem");
@@ -153,7 +153,7 @@ class WelcomePage extends StatelessWidget {
           bottom: 20,
         ),
         child: SvgPicture.asset(
-          'images/logo/LevelMind.svg',
+          'assets/images/logo/LevelMind.svg',
           width: 250,
           alignment: Alignment.bottomCenter,
         ));

@@ -43,8 +43,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    // ... le reste du code
-    MediaQueryData mediaQuery = MediaQuery.of(context);
+    super.build(context);
     getCoursesModel();
     getProfs();
     return Scaffold(
@@ -56,7 +55,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
               alignment: Alignment.center,
               child: SizedBox(
                 width: 650,
-                child: Image(image: AssetImage('images/icons/welcome.jpg')),
+                child: Image(image: AssetImage('assets/images/icons/welcome.jpg')),
               )),
           const SizedBox(
             height: 30,
@@ -130,7 +129,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                                         errorBuilder: (BuildContext context, Object error,
                               StackTrace? stackTrace) {
                             return const Text(
-                              "Image loading problem",
+                              "Error while \n getting data",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 3, 93, 6),
                                   fontSize: 10),

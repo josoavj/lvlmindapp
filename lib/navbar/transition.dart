@@ -29,7 +29,7 @@ class _TransitionState extends State<Transition> {
                    colors: [Color(0xff2441e7), Color(0xffff1053)],
                  ),
                  image: DecorationImage(
-                   image: const AssetImage('images/background/fond2.jpg'),
+                   image: const AssetImage('assets/images/background/fond2.jpg'),
                    fit: BoxFit.cover,
                    colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.5),
