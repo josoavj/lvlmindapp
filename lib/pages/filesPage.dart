@@ -1,9 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/Models/screenModels/coursesFile.dart';
 import 'package:lvlmindbeta/Models/screenModels/profInfo.dart';
-import 'package:lvlmindbeta/Models/screenModels/profsList.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 

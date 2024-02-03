@@ -11,7 +11,16 @@ class  _MatContentState extends State<MatContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      extendBodyBehindAppBar: false,
+      appBar: AppBar(
+        title: const Text(
+          "Courses",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontFamily: 'Josefin'),
+        ),
+      ),
     );
   }
 }

@@ -26,7 +26,7 @@ class _ProfListedProfileState extends State<ProfListedProfile> {
       backgroundColor: Colors.blueAccent,
       leading: IconButton(
         onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> Files()));
+          Navigator.pop(context, MaterialPageRoute(builder: (context)=> Files()));
         }, 
         icon: const Icon(
           CupertinoIcons.back,
