@@ -70,36 +70,37 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/
-    - images/logo/
-    - images/logo/ispm.jpg
-    - images/logo/logomin.jpg
-    - images/logo/lvlind10.jpg
-    - images/logo/lvlmind.jpg
-    - images/logo/LevelMind.svg
-    - images/logo/lvlmindico.png
-    - images/decoration/
-    - images/decoration/Ellipse.svg
-    - images/decoration/Vector.svg
-    - images/decoration/Vector (1).svg
-    - images/decoration/Vector (2).svg
-    - images/background/
-    - images/background/fond1.jpg
-    - images/background/fond2.jpg
-    - images/profs/
-    - images/profs/prof1.jpg
-    - images/profs/prof2.jpg
-    - images/profs/prof3.png
-    - images/profs/Prof4.png
-    - images/icons/
-    - images/icons/avatar1.jpg
-    - images/icons/Electronic.jpg
-    - images/icons/math.jpg
-    - images/icons/menubutton.jpg
-    - images/icons/welcome.jpg
-    - images/icons/management.jpg
-    - images/icons/Programming.jpg
-    - fonts/
+    - assets/
+    - assets/images/
+    - assets/fonts/
+    - assets/images/logo/
+    - assets/images/logo/ispm.jpg
+    - assets/images/logo/logomin.jpg
+    - assets/images/logo/lvlind10.jpg
+    - assets/images/logo/lvlmind.jpg
+    - assets/images/logo/LevelMind.svg
+    - assets/images/logo/lvlmindico.png
+    - assets/images/decoration/
+    - assets/images/decoration/Ellipse.svg
+    - assets/images/decoration/Vector.svg
+    - assets/images/decoration/Vector (1).svg
+    - assets/images/decoration/Vector (2).svg
+    - assets/images/background/
+    - assets/images/background/fond1.jpg
+    - assets/images/background/fond2.jpg
+    - assets/images/profs/
+    - assets/images/profs/prof1.jpg
+    - assets/images/profs/prof2.jpg
+    - assets/images/profs/prof3.png
+    - assets/images/profs/Prof4.png
+    - assets/images/icons/
+    - assets/images/icons/avatar1.jpg
+    - assets/images/icons/Electronic.jpg
+    - assets/images/icons/math.jpg
+    - assets/images/icons/menubutton.jpg
+    - assets/images/icons/welcome.jpg
+    - assets/images/icons/management.jpg
+    - assets/images/icons/Programming.jpg
     - json/matiere.json
   
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -107,19 +108,19 @@ flutter:
   fonts:
     - family: PatrickHand 
       fonts:
-      - asset: fonts/PatrickHandSC-Regular.ttf
+      - asset: assets/fonts/PatrickHandSC-Regular.ttf
 
     - family: Josefin
       fonts:
-      - asset: fonts/JosefinSans-SemiBold.ttf
+      - asset: assets/fonts/JosefinSans-SemiBold.ttf
     
     - family: TiltNeon 
       fonts:
-      - asset: fonts/TiltNeon-Regular-VariableFont_XROT,YROT.ttf
+      - asset: assets/fonts/TiltNeon-Regular-VariableFont_XROT,YROT.ttf
 
     - family: Adlam 
       fonts:
-      - asset: fonts/ADLaMDisplay-Regular.ttf
+      - asset: assets/fonts/ADLaMDisplay-Regular.ttf
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 
