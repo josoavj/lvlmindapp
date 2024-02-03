@@ -39,7 +39,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
     setState(() {
       professor = Profs.getProfs();
     });
-  }ProfListedProfile
+  }
 
   @override
   Widget build(BuildContext context) {
