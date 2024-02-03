@@ -43,7 +43,7 @@ class _TransitionState extends State<Transition> {
             children: [
               SizedBox(
           child: SvgPicture.asset(
-            'images/logo/LevelMind.svg',
+            'assets/images/logo/LevelMind.svg',
             width: 250,
             alignment: Alignment.bottomCenter,
           )),
@@ -53,6 +53,8 @@ class _TransitionState extends State<Transition> {
   }
   Future<void> goto() async{
     await Future.delayed( const Duration(seconds: 2));
-       var onPushReplacement = Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+       var onPushReplacement = Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => BottomNavBar()),);
   }
 }

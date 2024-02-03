@@ -39,7 +39,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
     setState(() {
       professor = Profs.getProfs();
     });
-  }
+  }ProfListedProfile
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                   alignment: Alignment.topRight,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const ProfListedProfile()));
+                     Navigator.pushNamed(context, '/profListedProfile');
                     },
                     child: const Text(
                       "See all",
@@ -179,7 +179,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                 return Card(
                   child: ListTile(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const CoursesContent()));
+                        Navigator.pushNamed(context, '/coursesContent');;
                       },
                       leading: SizedBox(
                         child: Image(
