@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/Models/screenModels/profInfo.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
@@ -8,7 +6,7 @@ import 'package:lvlmindbeta/Models/matiere.dart';
 
 
 class Files extends StatefulWidget {
-  Files({Key? key}) : super(key: key);
+  const Files({super.key});
 
   @override
   _FilesState createState() => _FilesState();
@@ -177,7 +175,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                 return Card(
                   child: ListTile(
                       onTap: () {
-                        Navigator.pushNamed(context, '/coursesContent');;
+                        Navigator.pushNamed(context, '/coursesContent');
                       },
                       leading: SizedBox(
                         child: Image(
