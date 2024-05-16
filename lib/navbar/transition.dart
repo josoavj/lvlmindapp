@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lvlmindbeta/navbar/navbar.dart';
@@ -53,8 +55,8 @@ class _TransitionState extends State<Transition> {
   }
   Future<void> goto() async{
     await Future.delayed( const Duration(seconds: 2));
-       var onPushReplacement = Navigator.pushReplacement(
+       Navigator.pushReplacement(
     context,
-    MaterialPageRoute(builder: (context) => BottomNavBar()),);
+    MaterialPageRoute(builder: (context) => const BottomNavBar()),);
   }
 }
