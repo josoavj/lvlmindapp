@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show BuildContext, CupertinoIcons, EdgeInsets, FontWeight, Icon, ListView, Navigator, State, StatefulWidget, Text, TextStyle, Widget;
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/pages/filesPage.dart';
 
@@ -17,7 +17,7 @@ class  CoursesContentState extends State <CoursesContent> {
         leading: IconButton(
           icon: const Icon(CupertinoIcons.back),
           onPressed: (){
-            Navigator.pop(context, MaterialPageRoute(builder: (context)=> Files()));
+            Navigator.pop(context, MaterialPageRoute(builder: (context)=> const Files()));
           },),
           title: const Text(
             "Video",
