@@ -1,4 +1,6 @@
-import 'dart:async'; // Bibliothèque utile pour l'ensemble du code
+// ignore_for_file: file_names
+
+import 'dart:async' show Timer; // Bibliothèque utile pour l'ensemble du code
 import 'package:flutter/material.dart';
 
 class DelayedAnimation extends StatefulWidget {

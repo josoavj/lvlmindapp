@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show BuildContext, CupertinoIcons, Icon, Navigator, State, StatefulWidget, Text, TextStyle, Widget;
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/pages/filesPage.dart';
 
