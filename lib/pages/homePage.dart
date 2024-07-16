@@ -7,7 +7,7 @@ import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 
 class Homepage extends StatefulWidget {
-  Homepage({super.key});
+  const Homepage({super.key});
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -168,7 +168,6 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
               height: 40,
             ),
                       
-            // Passons aux catégories
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
@@ -193,7 +192,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                       // Categories = Matières
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Files()));
+                            MaterialPageRoute(builder: (context) => const Files()));
                       },
                       child: const Text(
                         "See all",
@@ -304,10 +303,6 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                         )),
                   ),
                   listebestmatiere(),
-                  // Pour ce menu: l'utilisateur peut personnaliser les catégories à afficher
-                  // en fonction du section
-                  // ToDo: Un menu flottant
-                  // Popup Menu
                   SizedBox(
                       child: IconButton(
                     onPressed: () {
@@ -445,11 +440,11 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
     );
   }
 }
-class category_img {
+class _category_img {
   String title;
   String image;
 
-  category_img(this.image, this.title);
+  _category_img(this.image, this.title);
 }
 
 class Category extends StatefulWidget {
@@ -461,14 +456,14 @@ class Category extends StatefulWidget {
 
 // Liste de suggestion des matières
 class CategoryState extends State<Category> {
-  final List<category_img> category = [
-    category_img(
+  final List<_category_img> category = [
+    _category_img(
       'assets/images/icons/Electronic.jpg',
       'Electronic',
     ),
-    category_img('assets/images/icons/Programming.jpg', 'Programming'),
-    category_img('assets/images/icons/management.jpg', 'Management'),
-    category_img('assets/images/icons/math.jpg', 'Mathematic')
+    _category_img('assets/images/icons/Programming.jpg', 'Programming'),
+    _category_img('assets/images/icons/management.jpg', 'Management'),
+    _category_img('assets/images/icons/math.jpg', 'Mathematic')
   ];
   @override
   Widget build(BuildContext context) {
