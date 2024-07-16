@@ -1,28 +1,10 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:url_launcher/url_launcher.dart';
-//import 'package:lvlmindbeta/presentation.dart';
-//import 'package:flutter/gestures.dart';
+import 'package:url_launcher/link.dart';
 
 class Redirecting extends StatelessWidget {
-  Redirecting({super.key});
-
-//url vers notre site web
-  String url =
-      "http://192.168.43.128:8000/account/student-register/business-marketing";
-      // URL obsolète
-      // Recommendation: Ajouter un autre
-  void _launchURL() async {
-    if (await canLaunchUrl(url as Uri)) {
-      await launchUrl(url as Uri);
-    } else {
-      throw 'Cannot open the link';
-      // Nécessite une demande de naviguer vers une autre application
-    }
-  }
+  const Redirecting({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -188,9 +170,7 @@ class Redirecting extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                        ),/*
-> Flexibilité corrigé
-*/
+                        ),
                         const SizedBox(
                           height: 60,
                         ),
@@ -207,18 +187,23 @@ class Redirecting extends StatelessWidget {
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              TextButton(
-                                onPressed: _launchURL, // Appel de l'url
-                                child: const Text(
-                                  "Create",
-                                  style: TextStyle(
-                                    fontFamily: 'Josefin',
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ),
+                                   Link(
+                              uri: Uri.https('github.com', '/Josoa886'),
+                              target: LinkTarget.blank,
+                              builder: (context, followLink) => TextButton(
+                              onPressed: followLink,
+                              child:  const AbsorbPointer(
+                                      child: Text(
+                                          'Create', 
+                                          style: TextStyle(
+                                              fontFamily: 'Josefin',
+                                              color: Color.fromARGB(255, 255, 255, 255),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w800,
+                              ),),
+                        ),
+                      ),
+                    )
                             ])
                       ],
                     ),
@@ -345,19 +330,23 @@ class Redirecting extends StatelessWidget {
                               color: Color.fromARGB(255, 255, 255, 255),
                             ),
                           ),
-                          TextButton(
-                            onPressed: _launchURL, // Appel de l'url
-                            child: const Text(
-                              "Create",
-                              style: TextStyle(
-                                fontFamily: 'Josefin',
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontSize: 13,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ),
-                        ])
+                          Link(
+                              uri: Uri.https('github.com', '/Josoa886'),
+                              target: LinkTarget.blank,
+                              builder: (context, followLink) => TextButton(
+                              onPressed: followLink,
+                              child:  const AbsorbPointer(
+                                      child: Text(
+                                          'Create', 
+                                          style: TextStyle(
+                                              fontFamily: 'Josefin',
+                                              color: Color.fromARGB(255, 255, 255, 255),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w800,
+                              ),),
+                        ),
+                      ),
+                    )])
                   ],
                 ),
               ),
