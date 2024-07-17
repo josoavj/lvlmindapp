@@ -10,7 +10,7 @@
 
 ### Contributors
 
-- [Josoa](https://github.com/Josoa886)
+- [Josoa](https://github.com/josoavj)
 - [Fiatoa](https://github.com/foulburst)
 
 #### Logo
