@@ -53,5 +53,75 @@
         ],
         
         "courses_number": "2"
+    },
+    {
+        "name": "Math",
+        "courses": [
+            {
+                "title": "Chapter 1",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 2",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 3",
+                "video": "videos/"
+            }
+        ]
+    },
+    {
+        "name": "Statistics",
+        "courses": [
+            {
+                "title": "Chapter 1",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 2",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 3",
+                "video": "videos/"
+            }
+        ]
+    },
+    {
+        "name": "Finance",
+        "courses": [
+            {
+                "title": "Chapter 1",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 2",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 3",
+                "video": "videos/"
+            }
+        ]
+    },
+    {
+        "name": "Comptability",
+        "courses": [
+            {
+                "title": "Chapter 1",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 2",
+                "video": "videos/"
+            },
+            {
+                "title": "Chapter 3",
+                "video": "videos/"
+            }
+        ]
     }
+    
+    
 ]
