@@ -10,8 +10,12 @@
 
 ## Contributors
 
-- [Josoa](https://github.com/josoavj)
-- [Fiatoa](https://github.com/foulburst)
+- Front-end:
+  - [Josoa](https://github.com/josoavj)
+  - [Fiatoa](https://github.com/foulburst)
+- Design:
+  - [Nyr](https://github.com/Manamahefa)
+  - [Koloina](https://github.com/koulienathalie) 
 
 ## Logo
 
@@ -22,4 +26,4 @@
 
 ## Others 
 
-- LevelMind project : [lvlmind]()
+- LevelMind project : [lvlmind](https://github.com/TahianSylvain/teamEsiia3)
