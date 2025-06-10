@@ -22,6 +22,11 @@
   - [Koloina](https://github.com/koulienathalie) 
 
 
-## Others 
+## Source
 
 - LevelMind project (Source) : [lvlmind](https://github.com/TahianSylvain/teamEsiia3)
+
+### 📃 License
+
+This project can be used as a personal project. If you'd like to contribute, please contact one of the current contributors.
+
