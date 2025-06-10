@@ -28,5 +28,5 @@
 
 ### 📃 License
 
-This project can be used as a personnal project. If you want to contribute please contact one of the actual conytributor.
+This project can be used as a personal project. If you'd like to contribute, please contact one of the current contributors.
 
