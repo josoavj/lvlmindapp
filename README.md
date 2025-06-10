@@ -26,7 +26,7 @@
 
 - LevelMind project (Source) : [lvlmind](https://github.com/TahianSylvain/teamEsiia3)
 
-### 📃 Licence
+### 📃 License
 
 This project can be used as a personnal project. If you want to contribute please contact one of the actual conytributor.
 
