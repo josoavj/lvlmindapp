@@ -1,65 +1,53 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
 import 'package:lvlmindbeta/screens/loginpage.dart';
 import 'package:lvlmindbeta/screens/redirecting.dart';
-import 'package:lvlmindbeta/screens/welcomepage.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class Presentation extends StatelessWidget {
   const Presentation({super.key});
 
-  // Constructor added
   @override
   Widget build(BuildContext context) {
+    // Obtenez les dimensions de l'écran une seule fois
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: appbar(context),
-      // Conteneur pour les élements de la page
+      extendBodyBehindAppBar: true, // Permet au corps de s'étendre derrière l'AppBar transparente
+      appBar: _buildAppBar(context), // Utilisation de la barre d'application refactorisée
       body: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 15,
-          horizontal: 10,
-        ),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: background(),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+        width: screenWidth,
+        height: screenHeight,
+        decoration: _buildBackgroundDecoration(), // Appel de la méthode pour le fond
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Align(
-              alignment: Alignment.center,
-            ),
+            // L'Align vide a été supprimé car il n'avait pas d'enfant et était inutile.
             DelayedAnimation(
               delay: 900,
-              child: lvlminlogo(),
+              child: _buildLvlMinLogo(),
             ),
-            DelayedAnimation(
+            const DelayedAnimation(
               delay: 1000,
               child: SizedBox(
-                height: 60,
-              ),
+                  height: 60), // Espacement après le logo, peut être ajusté
             ),
             DelayedAnimation(
               delay: 1000,
-              child: textsection(),
+              child: _buildIntroTextSection(),
             ),
             DelayedAnimation(
               delay: 1000,
               child: Container(
-                margin: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 40,
-                ),
+                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 child: Column(
                   children: [
-                    loginbutton(context),
+                    _buildLoginButton(context),
                     const SizedBox(height: 15),
-                    // Texte avec lien de redirection dans une page redirecting
-                    SizedBox(
-                      child: registersection(context),
-                    ),
+                    _buildRegisterSection(context),
                   ],
                 ),
               ),
@@ -70,30 +58,29 @@ class Presentation extends StatelessWidget {
     );
   }
 
-  // Barre d'application
-  AppBar appbar(BuildContext context) {
+  // --- Méthodes de construction des widgets pour une meilleure lisibilité ---
+
+  /// Construit la barre d'application transparente.
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.white.withOpacity(0),
+      elevation: 0, // Pas d'ombre
+      backgroundColor: Colors.transparent, // Rendre l'AppBar transparente
       leading: IconButton(
         icon: const Icon(
           Icons.arrow_back,
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: Colors.white, // Icône blanche pour contraster avec le fond
           size: 30,
         ),
         onPressed: () {
-          Navigator.pop(
-              context,
-              MaterialPageRoute(
-                builder: (context) => WelcomePage(),
-              ));
+          // Retourne à la page précédente (WelcomePage)
+          Navigator.pop(context);
         },
       ),
     );
   }
 
-  // Pour le fond
-  BoxDecoration background() {
+  /// Construit la décoration du fond avec un dégradé et une image.
+  BoxDecoration _buildBackgroundDecoration() {
     return BoxDecoration(
       gradient: const LinearGradient(
         begin: Alignment.topCenter,
@@ -104,55 +91,58 @@ class Presentation extends StatelessWidget {
         image: const AssetImage('assets/images/background/fond1.jpg'),
         fit: BoxFit.cover,
         colorFilter: ColorFilter.mode(
-          Colors.black.withOpacity(0.5),
+          Colors.black.withOpacity(0.5), // Assombrit l'image de fond
           BlendMode.dstATop,
         ),
       ),
     );
   }
 
-  // Notre logo
-  SizedBox lvlminlogo() {
+  /// Construit le logo de l'application.
+  SizedBox _buildLvlMinLogo() {
     return SizedBox(
       height: 140,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(40),
         child: Image.asset(
           'assets/images/logo/lvlind10.jpg',
-          errorBuilder:
-              (BuildContext context, Object error, StackTrace? stackTrace) {
-            return Text("Image loading problem");
+          errorBuilder: (context, error, stackTrace) {
+            return const Icon(
+              Icons.lightbulb_outline,
+              color: Colors.white,
+              size: 100,
+            ); // Icône par défaut si l'image ne charge pas
           },
         ),
-      ), //Logo de notre application
+      ),
     );
   }
 
-  // Texte d'introduction
-  Container textsection() {
+  /// Construit la section de texte d'introduction.
+  Container _buildIntroTextSection() {
     return Container(
       alignment: Alignment.center,
-      child: Column(
-        children: const [
+      child: const Column(
+        children: [
           Text(
-            "Your adventure begins here and now.",
+            "Votre aventure commence ici et maintenant.", // Traduit le texte
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Josefin',
               fontSize: 35,
               fontWeight: FontWeight.w600,
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
             ),
           ),
           SizedBox(height: 40),
           Text(
-            "Train your mind to gain more knowledge with levelmind",
+            "Entraînez votre esprit pour acquérir plus de connaissances avec LevelMind.", // Traduit le texte
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Josefin',
               fontSize: 25,
               fontWeight: FontWeight.w400,
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
             ),
           ),
         ],
@@ -160,28 +150,28 @@ class Presentation extends StatelessWidget {
     );
   }
 
-  // go to the login page
-  ElevatedButton loginbutton(BuildContext context) {
+  /// Construit le bouton de connexion.
+  ElevatedButton _buildLoginButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => LoginPage(),
+            builder: (context) => const LoginPage(), // Assurez-vous que LoginPage est const
           ),
         );
       },
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
-        backgroundColor: const Color.fromARGB(255, 248, 248, 248),
+        backgroundColor: Colors.white, // Fond blanc pour le bouton
         padding: const EdgeInsets.all(13),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GradientText(
-            'Connect with Personal ID',
-            style: TextStyle(
+            'Se connecter avec un ID personnel', // Traduit le texte du bouton
+            style: const TextStyle(
               fontFamily: 'Josefin',
               fontSize: 18,
               fontWeight: FontWeight.w400,
@@ -194,58 +184,51 @@ class Presentation extends StatelessWidget {
     );
   }
 
-  // Register
-  Row registersection(BuildContext context) {
+  /// Construit la section d'enregistrement (texte et bouton).
+  Row _buildRegisterSection(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize
-          .min, // Pour diminuer l'espacement entre les deux élements
+      mainAxisAlignment: MainAxisAlignment.center, // Centrer les éléments
       children: [
-        Flexible(
-          flex: 2,
-          child: registerintro(),
-        ),
-        Flexible(
-          flex: 1,
-          child: registerbutton(context),
-        )
+        _buildRegisterIntroText(), // Texte "Pas de compte ?"
+        const SizedBox(width: 5), // Espacement entre le texte et le bouton
+        _buildRegisterButton(context), // Bouton "S'inscrire"
       ],
     );
   }
 
-  // Text registration intro
-  Text registerintro() {
-    return Text(
-      "Don't have an account?",
+  /// Construit le texte d'introduction à l'enregistrement.
+  Text _buildRegisterIntroText() {
+    return const Text(
+      "Pas encore de compte ?", // Traduit le texte
       style: TextStyle(
         fontFamily: 'Josefin',
         fontSize: 16,
         fontWeight: FontWeight.w400,
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: Colors.white,
       ),
     );
   }
 
-  // Bouton register
-  TextButton registerbutton(BuildContext context) {
+  /// Construit le bouton d'enregistrement.
+  TextButton _buildRegisterButton(BuildContext context) {
     return TextButton(
       onPressed: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Redirecting(),
+            builder: (context) => const Redirecting(), // Assurez-vous que Redirecting est const
           ),
         );
       },
       child: const DelayedAnimation(
         delay: 1050,
         child: Text(
-          "Register",
+          "S'inscrire", // Traduit le texte du bouton
           style: TextStyle(
             fontFamily: 'Josefin',
             fontSize: 15,
             fontWeight: FontWeight.w800,
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: Colors.white,
           ),
         ),
       ),
