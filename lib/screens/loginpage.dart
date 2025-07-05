@@ -1,26 +1,21 @@
-//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
-import 'package:lvlmindbeta/navbar/transition.dart';
-import 'package:lvlmindbeta/screens/presentation.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-// Suite à une erreur sur les polices que j'ai télechargé
-// J'ai du revenir à googlefonts
+import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart'; // Assurez-vous que ce chemin est correct
+import 'package:lvlmindbeta/navbar/transition.dart'; // Assurez-vous que ce chemin est correct
+import 'package:lvlmindbeta/screens/presentation.dart'; // Assurez-vous que ce chemin est correct
+import 'package:flutter_svg/flutter_svg.dart'; // Assurez-vous que ce package est bien installé
 
-
-/*
-  ToDo: Ajout d'un API pour identifier et authentifier l'utilisateur
- */
+// La page de connexion de l'application
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: appbar(context),
+      extendBodyBehindAppBar: true, // Permet au corps de s'étendre derrière l'AppBar transparente
+      appBar: _buildAppBar(context), // Utilisation de la barre d'application refactorisée
       body: Stack(
         children: [
+          // Éléments de décoration SVG en arrière-plan
           Align(
             alignment: Alignment.topRight,
             child: SvgPicture.asset(
@@ -30,39 +25,46 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           Align(
-              alignment: Alignment.topRight,
-              child: SvgPicture.asset(
-                'assets/images/decoration/Vector (1).svg',
-                width: 200,
-              )),
+            alignment: Alignment.topRight,
+            child: SvgPicture.asset(
+              'assets/images/decoration/Vector (1).svg',
+              width: 200,
+            ),
+          ),
           Align(
-              alignment: Alignment.bottomCenter,
-              child: SvgPicture.asset(
-                'assets/images/decoration/Vector (2).svg',
-                width: 150,
-              )),
+            alignment: Alignment.bottomCenter,
+            child: SvgPicture.asset(
+              'assets/images/decoration/Vector (2).svg',
+              width: 150,
+            ),
+          ),
           Align(
-              alignment: Alignment.bottomCenter,
-              child: SvgPicture.asset(
-                'assets/images/decoration/Ellipse.svg',
-                width: 200,
-              )),
-          loginbody(context),
+            alignment: Alignment.bottomCenter,
+            child: SvgPicture.asset(
+              'assets/images/decoration/Ellipse.svg',
+              width: 200,
+            ),
+          ),
+          // Contenu principal de la page de connexion
+          _buildLoginBody(context),
         ],
       ),
     );
   }
 
-  // Barre d'application
-  AppBar appbar(BuildContext context) {
+  // --- Méthodes de construction des widgets pour une meilleure lisibilité ---
+
+  /// Construit la barre d'application pour la page de connexion.
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      automaticallyImplyLeading: false,
+      elevation: 0, // Pas d'ombre
+      backgroundColor: Colors.transparent, // Rendre l'AppBar transparente
+      automaticallyImplyLeading: false, // Ne pas afficher le bouton retour automatique
+      titleSpacing: 0, // Supprime l'espacement par défaut du titre
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.min,
         children: [
+          // Bouton de fermeture
           IconButton(
             icon: const Icon(
               Icons.close,
@@ -70,98 +72,90 @@ class LoginPage extends StatelessWidget {
               size: 25,
             ),
             onPressed: () {
+              // Retourne à la page de présentation
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Presentation(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Presentation(),
+                ),
+              );
             },
           ),
-          const SizedBox(
-            height: 10,
+          // Logo de l'application
+          Padding(
+            padding: EdgeInsets.only(top: 10, right: 15), // Ajuste le padding
+            child: Image(
+              height: 50,
+              image: AssetImage('assets/images/logo/logomin.jpg'),
+              // Ajoute un errorBuilder pour gérer les images manquantes
+              errorBuilder: (context, error, stackTrace) => Icon(
+                Icons.image_not_supported,
+                color: Colors.grey,
+                size: 50,
+              ),
+            ),
           ),
-          const Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Image(
-                height: 50,
-                image: AssetImage('assets/images/logo/logomin.jpg'),
-              ))
         ],
       ),
-      titleSpacing: 0,
     );
   }
 
-  // login
-  SingleChildScrollView loginbody(BuildContext context) {
+  /// Construit le corps principal de la page de connexion.
+  SingleChildScrollView _buildLoginBody(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 100,
-              horizontal: 30,
-            ),
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            padding: const EdgeInsets.only(top: 100, left: 30, right: 30), // Padding ajusté
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // Aligne le texte à gauche
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: DelayedAnimation(
-                    delay: 800,
-                    child: Text(
-                      'Connect to levelmind',
-                      style: TextStyle(
-                        fontFamily: 'PatrickHand',
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                      ),
+                const DelayedAnimation(
+                  delay: 800,
+                  child: Text(
+                    'Connectez-vous à LevelMind', // Traduit le texte
+                    style: TextStyle(
+                      fontFamily: 'PatrickHand',
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black87, // Couleur du texte
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: SizedBox(height: 22),
+                const SizedBox(height: 22),
+                const DelayedAnimation(
+                  delay: 850,
+                  child: Text(
+                    "Il est recommandé de se connecter", // Traduit le texte
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 20,
+                      color: Color.fromARGB(95, 15, 12, 199),
+                    ),
+                  ),
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: DelayedAnimation(
-                      delay: 850,
-                      child: Text(
-                        "It's recommended to connect",
-                        style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 20,
-                          color: Color.fromARGB(95, 15, 12, 199),
-                        ),
-                      )),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: DelayedAnimation(
-                      delay: 850,
-                      child: Text(
-                        "with your ID.",
-                        style: TextStyle(
-                          fontFamily: 'Josefin',
-                          fontSize: 20,
-                          color: Color.fromARGB(95, 15, 12, 199),
-                        ),
-                      )),
+                const DelayedAnimation(
+                  delay: 850,
+                  child: Text(
+                    "avec votre identifiant.", // Traduit le texte
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 20,
+                      color: Color.fromARGB(95, 15, 12, 199),
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 0),
-          const LoginForm(),
+          const SizedBox(height: 30), // Espacement après le texte d'introduction
+          const LoginForm(), // Le formulaire de connexion
           const SizedBox(height: 50),
           DelayedAnimation(
             delay: 1100,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
-                // J'ai utilisé primary mais elle est obsolète
-                // Du coup je l'ai remplacé par backgroundColor
                 backgroundColor: const Color.fromARGB(225, 249, 29, 88),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 90,
@@ -169,13 +163,15 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                'CONFIRM',
+                'CONFIRMER', // Traduit le texte du bouton
                 style: TextStyle(
                   fontFamily: 'Josefin',
-                  color: Colors.black,
+                  color: Colors.white, // Couleur du texte du bouton
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               onPressed: () {
+                // Navigue vers la page de transition après la connexion
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -191,26 +187,23 @@ class LoginPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(right: 35),
               child: TextButton(
-                  onPressed: () {
-                    Navigator.pop(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Presentation(),
-                        ));
-                  },
-                  child: const DelayedAnimation(
-                    delay: 1100,
-                    child: Flexible(
-                        flex: 1,
-                        child: Text(
-                          "Return",
-                          style: TextStyle(
-                              fontFamily: 'Josefin',
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blueAccent),
-                        )),
-                  )),
+                onPressed: () {
+                  // Retourne à la page de présentation
+                  Navigator.pop(context); // Pop la route actuelle
+                },
+                child: const DelayedAnimation(
+                  delay: 1100,
+                  child: Text(
+                    "Retour", // Traduit le texte du bouton
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -219,43 +212,51 @@ class LoginPage extends StatelessWidget {
   }
 }
 
+// Le formulaire de connexion (Email/ID et Mot de passe)
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _LoginFormState createState() => _LoginFormState();
+  _LoginFormState createState() => _LoginFormState(); // Correction du nom de la classe d'état
 }
 
 class _LoginFormState extends State<LoginForm> {
-  var _obscureText = true;
+  bool _obscureText = true; // Pour masquer/afficher le mot de passe
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
           DelayedAnimation(
             delay: 1000,
             child: TextField(
               decoration: InputDecoration(
-                labelText: 'Your ID',
+                labelText: 'Votre identifiant', // Traduit le label
                 labelStyle: TextStyle(
                   fontFamily: 'Josefin',
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
-                  color: Colors.grey[400],
+                  color: Colors.grey[600], // Couleur du label ajustée
                 ),
-                filled: true, //remplissage de l'arrière-plan
+                filled: true,
                 fillColor: const Color.fromARGB(90, 212, 212, 212),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(100),
-                    borderSide: const BorderSide(
-                      color: Colors.transparent, // Couleur de la bordure
-                      width: 2.0, // Largeur de la bordure
-                    )),
+                  borderRadius: BorderRadius.circular(100),
+                  borderSide: BorderSide.none, // Pas de bordure visible
+                ),
+                enabledBorder: OutlineInputBorder( // Bordure quand le champ n'est pas focus
+                  borderRadius: BorderRadius.circular(100),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder( // Bordure quand le champ est focus
+                  borderRadius: BorderRadius.circular(100),
+                  borderSide: const BorderSide(
+                    color: Colors.blueAccent, // Couleur de la bordure en focus
+                    width: 2.0,
+                  ),
+                ),
               ),
             ),
           ),
@@ -265,32 +266,42 @@ class _LoginFormState extends State<LoginForm> {
             child: TextField(
               obscureText: _obscureText,
               decoration: InputDecoration(
-                  labelStyle: TextStyle(
-                    fontFamily: 'Josefin',
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey[400],
+                labelText: 'Mot de passe', // Traduit le label
+                labelStyle: TextStyle(
+                  fontFamily: 'Josefin',
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey[600], // Couleur du label ajustée
+                ),
+                filled: true,
+                fillColor: const Color.fromARGB(90, 212, 212, 212),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility, // Change l'icône
+                    color: const Color.fromARGB(255, 82, 141, 243),
                   ),
-                  filled: true, //remplissage de l'arrière-plan
-                  fillColor: const Color.fromARGB(90, 212, 212, 212),
-                  labelText: 'Password',
-                  suffixIcon: IconButton(
-                    icon: const Icon(
-                      Icons.visibility,
-                      color: Color.fromARGB(255, 82, 141, 243),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100),
+                  borderSide: BorderSide.none, // Pas de bordure visible
+                ),
+                enabledBorder: OutlineInputBorder( // Bordure quand le champ n'est pas focus
+                  borderRadius: BorderRadius.circular(100),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder( // Bordure quand le champ est focus
+                  borderRadius: BorderRadius.circular(100),
+                  borderSide: const BorderSide(
+                    color: Colors.blueAccent, // Couleur de la bordure en focus
+                    width: 2.0,
                   ),
-                  border: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 295,
-                      ),
-                      borderRadius: BorderRadius.circular(100))),
+                ),
+              ),
             ),
           ),
         ],
