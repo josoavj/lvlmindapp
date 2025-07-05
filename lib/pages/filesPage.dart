@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/Models/screenModels/profInfo.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
-import 'package:lvlmindbeta/Models/screenModels/profsList.dart';
+import '../Models/screenModels/matiereDetails.dart';
+import '../Models/screenModels/matieresList.dart';
+import '../Models/screenModels/profsList.dart';
 import '../screens/profsDetails.dart';
+
 
 class Files extends StatefulWidget {
   const Files({super.key});
@@ -37,7 +39,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
     super.build(context);
 
     return Scaffold(
-      appBar: _buildAppBar(context), // Utilisation de la barre d'application refactorisée
+      appBar: _buildAppBar(context),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         children: [
@@ -57,7 +59,6 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
             ),
           ),
           const SizedBox(height: 30),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -67,12 +68,11 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                   fontFamily: 'Josefin',
                   fontSize: 25,
                   fontWeight: FontWeight.w700,
-                  color: Theme.of(context).textTheme.titleLarge?.color, // Adapte la couleur au thème
+                  color: Theme.of(context).textTheme.titleLarge?.color,
                 ),
               ),
               TextButton(
                 onPressed: () {
-                  // Navigue vers la ProfsListPage (la page "Voir tout")
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const ProfsListPage()),
@@ -84,7 +84,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                     fontFamily: 'Josefin',
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({WidgetState.selected}),
+                    color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}),
                   ),
                 ),
               ),
@@ -92,9 +92,8 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
           ),
           const SizedBox(height: 15),
 
-          // Liste horizontale des professeurs
           SizedBox(
-            height: 220, // Hauteur ajustée pour une meilleure visibilité des cartes
+            height: 220,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -104,31 +103,30 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                 final prof = _professeurs[index];
                 return GestureDetector(
                   onTap: () {
-                    // Navigue vers la ProfDetailsPage en passant l'objet professeur
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ProfDetailsPage(prof: prof)),
                     );
                   },
                   child: Card(
-                    color: Theme.of(context).cardColor, // Adapte la couleur de la carte au thème
+                    color: Theme.of(context).cardColor,
                     elevation: 2,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), // Coins arrondis
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     child: SizedBox(
-                      width: 150, // Largeur fixe pour chaque petite carte
+                      width: 150,
                       child: Column(
                         children: [
                           ClipRRect(
                             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                             child: Image.asset(
-                              prof.iconpath, // Utilise iconpath
+                              prof.iconpath,
                               fit: BoxFit.cover,
-                              height: 120, // Hauteur de l'image
+                              height: 120,
                               width: double.infinity,
                               errorBuilder: (context, error, stackTrace) {
                                 return Icon(
                                   Icons.person_pin,
-                                  color: Theme.of(context).iconTheme.color, // Adapte la couleur au thème
+                                  color: Theme.of(context).iconTheme.color,
                                   size: 70,
                                 );
                               },
@@ -140,24 +138,24 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  prof.pname, // Utilise pname
+                                  prof.pname,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: 'Josefin',
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).textTheme.titleLarge?.color, // Adapte la couleur au thème
+                                    color: Theme.of(context).textTheme.titleLarge?.color,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Text(
-                                  prof.profeducation.split(',').first, // Affiche juste la première partie de l'éducation
+                                  prof.profeducation.split(',').first,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: 'Josefin',
                                     fontSize: 12,
-                                    color: Theme.of(context).textTheme.bodyMedium?.color, // Adapte la couleur au thème
+                                    color: Theme.of(context).textTheme.bodyMedium?.color,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -174,35 +172,63 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
             ),
           ),
           const SizedBox(height: 30),
-          // --- FIN DE LA SECTION "PROFESSEURS" MISE À JOUR ---
+          // --- FIN DE LA SECTION "PROFESSEURS" ---
 
-          // Section "Matières" (inchangée, mais assurez-vous des couleurs adaptatives)
-          Text(
-            "Matières",
-            style: TextStyle(
-              fontFamily: 'Josefin',
-              fontSize: 25,
-              fontWeight: FontWeight.w500,
-              color: Theme.of(context).textTheme.titleLarge?.color, // Adapte la couleur au thème
-            ),
+          // --- SECTION "MATIERES" (MODIFIÉE AVEC BOUTON "VOIR TOUT") ---
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Matières",
+                style: TextStyle(
+                  fontFamily: 'Josefin',
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).textTheme.titleLarge?.color,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Redirection vers la MatieresListPage
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MatieresListPage()),
+                  );
+                },
+                child: Text(
+                  "Voir tout",
+                  style: TextStyle(
+                    fontFamily: 'Josefin',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}),
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 15),
 
+          // Liste verticale des matières (inchangée, mais le onTap changera)
           SizedBox(
-            height: 450,
+            height: 450, // Peut-être agrandir si vous avez beaucoup de matières pour éviter le scroll
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
               itemCount: _matieres.length,
               itemBuilder: (context, index) {
                 final matiere = _matieres[index];
                 return Card(
-                  color: Theme.of(context).cardColor, // Adapte la couleur de la carte au thème
+                  color: Theme.of(context).cardColor,
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   elevation: 2,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   child: ListTile(
                     onTap: () {
-                      Navigator.pushNamed(context, '/coursesContent');
+                      // Navigue vers la MatiereDetailsPage en passant l'objet matiere
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MatiereDetailsPage(matiere: matiere)),
+                      );
                     },
                     leading: SizedBox(
                       width: 40,
@@ -213,7 +239,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                         errorBuilder: (context, error, stackTrace) {
                           return Icon(
                             Icons.book,
-                            color: Theme.of(context).iconTheme.color, // Adapte la couleur au thème
+                            color: Theme.of(context).iconTheme.color,
                             size: 30,
                           );
                         },
@@ -225,15 +251,15 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                         fontFamily: 'Josefin',
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
-                        color: Theme.of(context).textTheme.bodyLarge?.color, // Adapte la couleur au thème
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     trailing: Text(
-                      matiere.number,
-                      style: const TextStyle( // Note: Les couleurs fixes peuvent ne pas s'adapter au thème
+                      matiere.number, // Affiche le nombre de chapitres comme avant
+                      style: const TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 13,
-                        color: Colors.greenAccent, // Conserve votre couleur originale
+                        color: Colors.greenAccent,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -242,16 +268,17 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
               },
             ),
           ),
+          const SizedBox(height: 30),
+          // --- FIN DE LA SECTION "MATIERES" ---
         ],
       ),
     );
   }
 
-  /// Barre d'application personnalisée pour la page des fichiers.
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: Theme.of(context).appBarTheme.backgroundColor, // Adapte la couleur au thème
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       automaticallyImplyLeading: false,
       centerTitle: true,
       title: Text(
@@ -259,7 +286,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
         style: TextStyle(
           fontFamily: 'Josefin',
           fontSize: 22,
-          color: Theme.of(context).appBarTheme.foregroundColor, // Adapte la couleur au thème
+          color: Theme.of(context).appBarTheme.foregroundColor,
           fontWeight: FontWeight.w700,
         ),
       ),
