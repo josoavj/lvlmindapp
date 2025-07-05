@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; // Importez Provider
-import 'package:lvlmindbeta/providers/theme_notifier.dart'; // Importez votre ThemeNotifier
+import 'package:provider/provider.dart';
+import 'package:lvlmindbeta/providers/theme_notifier.dart'; // Assurez-vous que ce chemin est correct
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -10,19 +10,15 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  // Ces variables locales ne sont plus nécessaires pour le mode sombre,
-  // car l'état sera géré par ThemeNotifier.
-  // bool _darkModeEnabled = false; // SUPPRIMER OU NE PAS UTILISER POUR LE THÈME
   bool _notificationsEnabled = true;
   String _selectedLanguage = 'Français';
-  // String _selectedTheme = 'Clair'; // Remplacé par la lecture directe du ThemeNotifier
 
   @override
   Widget build(BuildContext context) {
     // Écoutez le ThemeNotifier pour obtenir l'état actuel du thème.
     final themeNotifier = Provider.of<ThemeNotifier>(context);
-    final bool _isDarkMode = themeNotifier.themeMode == ThemeMode.dark;
-    final String _currentThemeName = _isDarkMode ? 'Sombre' : 'Clair';
+    final bool isDarkMode = themeNotifier.themeMode == ThemeMode.dark;
+    final String currentThemeName = isDarkMode ? 'Sombre' : 'Clair';
 
     return Scaffold(
       appBar: AppBar(
@@ -35,11 +31,12 @@ class _SettingsPageState extends State<SettingsPage> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.blueAccent,
+        // Les couleurs de l'AppBar sont gérées par le thème de MaterialApp
+        // backgroundColor: Colors.blueAccent, // N'est plus nécessaire ici
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back), // Couleur gérée par le thème
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -62,7 +59,7 @@ class _SettingsPageState extends State<SettingsPage> {
               });
               // Logique pour gérer les notifications
             },
-            secondary: const Icon(Icons.notifications),
+            secondary: const Icon(Icons.notifications), // Couleur gérée par le thème
             activeColor: Colors.blueAccent,
           ),
           SwitchListTile(
@@ -70,14 +67,11 @@ class _SettingsPageState extends State<SettingsPage> {
               "Mode Sombre",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            value: _isDarkMode, // Lire l'état du thème directement depuis ThemeNotifier
+            value: isDarkMode, // Lire l'état du thème directement depuis ThemeNotifier
             onChanged: (bool value) {
-              // Appeler la méthode toggleTheme du ThemeNotifier
-              themeNotifier.toggleTheme();
-              // Pas besoin de setState pour _darkModeEnabled ici, car ThemeNotifier va notifier
-              // et la page va se reconstruire avec le nouvel état du thème.
+              themeNotifier.toggleTheme(); // Appeler la méthode toggleTheme du ThemeNotifier
             },
-            secondary: const Icon(Icons.dark_mode),
+            secondary: const Icon(Icons.dark_mode), // Couleur gérée par le thème
             activeColor: Colors.blueAccent,
           ),
           ListTile(
@@ -86,8 +80,8 @@ class _SettingsPageState extends State<SettingsPage> {
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
             subtitle: Text(_selectedLanguage),
-            leading: const Icon(Icons.language),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            leading: const Icon(Icons.language), // Couleur gérée par le thème
+            trailing: const Icon(Icons.arrow_forward_ios, size: 18), // Couleur gérée par le thème
             onTap: () {
               _showLanguagePicker(context);
             },
@@ -97,15 +91,14 @@ class _SettingsPageState extends State<SettingsPage> {
               "Thème de l'application",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            subtitle: Text(_currentThemeName), // Afficher le nom du thème actuel
-            leading: const Icon(Icons.palette),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            subtitle: Text(currentThemeName), // Afficher le nom du thème actuel
+            leading: const Icon(Icons.palette), // Couleur gérée par le thème
+            trailing: const Icon(Icons.arrow_forward_ios, size: 18), // Couleur gérée par le thème
             onTap: () {
-              // Passer le themeNotifier à la méthode _showThemePicker
               _showThemePicker(context, themeNotifier);
             },
           ),
-          const Divider(), // Ligne de séparation
+          const Divider(),
 
           // --- Section Compte ---
           _buildSectionTitle("Compte"),
@@ -215,11 +208,11 @@ class _SettingsPageState extends State<SettingsPage> {
       padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle( // Utilise TextStyle pour s'adapter au thème (couleur texte)
           fontFamily: 'Josefin',
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Colors.black87,
+          color: Theme.of(context).textTheme.titleLarge?.color, // S'adapte à la couleur de texte du thème
         ),
       ),
     );
