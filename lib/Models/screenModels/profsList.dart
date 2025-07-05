@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../screens/profsDetails.dart';
-import '../profs.dart'; // Importez la page de détails
+import '../profs.dart';
 
 class ProfsListPage extends StatelessWidget {
   const ProfsListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Récupère la liste complète des professeurs
-    List<Profs> allTeachers = Profs.getFictionalProfs();
-
-    // Trie les professeurs par ordre alphabétique de leur nom (pname)
+    List<Profs> allTeachers = Profs.getFictionalProfs().toList();
     allTeachers.sort((a, b) => a.pname.compareTo(b.pname));
 
     return Scaffold(
@@ -38,24 +35,21 @@ class ProfsListPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // 2 colonnes pour une bonne densité
+            crossAxisCount: 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            childAspectRatio: 0.75, // Ratio pour la taille des cartes
+            childAspectRatio: 0.75,
           ),
           itemCount: allTeachers.length,
           itemBuilder: (context, index) {
             final prof = allTeachers[index];
-            return _buildProfGridCard(context, prof); // Utilise une carte pour la GridView
+            return _buildProfGridCard(context, prof);
           },
         ),
       ),
     );
   }
 
-  // Fonction pour construire une carte de professeur pour la GridView
-  // Cette fonction est identique à celle de FilesPage utilisée pour les petites cartes,
-  // mais elle est ici pour la page de liste complète.
   Widget _buildProfGridCard(BuildContext context, Profs prof) {
     return Card(
       color: Theme.of(context).cardColor,
@@ -63,7 +57,6 @@ class ProfsListPage extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell(
         onTap: () {
-          // Navigue vers la ProfDetailsPage en passant l'objet prof
           Navigator.push(
             context,
             MaterialPageRoute(
