@@ -1,39 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/pages/homePage.dart';
-import 'package:provider/provider.dart';
-import 'package:lvlmindbeta/providers/theme_notifier.dart';
+import 'package:provider/provider.dart'; // Importez le package provider
+import 'package:lvlmindbeta/providers/theme_notifier.dart'; // Importez votre ThemeNotifier
+import 'package:lvlmindbeta/screens/welcomepage.dart'; // Votre page d'accueil
+
+// Ces constantes de couleur ne sont plus nécessaires si vous utilisez des thèmes bien définis.
+// Vous pouvez les retirer si elles ne sont pas utilisées ailleurs de manière spécifique.
+// const d_color = Colors.blueAccent;
+// const b_color = Colors.white;
 
 void main() async {
+  // Assurez-vous que les bindings Flutter sont initialisés avant d'utiliser des services natifs (comme SharedPreferences).
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialise le ThemeNotifier avec le thème du système par défaut
+
+  // Crée une instance de ThemeNotifier et tente de charger le thème sauvegardé.
+  // Initialisé avec ThemeMode.system par défaut si rien n'est sauvegardé.
   final themeNotifier = ThemeNotifier(ThemeMode.system);
-  // Tente de charger le thème sauvegardé
-  await themeNotifier.loadTheme();
+  await themeNotifier.loadTheme(); // Charge la préférence de thème depuis le stockage local
 
   runApp(
+    // Fournit l'instance de ThemeNotifier à l'arbre des widgets.
+    // Cela permet à tous les widgets descendants d'accéder et d'écouter les changements de thème.
     ChangeNotifierProvider<ThemeNotifier>(
-      create: (_) => themeNotifier, // Fournit l'instance de ThemeNotifier à l'arbre des widgets
-      child: const MyApp(), // Votre application principale
+      create: (_) => themeNotifier,
+      child: const LvlMindApp(), // Votre application principale
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// J'ai renommé 'lvlmind' en 'LvlMindApp' pour suivre les conventions de nommage des classes (PascalCase).
+class LvlMindApp extends StatelessWidget {
+  const LvlMindApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Écoute les changements du thème via Provider
+    // Écoute les changements du thème via Provider.
+    // Lorsque themeNotifier.notifyListeners() est appelé, ce widget se reconstruit.
     final themeNotifier = Provider.of<ThemeNotifier>(context);
 
     return MaterialApp(
-      title: 'LvlMindBeta',
-      debugShowCheckedModeBanner: false,
-      // Définition du thème clair
+      title: 'LvlMindBeta', // Titre de l'application
+      debugShowCheckedModeBanner: false, // Supprime le bandeau "DEBUG"
+
+      // --- Définition du Thème Clair ---
       theme: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.blueAccent, // Couleur principale pour le thème clair
+        primarySwatch: Colors.blue, // Couleur primaire générale
+        primaryColor: Colors.blueAccent, // Couleur principale du thème clair
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blueAccent,
           brightness: Brightness.light,
@@ -43,7 +55,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.blueAccent, // Fond des AppBar en mode clair
           foregroundColor: Colors.white, // Couleur du texte/icônes dans l'AppBar
-          elevation: 0,
+          elevation: 0, // Pas d'ombre sous l'AppBar
         ),
         textTheme: const TextTheme(
           bodyLarge: TextStyle(color: Colors.black87),
@@ -51,21 +63,21 @@ class MyApp extends StatelessWidget {
           titleLarge: TextStyle(color: Colors.black87),
           titleMedium: TextStyle(color: Colors.black87),
           titleSmall: TextStyle(color: Colors.black54),
-        ).apply(fontFamily: 'Josefin'), // Applique la police Josefin au thème clair
+        ).apply(fontFamily: 'Josefin'), // Applique la police Josefin à tous les textes du thème clair
         iconTheme: const IconThemeData(color: Colors.black54), // Couleur des icônes
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent,
-            foregroundColor: Colors.white,
+            backgroundColor: Colors.blueAccent, // Couleur de fond par défaut pour les ElevatedButton
+            foregroundColor: Colors.white, // Couleur du texte par défaut pour les ElevatedButton
             shape: const StadiumBorder(),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: Colors.blueAccent,
+            foregroundColor: Colors.blueAccent, // Couleur par défaut pour les TextButton
           ),
         ),
-        inputDecorationTheme: InputDecorationTheme( // Thème des champs de saisie
+        inputDecorationTheme: InputDecorationTheme( // Thème des champs de saisie pour le mode clair
           filled: true,
           fillColor: Colors.grey[200],
           labelStyle: TextStyle(color: Colors.grey[700]),
@@ -90,13 +102,13 @@ class MyApp extends StatelessWidget {
             borderSide: const BorderSide(color: Colors.red, width: 2.0),
           ),
         ),
-        // ... autres personnalisations du thème clair
       ),
-      // Définition du thème sombre
+
+      // --- Définition du Thème Sombre ---
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
-        primaryColor: Colors.blueAccent, // Conserve une couleur principale
+        primaryColor: Colors.blueAccent, // Conserve une couleur principale similaire
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blueAccent,
           brightness: Brightness.dark,
@@ -114,18 +126,20 @@ class MyApp extends StatelessWidget {
           titleLarge: TextStyle(color: Colors.white),
           titleMedium: TextStyle(color: Colors.white70),
           titleSmall: TextStyle(color: Colors.white60),
-        ).apply(fontFamily: 'Josefin'), // Applique la police Josefin au thème sombre
+        ).apply(fontFamily: 'Josefin'), // Applique la police Josefin à tous les textes du thème sombre
         iconTheme: const IconThemeData(color: Colors.white70),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(225, 249, 29, 88), // Votre couleur rouge pour le bouton CONFIRMER
+            // La couleur spécifique pour le bouton CONFIRMER dans LoginPage (rouge)
+            // est gérée par un style local dans LoginPage pour override ce style global si nécessaire.
+            backgroundColor: Colors.blueAccent, // Couleur par défaut pour le mode sombre
             foregroundColor: Colors.white,
             shape: const StadiumBorder(),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: Colors.blueAccent, // Conserve la couleur bleue pour les TextButton
+            foregroundColor: Colors.blueAccent,
           ),
         ),
         inputDecorationTheme: InputDecorationTheme( // Thème des champs de saisie pour le mode sombre
@@ -153,10 +167,13 @@ class MyApp extends StatelessWidget {
             borderSide: const BorderSide(color: Colors.red, width: 2.0),
           ),
         ),
-        // ... autres personnalisations du thème sombre
       ),
-      themeMode: themeNotifier.themeMode, // Le mode de thème actuel géré par ThemeNotifier
-      home: const Homepage(), // Votre page d'accueil initiale
+
+      // Spécifie quel thème utiliser (clair, sombre, ou système)
+      themeMode: themeNotifier.themeMode,
+
+      // La première page de votre application
+      home: const WelcomePage(),
     );
   }
 }
