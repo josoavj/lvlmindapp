@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Importez Provider
+import 'package:lvlmindbeta/providers/theme_notifier.dart'; // Importez votre ThemeNotifier
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -8,14 +10,20 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  // Variables d'état pour les options (ex: notifications, mode sombre)
+  // Ces variables locales ne sont plus nécessaires pour le mode sombre,
+  // car l'état sera géré par ThemeNotifier.
+  // bool _darkModeEnabled = false; // SUPPRIMER OU NE PAS UTILISER POUR LE THÈME
   bool _notificationsEnabled = true;
-  bool _darkModeEnabled = false;
   String _selectedLanguage = 'Français';
-  String _selectedTheme = 'Clair';
+  // String _selectedTheme = 'Clair'; // Remplacé par la lecture directe du ThemeNotifier
 
   @override
   Widget build(BuildContext context) {
+    // Écoutez le ThemeNotifier pour obtenir l'état actuel du thème.
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+    final bool _isDarkMode = themeNotifier.themeMode == ThemeMode.dark;
+    final String _currentThemeName = _isDarkMode ? 'Sombre' : 'Clair';
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -62,12 +70,12 @@ class _SettingsPageState extends State<SettingsPage> {
               "Mode Sombre",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            value: _darkModeEnabled,
+            value: _isDarkMode, // Lire l'état du thème directement depuis ThemeNotifier
             onChanged: (bool value) {
-              setState(() {
-                _darkModeEnabled = value;
-              });
-              // Logique pour changer le thème (ex: via Provider/BLoC)
+              // Appeler la méthode toggleTheme du ThemeNotifier
+              themeNotifier.toggleTheme();
+              // Pas besoin de setState pour _darkModeEnabled ici, car ThemeNotifier va notifier
+              // et la page va se reconstruire avec le nouvel état du thème.
             },
             secondary: const Icon(Icons.dark_mode),
             activeColor: Colors.blueAccent,
@@ -89,11 +97,12 @@ class _SettingsPageState extends State<SettingsPage> {
               "Thème de l'application",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            subtitle: Text(_selectedTheme),
+            subtitle: Text(_currentThemeName), // Afficher le nom du thème actuel
             leading: const Icon(Icons.palette),
             trailing: const Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
-              _showThemePicker(context);
+              // Passer le themeNotifier à la méthode _showThemePicker
+              _showThemePicker(context, themeNotifier);
             },
           ),
           const Divider(), // Ligne de séparation
@@ -252,8 +261,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Affiche un sélecteur de thème
-  void _showThemePicker(BuildContext context) {
+  // Affiche un sélecteur de thème (maintenant avec themeNotifier)
+  void _showThemePicker(BuildContext context, ThemeNotifier themeNotifier) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext bc) {
@@ -262,27 +271,20 @@ class _SettingsPageState extends State<SettingsPage> {
             children: <Widget>[
               ListTile(
                 title: const Text('Clair', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: _selectedTheme == 'Clair' ? const Icon(Icons.check, color: Colors.blueAccent) : null,
+                trailing: themeNotifier.themeMode == ThemeMode.light ? const Icon(Icons.check, color: Colors.blueAccent) : null,
                 onTap: () {
-                  setState(() {
-                    _selectedTheme = 'Clair';
-                    _darkModeEnabled = false; // Désactiver mode sombre si thème clair
-                  });
+                  themeNotifier.setThemeMode(ThemeMode.light); // Définit le thème via notifier
                   Navigator.pop(context);
                 },
               ),
               ListTile(
                 title: const Text('Sombre', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: _selectedTheme == 'Sombre' ? const Icon(Icons.check, color: Colors.blueAccent) : null,
+                trailing: themeNotifier.themeMode == ThemeMode.dark ? const Icon(Icons.check, color: Colors.blueAccent) : null,
                 onTap: () {
-                  setState(() {
-                    _selectedTheme = 'Sombre';
-                    _darkModeEnabled = true; // Activer mode sombre si thème sombre
-                  });
+                  themeNotifier.setThemeMode(ThemeMode.dark); // Définit le thème via notifier
                   Navigator.pop(context);
                 },
               ),
-              // Ajoutez d'autres thèmes si besoin
             ],
           ),
         );
