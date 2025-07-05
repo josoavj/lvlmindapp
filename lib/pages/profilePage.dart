@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/deconnexion.dart';
+import '../screens/settings.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -157,7 +158,12 @@ class _ProfileState extends State<Profile> {
           const SizedBox(height: 30),
 
           // Autres informations (ex: Paramètres, Aide, Déconnexion)
-          _buildOptionTile(Icons.settings, "Paramètres", () { /* Naviguer vers les paramètres */ }),
+          _buildOptionTile(Icons.settings, "Paramètres", () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingsPage()),
+            );
+          }),
           _buildOptionTile(Icons.help_outline, "Aide et Support", () { /* Naviguer vers l'aide */ }),
           _buildOptionTile(Icons.logout, "Déconnexion", () {
     DeconnexionService.showLogoutConfirmation(context);
