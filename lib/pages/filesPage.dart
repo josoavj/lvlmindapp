@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/Models/screenModels/profInfo.dart';
 import 'package:lvlmindbeta/Models/profs.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
+import 'package:lvlmindbeta/Models/screenModels/profsList.dart';
 import '../screens/profsDetails.dart';
 
 class Files extends StatefulWidget {
@@ -74,7 +75,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                   // Navigue vers la ProfsListPage (la page "Voir tout")
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ProfProfile()),
+                    MaterialPageRoute(builder: (context) => const ProfsListPage()),
                   );
                 },
                 child: Text(
@@ -83,7 +84,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                     fontFamily: 'Josefin',
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}), // Adapte la couleur au thème
+                    color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({WidgetState.selected}),
                   ),
                 ),
               ),
