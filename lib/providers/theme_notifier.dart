@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Pour sauvegarder la préférence de l'utilisateur
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Un ChangeNotifier pour gérer l'état du thème de l'application (clair/sombre).
 class ThemeNotifier with ChangeNotifier {
@@ -21,10 +21,9 @@ class ThemeNotifier with ChangeNotifier {
     if (storedThemeIndex != null) {
       _themeMode = ThemeMode.values[storedThemeIndex];
     } else {
-      // Si aucune préférence n'est enregistrée, nous pourrions vouloir utiliser
-      // ThemeMode.system ou un défaut comme ThemeMode.light.
-      // Pour cet exemple, nous allons rester sur la valeur passée au constructeur
-      // (qui sera ThemeMode.system depuis main.dart).
+      // Si aucune préférence n'est enregistrée, nous pouvons vouloir utiliser
+      // ThemeMode.system (par défaut) ou ThemeMode.light.
+      // Le constructeur reçoit déjà ThemeMode.system de main.dart, donc c'est bon.
     }
     notifyListeners(); // Notifie les auditeurs que le thème a été chargé
   }
