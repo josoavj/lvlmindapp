@@ -20,7 +20,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _screens = [
     const Homepage(), // Use const for widget instances that don't change
     const Schedule(),
-    const FilesPage(),
+    const Files(),
     const Profile(),
   ];
 
