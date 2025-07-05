@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/screens/welcomepage.dart';
-import 'package:lvlmindbeta/Models/profs.dart';
-import 'package:lvlmindbeta/screens/profsDetails.dart';
+import '../Models/profs.dart';
+import '../screens/profsDetails.dart';
 
 class FilesPage extends StatefulWidget {
   const FilesPage({super.key});
@@ -12,19 +11,19 @@ class FilesPage extends StatefulWidget {
 
 class _FilesPageState extends State<FilesPage> {
   // Liste des professeurs provenant du modèle
-  final List<Profs> teachers = profList;
+  final List<Profs> teachers = Profs.getFictionalProfs(); // Utilise la méthode statique
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text( // Le widget Text peut changer de couleur via le thème
           "Nos Professeurs",
-          style: TextStyle(
+          style: TextStyle( // Le TextStyle doit être explicite ici car la couleur du titre d'AppBar est souvent fixée
             fontFamily: 'Josefin',
             fontSize: 22,
             fontWeight: FontWeight.w700,
-            color: Colors.white,
+            color: Theme.of(context).appBarTheme.foregroundColor, // S'adapte à la couleur du texte/icônes de l'AppBar
           ),
         ),
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor, // S'adapte au thème
@@ -33,10 +32,9 @@ class _FilesPageState extends State<FilesPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Theme.of(context).appBarTheme.foregroundColor), // Couleur gérée par le thème
           onPressed: () {
-            Navigator.pop(
-              context,
-              MaterialPageRoute(builder: (context) => const WelcomePage()),
-            );
+            // Note: Si WelcomePage est la racine de votre Navigator, Navigator.pop() suffira.
+            // Si vous naviguez spécifiquement vers WelcomePage, le code ci-dessous est correct.
+            Navigator.pop(context); // Un simple pop est souvent suffisant pour revenir en arrière.
           },
         ),
       ),
@@ -62,7 +60,7 @@ class _FilesPageState extends State<FilesPage> {
   // Fonction pour construire une carte de professeur cliquable
   Widget _buildProfCard(BuildContext context, Profs prof) {
     return Card(
-      color: Theme.of(context).cardColor, // S'adapte au thème
+      color: Theme.of(context).cardColor, // S'adapte au thème (cardColor défini dans main.dart)
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell( // Rendre la carte cliquable
@@ -84,13 +82,13 @@ class _FilesPageState extends State<FilesPage> {
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                 child: Image.asset(
-                  prof.profpic,
+                  prof.iconpath, // Utilise iconpath
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
+                  errorBuilder: (context, error, stackTrace) => Icon(
                     Icons.person,
                     size: 80,
-                    color: Colors.grey,
+                    color: Theme.of(context).iconTheme.color, // S'adapte au thème
                   ),
                 ),
               ),
@@ -103,7 +101,7 @@ class _FilesPageState extends State<FilesPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      prof.profname,
+                      prof.pname, // Utilise pname
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Josefin',
@@ -116,7 +114,7 @@ class _FilesPageState extends State<FilesPage> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      prof.profeducation,
+                      prof.profeducation, // Utilise profeducation
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Josefin',
