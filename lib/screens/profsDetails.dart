@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../Models/profs.dart';
+import '../Models/profs.dart'; // Pour lancer des appels/emails
 
 class ProfDetailsPage extends StatelessWidget {
-  final Profs prof;
+  final Profs prof; // Le professeur dont les détails seront affichés
 
   const ProfDetailsPage({super.key, required this.prof});
 
@@ -16,7 +15,7 @@ class ProfDetailsPage extends StatelessWidget {
         backgroundColor: Colors.transparent, // AppBar transparente
         elevation: 0,
         title: Text(
-          prof.profname,
+          prof.pname, // Utilise pname
           style: const TextStyle(
             fontFamily: 'Josefin',
             fontSize: 22,
@@ -41,20 +40,35 @@ class ProfDetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 16),
-                  _buildSectionTitle("Informations Générales"),
-                  _buildInfoRow(Icons.school, "Éducation", prof.profeducation),
-                  const SizedBox(height: 10),
-                  _buildInfoRow(Icons.description, "Biographie", prof.bio),
+                  _buildSectionTitle(context, "Informations Générales"), // Passe le contexte
+                  _buildInfoRow(context, Icons.school, "Éducation", prof.profeducation), // Passe le contexte
+                  if (prof.bio != null && prof.bio!.isNotEmpty) // Afficher la bio seulement si elle existe
+                    Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        _buildInfoRow(context, Icons.description, "Biographie", prof.bio!), // Passe le contexte
+                      ],
+                    ),
                   const SizedBox(height: 20),
 
-                  _buildSectionTitle("Contact"),
-                  _buildContactRow(Icons.phone, prof.phone, () => _launchPhone(prof.phone)),
-                  const SizedBox(height: 10),
-                  _buildContactRow(Icons.email, prof.email, () => _launchEmail(prof.email)),
+                  _buildSectionTitle(context, "Contact"), // Passe le contexte
+                  _buildContactRow(context, Icons.phone, prof.phone, () => _launchPhone(context, prof.phone)), // Passe le contexte
+                  if (prof.email != null && prof.email!.isNotEmpty) // Afficher l'email seulement si elle existe
+                    Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        _buildContactRow(context, Icons.email, prof.email!, () => _launchEmail(context, prof.email!)), // Passe le contexte
+                      ],
+                    ),
                   const SizedBox(height: 20),
 
-                  _buildSectionTitle("Cours Enseignés"),
-                  _buildCoursesList(prof.courses),
+                  if (prof.courses.isNotEmpty) // Afficher les cours seulement s'il y en a
+                    Column(
+                      children: [
+                        _buildSectionTitle(context, "Cours Enseignés"), // Passe le contexte
+                        _buildCoursesList(context, prof.courses), // Passe le contexte
+                      ],
+                    ),
                   const SizedBox(height: 20),
                 ],
               ),
@@ -71,7 +85,7 @@ class ProfDetailsPage extends StatelessWidget {
       height: 250, // Hauteur fixe pour l'image d'en-tête
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(prof.profpic),
+          image: AssetImage(prof.iconpath), // Utilise iconpath
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
             Colors.black.withOpacity(0.4), // Assombrir l'image pour la lisibilité du texte
@@ -89,7 +103,7 @@ class ProfDetailsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  prof.profname,
+                  prof.pname, // Utilise pname
                   style: const TextStyle(
                     fontFamily: 'Josefin',
                     fontSize: 28,
@@ -99,7 +113,7 @@ class ProfDetailsPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  prof.profeducation,
+                  prof.profeducation, // Utilise profeducation
                   style: const TextStyle(
                     fontFamily: 'Josefin',
                     fontSize: 16,
@@ -115,7 +129,7 @@ class ProfDetailsPage extends StatelessWidget {
   }
 
   // Titre de section (e.g., "Informations Générales")
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(BuildContext context, String title) { // Ajoute BuildContext
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Text(
@@ -131,7 +145,7 @@ class ProfDetailsPage extends StatelessWidget {
   }
 
   // Ligne d'information (icône, titre, contenu)
-  Widget _buildInfoRow(IconData icon, String title, String content) {
+  Widget _buildInfoRow(BuildContext context, IconData icon, String title, String content) { // Ajoute BuildContext
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -166,7 +180,7 @@ class ProfDetailsPage extends StatelessWidget {
   }
 
   // Ligne de contact cliquable (téléphone, email)
-  Widget _buildContactRow(IconData icon, String text, VoidCallback onTap) {
+  Widget _buildContactRow(BuildContext context, IconData icon, String text, VoidCallback onTap) { // Ajoute BuildContext
     return InkWell( // Rend la ligne cliquable
       onTap: onTap,
       child: Padding(
@@ -175,13 +189,15 @@ class ProfDetailsPage extends StatelessWidget {
           children: [
             Icon(icon, size: 24, color: Theme.of(context).iconTheme.color),
             const SizedBox(width: 10),
-            Text(
-              text,
-              style: TextStyle(
-                fontFamily: 'Josefin',
-                fontSize: 16,
-                color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}), // Utilise la couleur des TextButton
-                decoration: TextDecoration.underline, // Souligne le texte pour indiquer que c'est un lien
+            Expanded( // Ajout de Expanded pour que le texte ne déborde pas
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontFamily: 'Josefin',
+                  fontSize: 16,
+                  color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}), // Utilise la couleur des TextButton
+                  decoration: TextDecoration.underline, // Souligne le texte pour indiquer que c'est un lien
+                ),
               ),
             ),
           ],
@@ -191,7 +207,7 @@ class ProfDetailsPage extends StatelessWidget {
   }
 
   // Liste des cours enseignés
-  Widget _buildCoursesList(List<String> courses) {
+  Widget _buildCoursesList(BuildContext context, List<String> courses) { // Ajoute BuildContext
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: courses
@@ -201,7 +217,7 @@ class ProfDetailsPage extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.check_circle_outline, size: 20, color: Colors.green[700]),
+              Icon(Icons.check_circle_outline, size: 20, color: Colors.green[700]), // Couleur fixe pour le checkmark
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -209,7 +225,7 @@ class ProfDetailsPage extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Josefin',
                     fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                    color: Theme.of(context).textTheme.bodyLarge?.color, // S'adapte au thème
                   ),
                 ),
               ),
@@ -222,7 +238,7 @@ class ProfDetailsPage extends StatelessWidget {
   }
 
   // Fonction pour lancer un appel téléphonique
-  Future<void> _launchPhone(String phoneNumber) async {
+  Future<void> _launchPhone(BuildContext context, String phoneNumber) async { // Ajoute BuildContext
     final Uri launchUri = Uri(
       scheme: 'tel',
       path: phoneNumber,
@@ -230,14 +246,17 @@ class ProfDetailsPage extends StatelessWidget {
     if (await canLaunchUrl(launchUri)) {
       await launchUrl(launchUri);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Impossible de lancer l\'appel.')),
-      );
+      // Utilisez un SnackBar pour informer l'utilisateur si l'action échoue
+      if (context.mounted) { // Vérifie si le widget est monté avant d'afficher le SnackBar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Impossible de lancer l\'appel.')),
+        );
+      }
     }
   }
 
   // Fonction pour lancer un email
-  Future<void> _launchEmail(String emailAddress) async {
+  Future<void> _launchEmail(BuildContext context, String emailAddress) async { // Ajoute BuildContext
     final Uri launchUri = Uri(
       scheme: 'mailto',
       path: emailAddress,
@@ -245,9 +264,11 @@ class ProfDetailsPage extends StatelessWidget {
     if (await canLaunchUrl(launchUri)) {
       await launchUrl(launchUri);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Impossible d\'ouvrir l\'application email.')),
-      );
+      if (context.mounted) { // Vérifie si le widget est monté avant d'afficher le SnackBar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Impossible d\'ouvrir l\'application email.')),
+        );
+      }
     }
   }
 }
