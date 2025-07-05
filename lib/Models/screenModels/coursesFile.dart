@@ -17,7 +17,7 @@ class  CoursesContentState extends State <CoursesContent> {
         leading: IconButton(
           icon: const Icon(CupertinoIcons.back),
           onPressed: (){
-            Navigator.pop(context, MaterialPageRoute(builder: (context)=> const Files()));
+            Navigator.pop(context, MaterialPageRoute(builder: (context)=> const FilesPage()));
           },),
           title: const Text(
             "Video",
