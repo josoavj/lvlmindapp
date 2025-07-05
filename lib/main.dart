@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/pages/homePage.dart';
 import 'package:provider/provider.dart';
-import 'package:lvlmindbeta/providers/theme_notifier.dart'; 
+import 'package:lvlmindbeta/providers/theme_notifier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
