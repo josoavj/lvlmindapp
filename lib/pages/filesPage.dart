@@ -1,9 +1,11 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/Models/screenModels/profInfo.dart'; // Assurez-vous que ce chemin est correct
-import 'package:lvlmindbeta/Models/profs.dart'; // Assurez-vous que ce chemin est correct et que la classe Profs est à jour
-import 'package:lvlmindbeta/Models/matiere.dart'; // Assurez-vous que ce chemin est correct et que la classe Matiere est à jour
+import 'package:lvlmindbeta/Models/profs.dart';
+import 'package:lvlmindbeta/Models/matiere.dart';
+import '../Models/screenModels/matiereDetails.dart';
+import '../Models/screenModels/matieresList.dart';
+import '../Models/screenModels/profsList.dart';
+import '../screens/profsDetails.dart';
+
 
 class Files extends StatefulWidget {
   const Files({super.key});
@@ -13,93 +15,85 @@ class Files extends StatefulWidget {
 }
 
 class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
-  // Garde l'état du widget vivant lorsque vous naviguez loin et revenez
   @override
   bool get wantKeepAlive => true;
 
-  // Listes pour stocker les données des matières et des professeurs
   List<Matiere> _matieres = [];
   List<Profs> _professeurs = [];
 
   @override
   void initState() {
     super.initState();
-    // Initialise les données au démarrage de la page
     _loadData();
   }
 
-  // Méthode pour charger les données des matières et des professeurs
   void _loadData() {
     setState(() {
-      _matieres = Matiere.getFictionalCourses(); // Utilisation de la nouvelle fonction getFictionalCourses
-      _professeurs = Profs.getFictionalProfs(); // Assurez-vous que Profs a aussi une fonction getFictionalProfs()
+      _matieres = Matiere.getFictionalCourses();
+      _professeurs = Profs.getFictionalProfs();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // Appelle super.build(context) pour le mixin AutomaticKeepAliveClientMixin
     super.build(context);
 
-    // Ne PAS appeler _loadData() ici, cela provoquerait des appels setState() infinis.
-    // Les données sont chargées une seule fois dans initState.
-
     return Scaffold(
-      appBar: _buildAppBar(context), // Utilisation de la barre d'application refactorisée
+      appBar: _buildAppBar(context),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         children: [
           // Image de bienvenue centrée
           Center(
             child: SizedBox(
-              width: 650, // Peut être ajusté selon la taille de l'image réelle
+              width: 650,
               child: Image.asset(
                 'assets/images/icons/welcome.jpg',
-                fit: BoxFit.contain, // Ajuste l'image pour qu'elle tienne dans la boîte
+                fit: BoxFit.contain,
                 errorBuilder: (context, error, stackTrace) => const Icon(
                   Icons.image_not_supported,
                   color: Colors.grey,
                   size: 100,
-                ), // Icône si l'image ne charge pas
+                ),
               ),
             ),
           ),
           const SizedBox(height: 30),
-
-          // Section "Professeurs"
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Professeurs", // Traduit de "Teacher"
+              Text(
+                "Professeurs",
                 style: TextStyle(
                   fontFamily: 'Josefin',
                   fontSize: 25,
                   fontWeight: FontWeight.w700,
-                  color: Color.fromARGB(166, 0, 0, 0),
+                  color: Theme.of(context).textTheme.titleLarge?.color,
                 ),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/profListedProfile');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ProfsListPage()),
+                  );
                 },
-                child: const Text(
-                  "Voir tout", // Traduit de "See all"
+                child: Text(
+                  "Voir tout",
                   style: TextStyle(
                     fontFamily: 'Josefin',
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: Color.fromARGB(223, 222, 75, 161),
+                    color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 15), // Espace après le titre "Professeurs"
+          const SizedBox(height: 15),
 
-          // Liste horizontale des professeurs
           SizedBox(
-            height: 110, // Hauteur fixe pour la ListView horizontale
+            height: 220,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -109,49 +103,65 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                 final prof = _professeurs[index];
                 return GestureDetector(
                   onTap: () {
-                    // Passe l'objet professeur si ProfProfile en a besoin
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ProfProfile()),
+                      MaterialPageRoute(builder: (context) => ProfDetailsPage(prof: prof)),
                     );
                   },
                   child: Card(
+                    color: Theme.of(context).cardColor,
                     elevation: 2,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                    child: SizedBox( // Utilisation de SizedBox pour contraindre la taille de la carte
-                      width: 100,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    child: SizedBox(
+                      width: 150,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Image du professeur
-                          SizedBox(
-                            width: 50,
-                            height: 40,
+                          ClipRRect(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                             child: Image.asset(
-                              prof.iconpath, // Chemin de l'image du professeur
-                              fit: BoxFit.contain,
+                              prof.iconpath,
+                              fit: BoxFit.cover,
+                              height: 120,
+                              width: double.infinity,
                               errorBuilder: (context, error, stackTrace) {
-                                return const Icon(
-                                  Icons.person_pin, // Icône par défaut pour les profs
-                                  color: Colors.grey,
-                                  size: 30,
+                                return Icon(
+                                  Icons.person_pin,
+                                  color: Theme.of(context).iconTheme.color,
+                                  size: 70,
                                 );
                               },
                             ),
                           ),
-                          const SizedBox(height: 10), // Espacement réduit
-                          // Nom du professeur
-                          Text(
-                            prof.pname,
-                            textAlign: TextAlign.center, // Centrer le nom
-                            style: const TextStyle(
-                              fontFamily: 'Josefin',
-                              fontSize: 14, // Taille de police légèrement ajustée
-                              fontWeight: FontWeight.w400, // Poids de police ajusté
-                              color: Color.fromARGB(255, 65, 64, 64),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  prof.pname,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Josefin',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).textTheme.titleLarge?.color,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  prof.profeducation.split(',').first,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Josefin',
+                                    fontSize: 12,
+                                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
-                            maxLines: 2, // Limite à 2 lignes pour les noms longs
-                            overflow: TextOverflow.ellipsis, // Gère le débordement
                           ),
                         ],
                       ),
@@ -162,49 +172,74 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
             ),
           ),
           const SizedBox(height: 30),
+          // --- FIN DE LA SECTION "PROFESSEURS" ---
 
-          // Section "Matières"
-          const Text(
-            "Matières", // Traduit de "Courses"
-            style: TextStyle(
-              fontFamily: 'Josefin',
-              fontSize: 25,
-              fontWeight: FontWeight.w500,
-              color: Color.fromARGB(168, 0, 0, 0),
-            ),
+          // --- SECTION "MATIERES" (MODIFIÉE AVEC BOUTON "VOIR TOUT") ---
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Matières",
+                style: TextStyle(
+                  fontFamily: 'Josefin',
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).textTheme.titleLarge?.color,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Redirection vers la MatieresListPage
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MatieresListPage()),
+                  );
+                },
+                child: Text(
+                  "Voir tout",
+                  style: TextStyle(
+                    fontFamily: 'Josefin',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 15), // Espace après le titre "Matières"
+          const SizedBox(height: 15),
 
-          // Liste verticale des matières
-          // Utilisation de Expanded ou d'une hauteur fixe si ce ListView est imbriqué
-          // dans un Column sans contraintes de hauteur suffisantes.
-          // Ici, je suppose qu'il est le dernier élément d'un ListView principal,
-          // donc une hauteur fixe est une approche courante.
+          // Liste verticale des matières (inchangée, mais le onTap changera)
           SizedBox(
-            height: 450, // Hauteur fixe pour la ListView des matières
+            height: 450, // Peut-être agrandir si vous avez beaucoup de matières pour éviter le scroll
             child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0), // Padding ajusté
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
               itemCount: _matieres.length,
               itemBuilder: (context, index) {
                 final matiere = _matieres[index];
                 return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8), // Marge verticale entre les cartes
+                  color: Theme.of(context).cardColor,
+                  margin: const EdgeInsets.symmetric(vertical: 8),
                   elevation: 2,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   child: ListTile(
                     onTap: () {
-                      Navigator.pushNamed(context, '/coursesContent');
+                      // Navigue vers la MatiereDetailsPage en passant l'objet matiere
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MatiereDetailsPage(matiere: matiere)),
+                      );
                     },
                     leading: SizedBox(
-                      width: 40, // Largeur fixe pour l'icône de la matière
+                      width: 40,
                       height: 40,
                       child: Image.asset(
-                        matiere.image, // Chemin de l'image de la matière
+                        matiere.image,
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
-                            Icons.book, // Icône par défaut pour les matières
-                            color: Colors.blueGrey,
+                          return Icon(
+                            Icons.book,
+                            color: Theme.of(context).iconTheme.color,
                             size: 30,
                           );
                         },
@@ -212,20 +247,20 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                     ),
                     title: Text(
                       matiere.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 17,
-                        fontWeight: FontWeight.w400, // Poids de police ajusté
-                        color: Color.fromARGB(255, 65, 64, 64),
+                        fontWeight: FontWeight.w400,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     trailing: Text(
-                      matiere.number,
+                      matiere.number, // Affiche le nombre de chapitres comme avant
                       style: const TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 13,
                         color: Colors.greenAccent,
-                        fontWeight: FontWeight.w600, // Rendu plus lisible
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -233,24 +268,25 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
               },
             ),
           ),
+          const SizedBox(height: 30),
+          // --- FIN DE LA SECTION "MATIERES" ---
         ],
       ),
     );
   }
 
-  /// Barre d'application personnalisée pour la page des fichiers.
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: Colors.white,
-      automaticallyImplyLeading: false, // Pas de bouton retour automatique
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      automaticallyImplyLeading: false,
       centerTitle: true,
-      title: const Text(
-        'Matériel de cours', // Traduit de "Course materials"
+      title: Text(
+        'Matériel de cours',
         style: TextStyle(
           fontFamily: 'Josefin',
-          fontSize: 22, // Taille de police légèrement augmentée
-          color: Colors.blue,
+          fontSize: 22,
+          color: Theme.of(context).appBarTheme.foregroundColor,
           fontWeight: FontWeight.w700,
         ),
       ),

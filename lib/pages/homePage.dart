@@ -235,7 +235,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                     // Redirection vers la page des fichiers (qui liste les matières/catégories)
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Files()),
+                      MaterialPageRoute(builder: (context) => Files()),
                     );
                   },
                   child: const Text(
