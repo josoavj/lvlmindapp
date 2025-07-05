@@ -82,13 +82,12 @@ class LoginPage extends StatelessWidget {
             },
           ),
           // Logo de l'application
-          Padding(
-            padding: EdgeInsets.only(top: 10, right: 15), // Ajuste le padding
+          Padding( // <-- 'const' a été retiré ici
+            padding: const EdgeInsets.only(top: 10, right: 15),
             child: Image(
               height: 50,
-              image: AssetImage('assets/images/logo/logomin.jpg'),
-              // Ajoute un errorBuilder pour gérer les images manquantes
-              errorBuilder: (context, error, stackTrace) => Icon(
+              image: const AssetImage('assets/images/logo/logomin.jpg'),
+              errorBuilder: (context, error, stackTrace) => const Icon(
                 Icons.image_not_supported,
                 color: Colors.grey,
                 size: 50,
@@ -102,31 +101,32 @@ class LoginPage extends StatelessWidget {
 
   /// Construit le corps principal de la page de connexion.
   SingleChildScrollView _buildLoginBody(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView( // Peut être const car LoginForm est maintenant const
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 100, left: 30, right: 30), // Padding ajusté
+          // Section de texte d'introduction
+          Padding(
+            padding: EdgeInsets.only(top: 100, left: 30, right: 30),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Aligne le texte à gauche
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const DelayedAnimation(
+                DelayedAnimation(
                   delay: 800,
                   child: Text(
-                    'Connectez-vous à LevelMind', // Traduit le texte
+                    'Connectez-vous à LevelMind',
                     style: TextStyle(
                       fontFamily: 'PatrickHand',
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
-                      color: Colors.black87, // Couleur du texte
+                      color: Colors.black87,
                     ),
                   ),
                 ),
-                const SizedBox(height: 22),
-                const DelayedAnimation(
+                SizedBox(height: 22),
+                DelayedAnimation(
                   delay: 850,
                   child: Text(
-                    "Il est recommandé de se connecter", // Traduit le texte
+                    "Il est recommandé de se connecter",
                     style: TextStyle(
                       fontFamily: 'Josefin',
                       fontSize: 20,
@@ -134,10 +134,10 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const DelayedAnimation(
+                DelayedAnimation(
                   delay: 850,
                   child: Text(
-                    "avec votre identifiant.", // Traduit le texte
+                    "avec votre identifiant.",
                     style: TextStyle(
                       fontFamily: 'Josefin',
                       fontSize: 20,
@@ -148,9 +148,138 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 30), // Espacement après le texte d'introduction
-          const LoginForm(), // Le formulaire de connexion
-          const SizedBox(height: 50),
+          SizedBox(height: 30),
+          LoginForm(), // Le formulaire de connexion (maintenant avec les boutons)
+        ],
+      ),
+    );
+  }
+}
+
+// Le formulaire de connexion (Email/ID et Mot de passe)
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
+  @override
+  _LoginFormState createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final _formKey = GlobalKey<FormState>(); // Clé globale pour le formulaire
+  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _obscureText = true; // Pour masquer/afficher le mot de passe
+
+  @override
+  void dispose() {
+    _idController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form( // Le widget Form pour la validation
+      key: _formKey, // Associe la clé au formulaire
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              children: [
+                DelayedAnimation(
+                  delay: 1000,
+                  child: TextFormField( // Changé de TextField à TextFormField
+                    controller: _idController, // Associe le contrôleur
+                    decoration: InputDecoration(
+                      labelText: 'Votre identifiant',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Josefin',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey[600],
+                      ),
+                      filled: true,
+                      fillColor: const Color.fromARGB(90, 212, 212, 212),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: BorderSide.none,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: const BorderSide(
+                          color: Colors.blueAccent,
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                    validator: (value) { // Ajout du validateur
+                      if (value == null || value.isEmpty) {
+                        return 'Veuillez entrer votre identifiant';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 30),
+                DelayedAnimation(
+                  delay: 1050,
+                  child: TextFormField( // Changé de TextField à TextFormField
+                    controller: _passwordController, // Associe le contrôleur
+                    obscureText: _obscureText,
+                    decoration: InputDecoration(
+                      labelText: 'Mot de passe',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Josefin',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey[600],
+                      ),
+                      filled: true,
+                      fillColor: const Color.fromARGB(90, 212, 212, 212),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureText ? Icons.visibility_off : Icons.visibility,
+                          color: const Color.fromARGB(255, 82, 141, 243),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: BorderSide.none,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: const BorderSide(
+                          color: Colors.blueAccent,
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                    validator: (value) { // Ajout du validateur
+                      if (value == null || value.isEmpty) {
+                        return 'Veuillez entrer votre mot de passe';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 50), // Espacement avant le bouton CONFIRMER
           DelayedAnimation(
             delay: 1100,
             child: ElevatedButton(
@@ -163,21 +292,24 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                'CONFIRMER', // Traduit le texte du bouton
+                'CONFIRMER',
                 style: TextStyle(
                   fontFamily: 'Josefin',
-                  color: Colors.white, // Couleur du texte du bouton
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               onPressed: () {
-                // Navigue vers la page de transition après la connexion
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Transition(),
-                  ),
-                );
+                // Valide le formulaire
+                if (_formKey.currentState!.validate()) {
+                  // Si la validation réussit, navigue vers la page de transition
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Transition(),
+                    ),
+                  );
+                }
               },
             ),
           ),
@@ -189,116 +321,18 @@ class LoginPage extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   // Retourne à la page de présentation
-                  Navigator.pop(context); // Pop la route actuelle
+                  Navigator.pop(context);
                 },
                 child: const DelayedAnimation(
                   delay: 1100,
                   child: Text(
-                    "Retour", // Traduit le texte du bouton
+                    "Retour",
                     style: TextStyle(
                       fontFamily: 'Josefin',
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: Colors.blueAccent,
                     ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// Le formulaire de connexion (Email/ID et Mot de passe)
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
-
-  @override
-  _LoginFormState createState() => _LoginFormState(); // Correction du nom de la classe d'état
-}
-
-class _LoginFormState extends State<LoginForm> {
-  bool _obscureText = true; // Pour masquer/afficher le mot de passe
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
-        children: [
-          DelayedAnimation(
-            delay: 1000,
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: 'Votre identifiant', // Traduit le label
-                labelStyle: TextStyle(
-                  fontFamily: 'Josefin',
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey[600], // Couleur du label ajustée
-                ),
-                filled: true,
-                fillColor: const Color.fromARGB(90, 212, 212, 212),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: BorderSide.none, // Pas de bordure visible
-                ),
-                enabledBorder: OutlineInputBorder( // Bordure quand le champ n'est pas focus
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder( // Bordure quand le champ est focus
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: const BorderSide(
-                    color: Colors.blueAccent, // Couleur de la bordure en focus
-                    width: 2.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 30),
-          DelayedAnimation(
-            delay: 1050,
-            child: TextField(
-              obscureText: _obscureText,
-              decoration: InputDecoration(
-                labelText: 'Mot de passe', // Traduit le label
-                labelStyle: TextStyle(
-                  fontFamily: 'Josefin',
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey[600], // Couleur du label ajustée
-                ),
-                filled: true,
-                fillColor: const Color.fromARGB(90, 212, 212, 212),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscureText ? Icons.visibility_off : Icons.visibility, // Change l'icône
-                    color: const Color.fromARGB(255, 82, 141, 243),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
-                  },
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: BorderSide.none, // Pas de bordure visible
-                ),
-                enabledBorder: OutlineInputBorder( // Bordure quand le champ n'est pas focus
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder( // Bordure quand le champ est focus
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: const BorderSide(
-                    color: Colors.blueAccent, // Couleur de la bordure en focus
-                    width: 2.0,
                   ),
                 ),
               ),
