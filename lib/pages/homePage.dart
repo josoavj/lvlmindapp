@@ -3,7 +3,6 @@ import 'package:lvlmindbeta/Models/screenModels/matiereScreen.dart'; // Assurez-
 import 'package:lvlmindbeta/pages/filesPage.dart'; // Assurez-vous que ce chemin est correct
 import 'package:lvlmindbeta/Models/popuphome.dart'; // Assurez-vous que ce chemin est correct et que Section est à jour
 import 'package:lvlmindbeta/Models/matiere.dart'; // Assurez-vous que ce chemin est correct et que Matiere est à jour
-import 'package:lvlmindbeta/Models/secteur.dart'; // Importez la classe Secteur si elle n'est pas déjà dans matiere.dart
 
 // Définition de la page d'accueil de l'application
 class Homepage extends StatefulWidget {
