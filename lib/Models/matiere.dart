@@ -204,11 +204,11 @@ class Matiere {
           "Chapitre 10: Déploiement sur App Stores (Google Play, Apple App Store)",
         ],
       ),
-      // --- NOUVELLES MATIERES AJOUTEES ---
+      // --- NOUVELLES MATIERES AJOUTÉES (Réutilisant les images existantes) ---
       Matiere(
         name: "Programmation Orientée Objet",
         number: "10 Chapitres",
-        image: 'assets/images/courses/oop.png', // Assurez-vous d'avoir cette image
+        image: 'assets/images/courses/data_structure.png', // Réutilisation d'une image existante
         chapters: [
           "Chapitre 1: Concepts Fondamentaux de l'POO",
           "Chapitre 2: Classes et Objets",
@@ -225,7 +225,7 @@ class Matiere {
       Matiere(
         name: "Cloud Computing",
         number: "10 Chapitres",
-        image: 'assets/images/courses/cloud_computing.png', // Assurez-vous d'avoir cette image
+        image: 'assets/images/courses/networking.png', // Réutilisation d'une image existante
         chapters: [
           "Chapitre 1: Introduction au Cloud Computing",
           "Chapitre 2: Modèles de Service (IaaS, PaaS, SaaS)",
@@ -242,7 +242,7 @@ class Matiere {
       Matiere(
         name: "Big Data",
         number: "10 Chapitres",
-        image: 'assets/images/courses/big_data.png', // Assurez-vous d'avoir cette image
+        image: 'assets/images/courses/database.png', // Réutilisation d'une image existante
         chapters: [
           "Chapitre 1: Introduction au Big Data",
           "Chapitre 2: Les 3 V du Big Data (Volume, Vélocité, Variété)",
@@ -259,7 +259,7 @@ class Matiere {
       Matiere(
         name: "DevOps",
         number: "10 Chapitres",
-        image: 'assets/images/courses/devops_course.png', // Assurez-vous d'avoir cette image
+        image: 'assets/images/courses/project_management.png', // Réutilisation d'une image existante
         chapters: [
           "Chapitre 1: Introduction au DevOps et ses Principes",
           "Chapitre 2: Intégration Continue (CI)",
@@ -276,7 +276,7 @@ class Matiere {
       Matiere(
         name: "Blockchain",
         number: "10 Chapitres",
-        image: 'assets/images/courses/blockchain.png', // Assurez-vous d'avoir cette image
+        image: 'assets/images/courses/electronic.png', // Réutilisation d'une image existante
         chapters: [
           "Chapitre 1: Introduction à la Blockchain",
           "Chapitre 2: Cryptographie et Hachage",
@@ -293,7 +293,7 @@ class Matiere {
       Matiere(
         name: "Analyse de Données",
         number: "10 Chapitres",
-        image: 'assets/images/courses/data_analysis.png',
+        image: 'assets/images/courses/ai.png', // Réutilisation d'une image existante
         chapters: [
           "Chapitre 1: Introduction à l'Analyse de Données",
           "Chapitre 2: Collecte et Nettoyage des Données",
@@ -310,7 +310,7 @@ class Matiere {
       Matiere(
         name: "Génie Logiciel",
         number: "10 Chapitres",
-        image: 'assets/images/courses/software_engineering.png',
+        image: 'assets/images/courses/web_dev.png', // Réutilisation d'une image existante
         chapters: [
           "Chapitre 1: Introduction au Génie Logiciel",
           "Chapitre 2: Modèles de Processus Logiciels (Cascade, Agile)",
@@ -327,7 +327,7 @@ class Matiere {
       Matiere(
         name: "Robotique",
         number: "10 Chapitres",
-        image: 'assets/images/courses/robotics_course.png',
+        image: 'assets/images/courses/algorithm.png', // Réutilisation d'une image existante
         chapters: [
           "Chapitre 1: Introduction à la Robotique",
           "Chapitre 2: Composants d'un Robot (Capteurs, Actionneurs)",
@@ -373,17 +373,16 @@ class Secteur {
       Secteur(name: "Marketing Digital", image: 'assets/images/sectors/digital_marketing.png'),
       Secteur(name: "Robotique", image: 'assets/images/sectors/robotics.png'),
       Secteur(name: "Science des Données", image: 'assets/images/sectors/data_science.png'),
-      // --- NOUVEAUX SECTEURS AJOUTES ---
-      Secteur(name: "Réalité Virtuelle (VR)", image: 'assets/images/sectors/vr.png'), // Assurez-vous d'avoir cette image
-      Secteur(name: "Cybersécurité Avancée", image: 'assets/images/sectors/advanced_cybersecurity.png'), // Assurez-vous d'avoir cette image
-      Secteur(name: "Gestion des Produits", image: 'assets/images/sectors/product_management.png'), // Assurez-vous d'avoir cette image
-      Secteur(name: "Biomédical", image: 'assets/images/sectors/biomedical.png'), // Assurez-vous d'avoir cette image
-      Secteur(name: "Écologie et Environnement", image: 'assets/images/sectors/ecology.png'), // Assurez-vous d'avoir cette image
-      Secteur(name: "Finance Durable", image: 'assets/images/sectors/sustainable_finance.png'),
-      Secteur(name: "Éducation en Ligne", image: 'assets/images/sectors/online_education.png'),
+      Secteur(name: "Réalité Virtuelle (VR)", image: 'assets/images/sectors/hacking.png'),
+      Secteur(name: "Cybersécurité Avancée", image: 'assets/images/sectors/cybersecurity.png'),
+      Secteur(name: "Gestion des Produits", image: 'assets/images/sectors/project_management.png'),
+      Secteur(name: "Biomédical", image: 'assets/images/sectors/biotech.png'),
+      Secteur(name: "Écologie et Environnement", image: 'assets/images/sectors/digital_art.png'),
+      Secteur(name: "Finance Durable", image: 'assets/images/sectors/trading.png'),
+      Secteur(name: "Éducation en Ligne", image: 'assets/images/sectors/design.png'),
       Secteur(name: "Jeux Vidéo", image: 'assets/images/sectors/gaming.png'),
-      Secteur(name: "Modélisation 3D", image: 'assets/images/sectors/3d_modeling.png'),
-      Secteur(name: "Agriculture de Précision", image: 'assets/images/sectors/precision_farming.png'),
+      Secteur(name: "Modélisation 3D", image: 'assets/images/sectors/digital_art.png'),
+      Secteur(name: "Agriculture de Précision", image: 'assets/images/sectors/robotics.png'),
     ];
   }
 }
