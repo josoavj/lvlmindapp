@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
 import 'package:lvlmindbeta/screens/loginpage.dart';
 import 'package:lvlmindbeta/screens/redirecting.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+
+import '../animations/simpleDelayedAnimation.dart';
 
 class Presentation extends StatelessWidget {
   const Presentation({super.key});
@@ -25,22 +26,28 @@ class Presentation extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // L'Align vide a été supprimé car il n'avait pas d'enfant et était inutile.
+            // Logo de l'application
             DelayedAnimation(
-              delay: 900,
+              delay: 500, // Commence l'animation plus tôt
+              curve: Curves.easeOutBack, // Effet de "recul" à l'arrivée
+              slideStartOffset: const Offset(0.0, -0.5), // Vient du haut
               child: _buildLvlMinLogo(),
             ),
-            const DelayedAnimation(
-              delay: 1000,
-              child: SizedBox(
-                  height: 60), // Espacement après le logo, peut être ajusté
-            ),
+            const SizedBox(height: 30), // Espacement ajusté après le logo
+
+            // Section de texte d'introduction
             DelayedAnimation(
-              delay: 1000,
+              delay: 800, // Démarre après le logo
+              curve: Curves.easeOutCubic, // Courbe douce
               child: _buildIntroTextSection(),
             ),
+            const SizedBox(height: 40), // Espacement après la section de texte
+
+            // Section des boutons (Login et Register)
             DelayedAnimation(
-              delay: 1000,
+              delay: 1100, // Démarre après le texte d'introduction
+              curve: Curves.bounceOut, // Effet de rebond pour les boutons
+              animationDuration: const Duration(milliseconds: 1000), // Durée pour l'effet de rebond
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 child: Column(
@@ -221,7 +228,7 @@ class Presentation extends StatelessWidget {
         );
       },
       child: const DelayedAnimation(
-        delay: 1050,
+        delay: 0, // Le délai est géré par le parent DelayedAnimation de la section
         child: Text(
           "S'inscrire", // Traduit le texte du bouton
           style: TextStyle(
