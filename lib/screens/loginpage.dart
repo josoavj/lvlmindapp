@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart'; // Assurez-vous que ce chemin est correct
-import 'package:lvlmindbeta/navbar/transition.dart'; // Assurez-vous que ce chemin est correct
-import 'package:lvlmindbeta/screens/presentation.dart'; // Assurez-vous que ce chemin est correct
-import 'package:flutter_svg/flutter_svg.dart'; // Assurez-vous que ce package est bien installé
+import 'package:lvlmindbeta/navbar/transition.dart';
+import 'package:lvlmindbeta/screens/presentation.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
 
 // La page de connexion de l'application
 class LoginPage extends StatelessWidget {
@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
       appBar: _buildAppBar(context), // Utilisation de la barre d'application refactorisée
       body: Stack(
         children: [
-          // Éléments de décoration SVG en arrière-plan
+          // Éléments de décoration SVG en arrière-plan (sans animation directe ici, ils sont statiques)
           Align(
             alignment: Alignment.topRight,
             child: SvgPicture.asset(
@@ -82,7 +82,7 @@ class LoginPage extends StatelessWidget {
             },
           ),
           // Logo de l'application
-          Padding( // <-- 'const' a été retiré ici
+          Padding(
             padding: const EdgeInsets.only(top: 10, right: 15),
             child: Image(
               height: 50,
@@ -101,55 +101,63 @@ class LoginPage extends StatelessWidget {
 
   /// Construit le corps principal de la page de connexion.
   SingleChildScrollView _buildLoginBody(BuildContext context) {
-    return const SingleChildScrollView( // Peut être const car LoginForm est maintenant const
+    return SingleChildScrollView(
       child: Column(
         children: [
           // Section de texte d'introduction
           Padding(
-            padding: EdgeInsets.only(top: 100, left: 30, right: 30),
+            padding: const EdgeInsets.only(top: 100, left: 30, right: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DelayedAnimation(
-                  delay: 800,
+                  delay: 500, // Début de l'animation pour le titre
+                  curve: Curves.easeOutCubic, // Courbe douce
+                  slideStartOffset: const Offset(0.0, -0.2), // Vient légèrement du haut
                   child: Text(
                     'Connectez-vous à LevelMind',
                     style: TextStyle(
                       fontFamily: 'PatrickHand',
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                      color: Theme.of(context).textTheme.titleLarge?.color, // S'adapte au thème
                     ),
                   ),
                 ),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 DelayedAnimation(
-                  delay: 850,
+                  delay: 700, // Démarre après le titre
+                  curve: Curves.easeOutQuad, // Courbe plus simple
+                  slideStartOffset: const Offset(0.0, -0.1), // Vient légèrement du haut
                   child: Text(
                     "Il est recommandé de se connecter",
                     style: TextStyle(
                       fontFamily: 'Josefin',
                       fontSize: 20,
-                      color: Color.fromARGB(95, 15, 12, 199),
+                      color: Theme.of(context).textTheme.bodyMedium?.color, // S'adapte au thème
                     ),
                   ),
                 ),
                 DelayedAnimation(
-                  delay: 850,
+                  delay: 800, // Démarre après la première ligne
+                  curve: Curves.easeOutQuad,
+                  slideStartOffset: const Offset(0.0, -0.1),
                   child: Text(
                     "avec votre identifiant.",
                     style: TextStyle(
                       fontFamily: 'Josefin',
                       fontSize: 20,
-                      color: Color.fromARGB(95, 15, 12, 199),
+                      color: Theme.of(context).textTheme.bodyMedium?.color, // S'adapte au thème
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 30),
-          LoginForm(), // Le formulaire de connexion (maintenant avec les boutons)
+          const SizedBox(height: 30),
+          // Le formulaire de connexion (maintenant avec les boutons)
+          // Le formulaire lui-même aura ses propres animations pour les champs
+          LoginForm(),
         ],
       ),
     );
@@ -165,10 +173,10 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _formKey = GlobalKey<FormState>(); // Clé globale pour le formulaire
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _obscureText = true; // Pour masquer/afficher le mot de passe
+  bool _obscureText = true;
 
   @override
   void dispose() {
@@ -179,8 +187,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form( // Le widget Form pour la validation
-      key: _formKey, // Associe la clé au formulaire
+    return Form(
+      key: _formKey,
       child: Column(
         children: [
           Container(
@@ -188,19 +196,21 @@ class _LoginFormState extends State<LoginForm> {
             child: Column(
               children: [
                 DelayedAnimation(
-                  delay: 1000,
-                  child: TextFormField( // Changé de TextField à TextFormField
-                    controller: _idController, // Associe le contrôleur
+                  delay: 1000, // Démarre après le texte d'intro
+                  curve: Curves.easeOutCubic,
+                  slideStartOffset: const Offset(0.0, 0.1), // Vient légèrement du bas
+                  child: TextFormField(
+                    controller: _idController,
                     decoration: InputDecoration(
                       labelText: 'Votre identifiant',
                       labelStyle: TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
-                        color: Colors.grey[600],
+                        color: Theme.of(context).inputDecorationTheme.labelStyle?.color, // S'adapte au thème
                       ),
                       filled: true,
-                      fillColor: const Color.fromARGB(90, 212, 212, 212),
+                      fillColor: Theme.of(context).inputDecorationTheme.fillColor, // S'adapte au thème
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                         borderSide: BorderSide.none,
@@ -211,13 +221,13 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
-                        borderSide: const BorderSide(
-                          color: Colors.blueAccent,
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor, // S'adapte au thème
                           width: 2.0,
                         ),
                       ),
                     ),
-                    validator: (value) { // Ajout du validateur
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez entrer votre identifiant';
                       }
@@ -227,9 +237,11 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 const SizedBox(height: 30),
                 DelayedAnimation(
-                  delay: 1050,
-                  child: TextFormField( // Changé de TextField à TextFormField
-                    controller: _passwordController, // Associe le contrôleur
+                  delay: 1200, // Démarre après le champ ID
+                  curve: Curves.easeOutCubic,
+                  slideStartOffset: const Offset(0.0, 0.1),
+                  child: TextFormField(
+                    controller: _passwordController,
                     obscureText: _obscureText,
                     decoration: InputDecoration(
                       labelText: 'Mot de passe',
@@ -237,14 +249,14 @@ class _LoginFormState extends State<LoginForm> {
                         fontFamily: 'Josefin',
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
-                        color: Colors.grey[600],
+                        color: Theme.of(context).inputDecorationTheme.labelStyle?.color, // S'adapte au thème
                       ),
                       filled: true,
-                      fillColor: const Color.fromARGB(90, 212, 212, 212),
+                      fillColor: Theme.of(context).inputDecorationTheme.fillColor, // S'adapte au thème
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscureText ? Icons.visibility_off : Icons.visibility,
-                          color: const Color.fromARGB(255, 82, 141, 243),
+                          color: Theme.of(context).iconTheme.color?.withOpacity(0.7), // S'adapte au thème
                         ),
                         onPressed: () {
                           setState(() {
@@ -262,13 +274,13 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
-                        borderSide: const BorderSide(
-                          color: Colors.blueAccent,
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor, // S'adapte au thème
                           width: 2.0,
                         ),
                       ),
                     ),
-                    validator: (value) { // Ajout du validateur
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez entrer votre mot de passe';
                       }
@@ -279,13 +291,15 @@ class _LoginFormState extends State<LoginForm> {
               ],
             ),
           ),
-          const SizedBox(height: 50), // Espacement avant le bouton CONFIRMER
+          const SizedBox(height: 50),
           DelayedAnimation(
-            delay: 1100,
+            delay: 1400, // Démarre après les champs de formulaire
+            curve: Curves.bounceOut, // Effet de rebond pour le bouton
+            animationDuration: const Duration(milliseconds: 1000), // Durée pour l'effet de rebond
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
-                backgroundColor: const Color.fromARGB(225, 249, 29, 88),
+                backgroundColor: const Color.fromARGB(225, 249, 29, 88), // Couleur spécifique ici
                 padding: const EdgeInsets.symmetric(
                   horizontal: 90,
                   vertical: 15,
@@ -300,9 +314,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               onPressed: () {
-                // Valide le formulaire
                 if (_formKey.currentState!.validate()) {
-                  // Si la validation réussit, navigue vers la page de transition
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -320,11 +332,12 @@ class _LoginFormState extends State<LoginForm> {
               padding: const EdgeInsets.only(right: 35),
               child: TextButton(
                 onPressed: () {
-                  // Retourne à la page de présentation
                   Navigator.pop(context);
                 },
                 child: const DelayedAnimation(
-                  delay: 1100,
+                  delay: 1600, // Démarre après le bouton CONFIRMER
+                  curve: Curves.easeOutCubic,
+                  slideStartOffset: Offset(0.0, 0.1),
                   child: Text(
                     "Retour",
                     style: TextStyle(
