@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
-import 'package:lvlmindbeta/navbar/transition.dart';
-import 'package:lvlmindbeta/screens/presentation.dart';
+import 'package:lvlmindbeta/navbar/transition.dart'; // Page de transition après connexion réussie
+import 'package:lvlmindbeta/screens/presentation.dart'; // Page de présentation pour le bouton retour
 import 'package:flutter_svg/flutter_svg.dart';
+import '../animations/simpleDelayedAnimation.dart';
+import '../services/authentificationService.dart';
 
-// La page de connexion de l'application
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
@@ -66,9 +66,9 @@ class LoginPage extends StatelessWidget {
         children: [
           // Bouton de fermeture
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.close,
-              color: Colors.blueAccent,
+              color: Theme.of(context).appBarTheme.foregroundColor ?? Colors.blueAccent, // Couleur adaptée au thème
               size: 25,
             ),
             onPressed: () {
@@ -87,9 +87,9 @@ class LoginPage extends StatelessWidget {
             child: Image(
               height: 50,
               image: const AssetImage('assets/images/logo/logomin.jpg'),
-              errorBuilder: (context, error, stackTrace) => const Icon(
+              errorBuilder: (context, error, stackTrace) => Icon(
                 Icons.image_not_supported,
-                color: Colors.grey,
+                color: Theme.of(context).iconTheme.color, // Couleur adaptée au thème
                 size: 50,
               ),
             ),
@@ -111,35 +111,35 @@ class LoginPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DelayedAnimation(
-                  delay: 500, // Début de l'animation pour le titre
-                  curve: Curves.easeOutCubic, // Courbe douce
-                  slideStartOffset: const Offset(0.0, -0.2), // Vient légèrement du haut
+                  delay: 500,
+                  curve: Curves.easeOutCubic,
+                  slideStartOffset: const Offset(0.0, -0.2),
                   child: Text(
                     'Connectez-vous à LevelMind',
                     style: TextStyle(
                       fontFamily: 'PatrickHand',
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
-                      color: Theme.of(context).textTheme.titleLarge?.color, // S'adapte au thème
+                      color: Theme.of(context).textTheme.titleLarge?.color,
                     ),
                   ),
                 ),
                 const SizedBox(height: 22),
                 DelayedAnimation(
-                  delay: 700, // Démarre après le titre
-                  curve: Curves.easeOutQuad, // Courbe plus simple
-                  slideStartOffset: const Offset(0.0, -0.1), // Vient légèrement du haut
+                  delay: 700,
+                  curve: Curves.easeOutQuad,
+                  slideStartOffset: const Offset(0.0, -0.1),
                   child: Text(
                     "Il est recommandé de se connecter",
                     style: TextStyle(
                       fontFamily: 'Josefin',
                       fontSize: 20,
-                      color: Theme.of(context).textTheme.bodyMedium?.color, // S'adapte au thème
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
                     ),
                   ),
                 ),
                 DelayedAnimation(
-                  delay: 800, // Démarre après la première ligne
+                  delay: 800,
                   curve: Curves.easeOutQuad,
                   slideStartOffset: const Offset(0.0, -0.1),
                   child: Text(
@@ -147,7 +147,7 @@ class LoginPage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Josefin',
                       fontSize: 20,
-                      color: Theme.of(context).textTheme.bodyMedium?.color, // S'adapte au thème
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
                     ),
                   ),
                 ),
@@ -155,16 +155,15 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          // Le formulaire de connexion (maintenant avec les boutons)
-          // Le formulaire lui-même aura ses propres animations pour les champs
-          LoginForm(),
+          // Le formulaire de connexion (maintenant avec la logique d'authentification)
+          const LoginForm(), // LoginForm est désormais une const
         ],
       ),
     );
   }
 }
 
-// Le formulaire de connexion (Email/ID et Mot de passe)
+// Le formulaire de connexion (Matricule et Mot de passe)
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
@@ -174,15 +173,65 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _matriculeController = TextEditingController(); // Renommé pour la clarté
   final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
+  bool _isLoading = false; // Pour l'indicateur de chargement
+  final AuthService _authService = AuthService(); // Instance du service d'authentification
 
   @override
   void dispose() {
-    _idController.dispose();
+    _matriculeController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  // Méthode de connexion
+  void _login() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true; // Active l'indicateur de chargement
+      });
+
+      try {
+        // Appel du service d'authentification avec le matricule et le mot de passe
+        final user = await _authService.login(
+          _matriculeController.text,
+          _passwordController.text,
+        );
+
+        if (user != null) {
+          if (!mounted) return; // Vérifie si le widget est toujours monté
+          // Connexion réussie, navigue vers l'écran de transition
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const Transition()),
+          );
+        } else {
+          // Cela ne devrait pas être atteint si l'exception est lancée par AuthService
+          _showErrorSnackBar('Numéro de matricule ou mot de passe incorrect.');
+        }
+      } catch (e) {
+        if (!mounted) return;
+        // Affiche le message d'erreur retourné par AuthService
+        _showErrorSnackBar(e.toString().replaceFirst('Exception: ', ''));
+      } finally {
+        setState(() {
+          _isLoading = false; // Désactive l'indicateur de chargement
+        });
+      }
+    }
+  }
+
+  // Fonction utilitaire pour afficher les messages d'erreur
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
@@ -196,14 +245,14 @@ class _LoginFormState extends State<LoginForm> {
             child: Column(
               children: [
                 DelayedAnimation(
-                  delay: 1000, // Démarre après le texte d'intro
+                  delay: 1000,
                   curve: Curves.easeOutCubic,
-                  slideStartOffset: const Offset(0.0, 0.1), // Vient légèrement du bas
+                  slideStartOffset: const Offset(0.0, 0.1),
                   child: TextFormField(
-                    controller: _idController,
+                    controller: _matriculeController, // Utilise le contrôleur pour le matricule
                     keyboardType: TextInputType.number, // Clavier numérique
                     decoration: InputDecoration(
-                      labelText: 'Votre identifiant (6 chiffres)', // Indication pour l'utilisateur
+                      labelText: 'Votre numéro de matricule (6 chiffres)', // Indication pour l'utilisateur
                       labelStyle: TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 15,
@@ -227,22 +276,22 @@ class _LoginFormState extends State<LoginForm> {
                           width: 2.0,
                         ),
                       ),
-                      errorBorder: OutlineInputBorder( // Style pour l'erreur
+                      errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                         borderSide: const BorderSide(color: Colors.red, width: 2.0),
                       ),
-                      focusedErrorBorder: OutlineInputBorder( // Style pour l'erreur quand focus
+                      focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                         borderSide: const BorderSide(color: Colors.red, width: 2.0),
                       ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Veuillez entrer votre identifiant';
+                        return 'Veuillez entrer votre numéro de matricule';
                       }
                       // Validation: uniquement des chiffres et 6 caractères
                       if (!RegExp(r'^[0-9]{6}$').hasMatch(value)) {
-                        return 'L\'identifiant doit être un nombre de 6 chiffres';
+                        return 'Le matricule doit être un nombre de 6 chiffres';
                       }
                       return null;
                     },
@@ -250,14 +299,14 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 const SizedBox(height: 30),
                 DelayedAnimation(
-                  delay: 1200, // Démarre après le champ ID
+                  delay: 1200,
                   curve: Curves.easeOutCubic,
                   slideStartOffset: const Offset(0.0, 0.1),
                   child: TextFormField(
                     controller: _passwordController,
                     obscureText: _obscureText,
                     decoration: InputDecoration(
-                      labelText: 'Mot de passe (min. 8 caractères)', // Indication pour l'utilisateur
+                      labelText: 'Mot de passe (min. 8 caractères)',
                       labelStyle: TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 15,
@@ -292,11 +341,11 @@ class _LoginFormState extends State<LoginForm> {
                           width: 2.0,
                         ),
                       ),
-                      errorBorder: OutlineInputBorder( // Style pour l'erreur
+                      errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                         borderSide: const BorderSide(color: Colors.red, width: 2.0),
                       ),
-                      focusedErrorBorder: OutlineInputBorder( // Style pour l'erreur quand focus
+                      focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                         borderSide: const BorderSide(color: Colors.red, width: 2.0),
                       ),
@@ -305,7 +354,6 @@ class _LoginFormState extends State<LoginForm> {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez entrer votre mot de passe';
                       }
-                      // Validation: minimum 8 caractères
                       if (value.length < 8) {
                         return 'Le mot de passe doit contenir au moins 8 caractères';
                       }
@@ -318,13 +366,15 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 50),
           DelayedAnimation(
-            delay: 1400, // Démarre après les champs de formulaire
-            curve: Curves.bounceOut, // Effet de rebond pour le bouton
-            animationDuration: const Duration(milliseconds: 1000), // Durée pour l'effet de rebond
-            child: ElevatedButton(
+            delay: 1400,
+            curve: Curves.bounceOut,
+            animationDuration: const Duration(milliseconds: 1000),
+            child: _isLoading // Affiche l'indicateur si en cours de chargement
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
-                backgroundColor: const Color.fromARGB(225, 249, 29, 88), // Couleur spécifique ici
+                backgroundColor: const Color.fromARGB(225, 249, 29, 88),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 90,
                   vertical: 15,
@@ -335,20 +385,10 @@ class _LoginFormState extends State<LoginForm> {
                 style: TextStyle(
                   fontFamily: 'Josefin',
                   color: Colors.white,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800, // Poids de police plus fort pour le bouton
                 ),
               ),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  // Si la validation réussit, navigue vers la page de transition
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Transition(),
-                    ),
-                  );
-                }
-              },
+              onPressed: _login, // Appel de la méthode _login
             ),
           ),
           const SizedBox(height: 90),
@@ -361,7 +401,7 @@ class _LoginFormState extends State<LoginForm> {
                   Navigator.pop(context);
                 },
                 child: const DelayedAnimation(
-                  delay: 1600, // Démarre après le bouton CONFIRMER
+                  delay: 1600,
                   curve: Curves.easeOutCubic,
                   slideStartOffset: Offset(0.0, 0.1),
                   child: Text(
