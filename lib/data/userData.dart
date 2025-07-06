@@ -6,7 +6,7 @@ final List<UserProfile> users = [
     password: 'password123',
     name: 'Josoa Vonjiniaina',
     status: 'Étudiant',
-    matricule: 'LM2023001',
+    matricule: '202301',
     establishment: 'Université d\'Antananarivo',
     avatarPath: 'assets/images/profil_placeholder.png',
   ),
@@ -15,7 +15,7 @@ final List<UserProfile> users = [
     password: 'password123',
     name: 'Fanantenana Andriamaro',
     status: 'Étudiant',
-    matricule: 'LM2023002', // Vérifiez ce matricule
+    matricule: '202302', // Vérifiez ce matricule
     establishment: 'ESPA Vontovorona',
     avatarPath: 'assets/images/profil_placeholder_fana.png',
   ),
@@ -24,7 +24,7 @@ final List<UserProfile> users = [
     password: 'adminpassword',
     name: 'Administrateur Test',
     status: 'Professeur',
-    matricule: 'LM2023003', // Vérifiez ce matricule
+    matricule: '202303', // Vérifiez ce matricule
     establishment: 'LVLMIND Academy',
     avatarPath: 'assets/images/profil_placeholder_admin.png',
   ),
