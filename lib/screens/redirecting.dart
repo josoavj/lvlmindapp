@@ -150,7 +150,7 @@ class Redirecting extends StatelessWidget {
                         ),
                         const SizedBox(width: 5), // Espacement entre le texte et le bouton
                         Link(
-                          uri: Uri.https('github.com', '/Josoa886'), // Votre lien GitHub
+                          uri: Uri.https('github.com', 'josoavj/lvlmindapp'), // Votre lien GitHub
                           target: LinkTarget.blank, // Ouvre dans un nouvel onglet/navigateur
                           builder: (context, followLink) => TextButton(
                             onPressed: followLink, // Utilise la fonction fournie par Link
