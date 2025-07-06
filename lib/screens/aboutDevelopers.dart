@@ -62,6 +62,7 @@ class AboutDevelopersPage extends StatelessWidget {
               context,
               name: "Josoa Vonjiniaina",
               role: "Développeur Principal (Et UI,UX)",
+              email: "josoavonjiniaina13@gmail.com",
               githubUsername: "josoavj",
               githubProfileUrl: "https://github.com/josoavj",
             ),
@@ -72,6 +73,7 @@ class AboutDevelopersPage extends StatelessWidget {
               context,
               name: "Faly Fiatoa",
               role: "Développeur Principal",
+              email: "falyfiatoa@gmail.com",
               githubUsername: "foulburst",
               githubProfileUrl: "https://github.com/foulburst",
             ),
@@ -126,7 +128,8 @@ class AboutDevelopersPage extends StatelessWidget {
       BuildContext context, {
         required String name,
         required String role,
-        required String githubUsername, // Gardez ce paramètre
+        required String email,
+        required String githubUsername,
         required String githubProfileUrl,
       }) {
     // Construction de l'URL de l'image de profil GitHub
