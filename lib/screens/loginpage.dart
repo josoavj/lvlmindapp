@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
 import 'package:lvlmindbeta/navbar/transition.dart';
 import 'package:lvlmindbeta/screens/presentation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
 
 // La page de connexion de l'application
 class LoginPage extends StatelessWidget {
@@ -201,16 +201,17 @@ class _LoginFormState extends State<LoginForm> {
                   slideStartOffset: const Offset(0.0, 0.1), // Vient légèrement du bas
                   child: TextFormField(
                     controller: _idController,
+                    keyboardType: TextInputType.number, // Clavier numérique
                     decoration: InputDecoration(
-                      labelText: 'Votre identifiant',
+                      labelText: 'Votre identifiant (6 chiffres)', // Indication pour l'utilisateur
                       labelStyle: TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
-                        color: Theme.of(context).inputDecorationTheme.labelStyle?.color, // S'adapte au thème
+                        color: Theme.of(context).inputDecorationTheme.labelStyle?.color,
                       ),
                       filled: true,
-                      fillColor: Theme.of(context).inputDecorationTheme.fillColor, // S'adapte au thème
+                      fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                         borderSide: BorderSide.none,
@@ -222,14 +223,26 @@ class _LoginFormState extends State<LoginForm> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                         borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor, // S'adapte au thème
+                          color: Theme.of(context).primaryColor,
                           width: 2.0,
                         ),
+                      ),
+                      errorBorder: OutlineInputBorder( // Style pour l'erreur
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: const BorderSide(color: Colors.red, width: 2.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder( // Style pour l'erreur quand focus
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: const BorderSide(color: Colors.red, width: 2.0),
                       ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez entrer votre identifiant';
+                      }
+                      // Validation: uniquement des chiffres et 6 caractères
+                      if (!RegExp(r'^[0-9]{6}$').hasMatch(value)) {
+                        return 'L\'identifiant doit être un nombre de 6 chiffres';
                       }
                       return null;
                     },
@@ -244,19 +257,19 @@ class _LoginFormState extends State<LoginForm> {
                     controller: _passwordController,
                     obscureText: _obscureText,
                     decoration: InputDecoration(
-                      labelText: 'Mot de passe',
+                      labelText: 'Mot de passe (min. 8 caractères)', // Indication pour l'utilisateur
                       labelStyle: TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
-                        color: Theme.of(context).inputDecorationTheme.labelStyle?.color, // S'adapte au thème
+                        color: Theme.of(context).inputDecorationTheme.labelStyle?.color,
                       ),
                       filled: true,
-                      fillColor: Theme.of(context).inputDecorationTheme.fillColor, // S'adapte au thème
+                      fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscureText ? Icons.visibility_off : Icons.visibility,
-                          color: Theme.of(context).iconTheme.color?.withOpacity(0.7), // S'adapte au thème
+                          color: Theme.of(context).iconTheme.color?.withOpacity(0.7),
                         ),
                         onPressed: () {
                           setState(() {
@@ -275,14 +288,26 @@ class _LoginFormState extends State<LoginForm> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                         borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor, // S'adapte au thème
+                          color: Theme.of(context).primaryColor,
                           width: 2.0,
                         ),
+                      ),
+                      errorBorder: OutlineInputBorder( // Style pour l'erreur
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: const BorderSide(color: Colors.red, width: 2.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder( // Style pour l'erreur quand focus
+                        borderRadius: BorderRadius.circular(100),
+                        borderSide: const BorderSide(color: Colors.red, width: 2.0),
                       ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez entrer votre mot de passe';
+                      }
+                      // Validation: minimum 8 caractères
+                      if (value.length < 8) {
+                        return 'Le mot de passe doit contenir au moins 8 caractères';
                       }
                       return null;
                     },
@@ -315,6 +340,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
+                  // Si la validation réussit, navigue vers la page de transition
                   Navigator.push(
                     context,
                     MaterialPageRoute(
