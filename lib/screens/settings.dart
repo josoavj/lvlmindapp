@@ -137,7 +137,6 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
             trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              // Naviguer vers la page d'édition de profil
               _showSnackBar(context, "Fonctionnalité 'Modifier le profil' à implémenter");
             },
           ),
@@ -149,7 +148,6 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: Icon(Icons.lock, color: Theme.of(context).iconTheme.color),
             trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              // Naviguer vers la page de changement de mot de passe
               _showSnackBar(context, "Fonctionnalité 'Changer le mot de passe' à implémenter");
             },
           ),
