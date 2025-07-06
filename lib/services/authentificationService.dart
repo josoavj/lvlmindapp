@@ -1,18 +1,16 @@
-import 'dart:convert'; // Pour encoder/décoder en JSON
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../Models/userProfile.dart';
 import '../data/userData.dart';
-
 class AuthService {
   static const String _loggedInUserKey = 'loggedInUser';
 
-  /// Tente de connecter un utilisateur.
+  /// Tente de connecter un utilisateur en utilisant le numéro de matricule et le mot de passe.
   /// Retourne le UserProfile si la connexion réussit, null sinon.
-  Future<UserProfile?> login(String username, String password) async {
+  Future<UserProfile?> login(String matricule, String password) async { // CHANGEMENT: matricule au lieu de username
     final user = users.firstWhere(
-          (u) => u.username == username && u.password == password,
-      orElse: () => throw Exception('Identifiants invalides'), // Ou retourne null
+          (u) => u.matricule == matricule && u.password == password, // CHANGEMENT: recherche par matricule
+      orElse: () => throw Exception('Numéro de matricule ou mot de passe incorrect.'), // Message d'erreur mis à jour
     );
 
     if (user != null) {
