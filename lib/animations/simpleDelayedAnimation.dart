@@ -1,22 +1,22 @@
-// ignore_for_file: file_names
+// lib/animations/delayed_animation.dart (ou simpleDelayedAnimation.dart si c'est son nom)
 
 import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
 
 class DelayedAnimation extends StatefulWidget {
   final Widget child;
-  final int delay; // Délai avant le début de l'animation en millisecondes
-  final Duration animationDuration; // Durée de l'animation elle-même
-  final Curve curve; // Courbe de l'animation pour plus de fluidité
-  final Offset slideStartOffset; // Position de début du glissement
+  final int delay;
+  final Duration animationDuration;
+  final Curve curve;
+  final Offset slideStartOffset;
 
   const DelayedAnimation({
     super.key,
     required this.delay,
     required this.child,
-    this.animationDuration = const Duration(milliseconds: 800), // Durée par défaut
-    this.curve = Curves.easeOutCubic, // Courbe plus dynamique par défaut
-    this.slideStartOffset = const Offset(0.0, -0.35), // Offset initial par défaut
+    this.animationDuration = const Duration(milliseconds: 800),
+    this.curve = Curves.easeOutCubic,
+    this.slideStartOffset = const Offset(0.0, -0.35),
   });
 
   @override
@@ -27,44 +27,39 @@ class _DelayedAnimationState extends State<DelayedAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
-  late Animation<double> _fadeAnimation; // Utilisation explicite pour la clarté
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
 
-    // 1. Initialisation du contrôleur d'animation
     _controller = AnimationController(
       vsync: this,
-      duration: widget.animationDuration, // Utilise la durée configurable
+      duration: widget.animationDuration,
     );
 
-    // 2. Définition des animations (Slide et Fade)
-    // La courbe est maintenant configurable via les propriétés du widget.
-    // CurvedAnimation est créé une seule fois et partagé par les deux animations.
     final curvedAnimation = CurvedAnimation(
       parent: _controller,
-      curve: widget.curve, // Utilise la courbe configurable
+      curve: widget.curve,
     );
 
+    // Assurez-vous que ces initialisations sont synchrones et complètes
     _slideAnimation = Tween<Offset>(
-      begin: widget.slideStartOffset, // Offset de début configurable
-      end: Offset.zero, // Arrive à la position finale
-    ).animate(curvedAnimation); // Animation basée sur la courbe définie
+      begin: widget.slideStartOffset,
+      end: Offset.zero,
+    ).animate(curvedAnimation);
 
     _fadeAnimation = Tween<double>(
-      begin: 0.0, // Commence complètement transparent
-      end: 1.0, // Finit complètement opaque
-    ).animate(curvedAnimation); // Animation basée sur la même courbe
+      begin: 0.0,
+      end: 1.0,
+    ).animate(curvedAnimation);
 
-    // 3. Déclenchement de l'animation après le délai spécifié
+    // Le Timer déclenche uniquement le forward() du contrôleur
     if (widget.delay == 0) {
-      // Si le délai est 0, on démarre immédiatement
       _controller.forward();
     } else {
-      // Sinon, on utilise un Timer pour le délai
       Timer(Duration(milliseconds: widget.delay), () {
-        if (mounted) { // Vérifie si le widget est toujours monté avant d'animer
+        if (mounted) {
           _controller.forward();
         }
       });
@@ -73,14 +68,15 @@ class _DelayedAnimationState extends State<DelayedAnimation>
 
   @override
   void dispose() {
-    // Très important : libérer les ressources de l'AnimationController
-    // pour éviter les fuites de mémoire.
     _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Les animations _fadeAnimation et _slideAnimation doivent être initialisées ici.
+    // Si _controller.forward() n'a pas été appelé, elles ont toujours leurs valeurs de début (0.0 pour opacité, slideStartOffset pour position)
+    // C'est pourquoi elles sont initialisées dans initState et devraient être prêtes.
     return FadeTransition(
       opacity: _fadeAnimation,
       child: SlideTransition(
