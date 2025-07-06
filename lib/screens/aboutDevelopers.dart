@@ -192,6 +192,15 @@ class AboutDevelopersPage extends StatelessWidget {
                     color: Theme.of(context).textTheme.bodySmall?.color,
                   ),
                 ),
+                Text(
+                  email,
+                  style: TextStyle(
+                    fontFamily: 'Josefin',
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.titleLarge?.color
+                  ),
+                )
               ],
             ),
           ],
