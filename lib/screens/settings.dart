@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:lvlmindbeta/providers/theme_notifier.dart'; // Assurez-vous que ce chemin est correct
+import 'package:lvlmindbeta/providers/theme_notifier.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'aboutDevelopers.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -22,21 +25,23 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Paramètres",
           style: TextStyle(
             fontFamily: 'Josefin',
             fontSize: 22,
             fontWeight: FontWeight.w700,
-            color: Colors.white,
+            // Utilise la couleur du texte de l'AppBar du thème, ou blanc par défaut
+            color: Theme.of(context).appBarTheme.titleTextStyle?.color ?? Colors.white,
           ),
         ),
-        // Les couleurs de l'AppBar sont gérées par le thème de MaterialApp
-        // backgroundColor: Colors.blueAccent, // N'est plus nécessaire ici
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back), // Couleur gérée par le thème
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).appBarTheme.foregroundColor, // Couleur de l'icône de l'AppBar du thème
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -58,21 +63,29 @@ class _SettingsPageState extends State<SettingsPage> {
                 _notificationsEnabled = value;
               });
               // Logique pour gérer les notifications
+              // Ex: Appeler une API ou un service de notification
+              _showSnackBar(context, "Notifications ${value ? 'activées' : 'désactivées'}");
             },
-            secondary: const Icon(Icons.notifications), // Couleur gérée par le thème
-            activeColor: Colors.blueAccent,
+            secondary: Icon(
+              Icons.notifications,
+              color: Theme.of(context).iconTheme.color, // Couleur de l'icône du thème
+            ),
+            activeColor: Theme.of(context).colorScheme.primary, // Couleur principale du thème
           ),
           SwitchListTile(
             title: const Text(
               "Mode Sombre",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            value: isDarkMode, // Lire l'état du thème directement depuis ThemeNotifier
+            value: isDarkMode,
             onChanged: (bool value) {
-              themeNotifier.toggleTheme(); // Appeler la méthode toggleTheme du ThemeNotifier
+              themeNotifier.toggleTheme();
             },
-            secondary: const Icon(Icons.dark_mode), // Couleur gérée par le thème
-            activeColor: Colors.blueAccent,
+            secondary: Icon(
+              Icons.dark_mode,
+              color: Theme.of(context).iconTheme.color,
+            ),
+            activeColor: Theme.of(context).colorScheme.primary,
           ),
           ListTile(
             title: const Text(
@@ -80,8 +93,15 @@ class _SettingsPageState extends State<SettingsPage> {
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
             subtitle: Text(_selectedLanguage),
-            leading: const Icon(Icons.language), // Couleur gérée par le thème
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18), // Couleur gérée par le thème
+            leading: Icon(
+              Icons.language,
+              color: Theme.of(context).iconTheme.color,
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              size: 18,
+              color: Theme.of(context).iconTheme.color,
+            ),
             onTap: () {
               _showLanguagePicker(context);
             },
@@ -91,9 +111,16 @@ class _SettingsPageState extends State<SettingsPage> {
               "Thème de l'application",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            subtitle: Text(currentThemeName), // Afficher le nom du thème actuel
-            leading: const Icon(Icons.palette), // Couleur gérée par le thème
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18), // Couleur gérée par le thème
+            subtitle: Text(currentThemeName),
+            leading: Icon(
+              Icons.palette,
+              color: Theme.of(context).iconTheme.color,
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              size: 18,
+              color: Theme.of(context).iconTheme.color,
+            ),
             onTap: () {
               _showThemePicker(context, themeNotifier);
             },
@@ -107,10 +134,10 @@ class _SettingsPageState extends State<SettingsPage> {
               "Modifier le profil",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: const Icon(Icons.person),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            leading: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              // Naviguer vers la page d'édition de profil
+              _showSnackBar(context, "Fonctionnalité 'Modifier le profil' à implémenter");
             },
           ),
           ListTile(
@@ -118,10 +145,10 @@ class _SettingsPageState extends State<SettingsPage> {
               "Changer le mot de passe",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: const Icon(Icons.lock),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            leading: Icon(Icons.lock, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              // Naviguer vers la page de changement de mot de passe
+              _showSnackBar(context, "Fonctionnalité 'Changer le mot de passe' à implémenter");
             },
           ),
           const Divider(),
@@ -133,10 +160,10 @@ class _SettingsPageState extends State<SettingsPage> {
               "Politique de confidentialité",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: const Icon(Icons.privacy_tip),
-            trailing: const Icon(Icons.open_in_new, size: 18),
+            leading: Icon(Icons.privacy_tip, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.open_in_new, size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              // Ouvrir la politique de confidentialité dans un navigateur ou une WebView
+              _launchURL('https://www.example.com/privacy'); // Remplacez par votre lien réel
             },
           ),
           ListTile(
@@ -144,10 +171,10 @@ class _SettingsPageState extends State<SettingsPage> {
               "Conditions d'utilisation",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: const Icon(Icons.description),
-            trailing: const Icon(Icons.open_in_new, size: 18),
+            leading: Icon(Icons.description, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.open_in_new, size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              // Ouvrir les conditions d'utilisation
+              _launchURL('https://www.example.com/terms'); // Remplacez par votre lien réel
             },
           ),
           SwitchListTile(
@@ -155,12 +182,13 @@ class _SettingsPageState extends State<SettingsPage> {
               "Authentification à deux facteurs",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            value: false, // Exemple, devrait être une variable d'état
+            value: false, // Exemple, devrait être une variable d'état liée à la logique réelle
             onChanged: (bool value) {
               // Logique pour activer/désactiver la 2FA
+              _showSnackBar(context, "Authentification à deux facteurs ${value ? 'activée' : 'désactivée'}");
             },
-            secondary: const Icon(Icons.security),
-            activeColor: Colors.blueAccent,
+            secondary: Icon(Icons.security, color: Theme.of(context).iconTheme.color),
+            activeColor: Theme.of(context).colorScheme.primary,
           ),
           const Divider(),
 
@@ -172,17 +200,32 @@ class _SettingsPageState extends State<SettingsPage> {
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
             subtitle: const Text("1.0.0"), // Remplacer par la version réelle de l'app
-            leading: const Icon(Icons.info_outline),
+            leading: Icon(Icons.info_outline, color: Theme.of(context).iconTheme.color),
+          ),
+          ListTile(
+            title: const Text(
+              "Développeurs", // Nouvelle entrée
+              style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
+            ),
+            leading: Icon(Icons.code, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
+            onTap: () {
+              // Navigue vers la nouvelle page des informations sur les développeurs
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AboutDevelopersPage()),
+              );
+            },
           ),
           ListTile(
             title: const Text(
               "Envoyer des retours",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: const Icon(Icons.feedback),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            leading: Icon(Icons.feedback, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              // Ouvrir un formulaire de feedback ou un client de messagerie
+              _launchURL('mailto:feedback@lvlmind.com?subject=Retour%20sur%20l\'application'); // Remplacez par votre adresse e-mail
             },
           ),
           ListTile(
@@ -190,10 +233,11 @@ class _SettingsPageState extends State<SettingsPage> {
               "Évaluer l'application",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: const Icon(Icons.star),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            leading: Icon(Icons.star, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              // Rediriger vers la page de l'application sur le store
+              // Rediriger vers la page de l'application sur le store (exemple Android)
+              _launchURL('market://details?id=com.lvlmind.beta'); // Remplacez par votre ID de package
             },
           ),
         ],
@@ -208,11 +252,11 @@ class _SettingsPageState extends State<SettingsPage> {
       padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
       child: Text(
         title,
-        style: TextStyle( // Utilise TextStyle pour s'adapter au thème (couleur texte)
+        style: TextStyle(
           fontFamily: 'Josefin',
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Theme.of(context).textTheme.titleLarge?.color, // S'adapte à la couleur de texte du thème
+          color: Theme.of(context).textTheme.titleLarge?.color,
         ),
       ),
     );
@@ -228,7 +272,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: <Widget>[
               ListTile(
                 title: const Text('Français', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: _selectedLanguage == 'Français' ? const Icon(Icons.check, color: Colors.blueAccent) : null,
+                trailing: _selectedLanguage == 'Français' ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary) : null,
                 onTap: () {
                   setState(() {
                     _selectedLanguage = 'Français';
@@ -238,7 +282,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               ListTile(
                 title: const Text('English', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: _selectedLanguage == 'English' ? const Icon(Icons.check, color: Colors.blueAccent) : null,
+                trailing: _selectedLanguage == 'English' ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary) : null,
                 onTap: () {
                   setState(() {
                     _selectedLanguage = 'English';
@@ -264,17 +308,17 @@ class _SettingsPageState extends State<SettingsPage> {
             children: <Widget>[
               ListTile(
                 title: const Text('Clair', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: themeNotifier.themeMode == ThemeMode.light ? const Icon(Icons.check, color: Colors.blueAccent) : null,
+                trailing: themeNotifier.themeMode == ThemeMode.light ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary) : null,
                 onTap: () {
-                  themeNotifier.setThemeMode(ThemeMode.light); // Définit le thème via notifier
+                  themeNotifier.setThemeMode(ThemeMode.light);
                   Navigator.pop(context);
                 },
               ),
               ListTile(
                 title: const Text('Sombre', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: themeNotifier.themeMode == ThemeMode.dark ? const Icon(Icons.check, color: Colors.blueAccent) : null,
+                trailing: themeNotifier.themeMode == ThemeMode.dark ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary) : null,
                 onTap: () {
-                  themeNotifier.setThemeMode(ThemeMode.dark); // Définit le thème via notifier
+                  themeNotifier.setThemeMode(ThemeMode.dark);
                   Navigator.pop(context);
                 },
               ),
@@ -282,6 +326,26 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         );
       },
+    );
+  }
+
+  // Fonction pour lancer des URLs
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      if (mounted) {
+        _showSnackBar(context, 'Impossible d\'ouvrir le lien : $url');
+      }
+    }
+  }
+
+  // Petite fonction utilitaire pour afficher des SnackBar
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+      ),
     );
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
+import '../Models/userProfile.dart';
 import '../screens/deconnexion.dart';
 import '../screens/settings.dart';
+import '../services/authentificationService.dart'; // Nom du fichier tel que fourni
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -11,74 +12,126 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  // Données fictives pour le profil (devraient être chargées dynamiquement)
-  final String _userName = "Josoa Vonjiniaina"; // Nom de l'utilisateur
-  final String _userStatus = "Étudiant"; // Statut (Étudiant ou Professeur)
-  final String _userAvatarPath = 'assets/images/profil_placeholder.png'; // Chemin de l'image de l'avatar
+  UserProfile? _currentUserProfile;
+  final AuthService _authService = AuthService(); // Instance du service d'authentification
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserProfile();
+  }
+
+  Future<void> _loadUserProfile() async {
+    final user = await _authService.getLoggedInUser();
+    if (mounted) {
+      setState(() {
+        _currentUserProfile = user;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_currentUserProfile == null) {
+      return Scaffold(
+        appBar: _buildAppBar(Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.onPrimary),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final String userName = _currentUserProfile!.name;
+    final String userStatus = _currentUserProfile!.status;
+    final String userMatricule = _currentUserProfile!.matricule;
+    final String userEstablishment = _currentUserProfile!.establishment;
+    final String userAvatarPath = _currentUserProfile!.avatarPath;
+
+    final Color primaryColor = Theme.of(context).colorScheme.primary;
+    final Color onPrimaryColor = Theme.of(context).colorScheme.onPrimary;
+    final Color textColor = Theme.of(context).textTheme.bodyMedium!.color!;
+    final Color sectionTitleColor = Theme.of(context).textTheme.titleLarge?.color ?? Colors.black;
+
     return Scaffold(
-      appBar: _buildAppBar(), // Utilisation d'une AppBar personnalisée
+      appBar: _buildAppBar(primaryColor, onPrimaryColor),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         children: [
-          // Section supérieure du profil (Avatar et Nom)
           Card(
-            color: Colors.blueAccent, // Couleur de fond de la carte
-            elevation: 8, // Élévation de la carte
+            color: primaryColor,
+            elevation: 8,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15), // Coins arrondis pour la carte
+              borderRadius: BorderRadius.circular(15),
             ),
-            margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Marge pour la carte
+            margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 40, // Taille de l'avatar
-                    backgroundColor: Colors.white, // Fond blanc pour l'avatar
-                    child: ClipOval( // Pour s'assurer que l'image est bien ronde
+                    radius: 40,
+                    backgroundColor: onPrimaryColor,
+                    child: ClipOval(
                       child: Image.asset(
-                        _userAvatarPath,
-                        fit: BoxFit.cover, // S'assure que l'image remplit le cercle
+                        userAvatarPath,
+                        fit: BoxFit.cover,
                         width: 80,
                         height: 80,
                         errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
+                          return Icon(
                             Icons.person,
                             size: 60,
-                            color: Colors.grey, // Icône par défaut si l'image ne charge pas
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                           );
                         },
                       ),
                     ),
                   ),
-                  const SizedBox(width: 20), // Espacement entre l'avatar et le texte
-                  Expanded( // Permet au texte de prendre l'espace restant
+                  const SizedBox(width: 20),
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _userName, // Nom de l'utilisateur
-                          style: const TextStyle(
+                          userName,
+                          style: TextStyle(
                             fontFamily: 'Josefin',
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white, // Texte en blanc pour contraster avec le fond bleu
+                            color: onPrimaryColor,
                           ),
-                          overflow: TextOverflow.ellipsis, // Gère le débordement si le nom est long
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          _userStatus, // Statut de l'utilisateur
+                          userStatus,
                           style: TextStyle(
                             fontFamily: 'Josefin',
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
-                            color: Colors.white.withOpacity(0.8), // Couleur légèrement transparente
+                            color: onPrimaryColor.withOpacity(0.8),
                           ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          'Matricule: $userMatricule',
+                          style: TextStyle(
+                            fontFamily: 'Josefin',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: onPrimaryColor.withOpacity(0.7),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          'Établissement: $userEstablishment',
+                          style: TextStyle(
+                            fontFamily: 'Josefin',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: onPrimaryColor.withOpacity(0.7),
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -88,41 +141,37 @@ class _ProfileState extends State<Profile> {
             ),
           ),
 
-          const SizedBox(height: 30), // Espacement entre les sections
-
-          // Section "Cours les plus suivis"
-          _buildSectionTitle("Mes Cours Préférés"),
+          const SizedBox(height: 30),
+          _buildSectionTitle("Mes Cours Préférés", sectionTitleColor),
           const SizedBox(height: 15),
           SizedBox(
-            height: 150, // Hauteur fixe pour la liste de cours
+            height: 150,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 4, // Nombre de cours fictifs
+              itemCount: 4,
               itemBuilder: (context, index) {
-                // Widget pour chaque carte de cours (ex: image du cours, titre)
                 return _buildCourseCard(
-                  'assets/images/course_placeholder_${index + 1}.png', // Chemin fictif
+                  'assets/images/course_placeholder_${index + 1}.png',
                   'Cours de ${['Flutter', 'Python', 'Web Dev', 'IA'][index]}',
-                  '${(index + 1) * 10}h de suivi', // Durée fictive
+                  '${(index + 1) * 10}h de suivi',
+                  textColor,
                 );
               },
             ),
           ),
 
           const SizedBox(height: 30),
-
-          // Section "Statistiques d'activité hebdomadaire"
-          _buildSectionTitle("Activité Hebdomadaire"),
+          _buildSectionTitle("Activité Hebdomadaire", sectionTitleColor),
           const SizedBox(height: 15),
-          // Placeholder pour le graphique ou les statistiques
           Container(
             height: 200,
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
+                // CORRECTION ICI: Changement de BoxBoxShadow à BoxShadow
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
+                  color: Theme.of(context).shadowColor.withOpacity(0.3),
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: const Offset(0, 3),
@@ -133,23 +182,23 @@ class _ProfileState extends State<Profile> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.bar_chart, size: 80, color: Colors.grey[600]),
+                Icon(Icons.bar_chart, size: 80, color: Theme.of(context).iconTheme.color),
                 const SizedBox(height: 10),
-                const Text(
+                Text(
                   "Graphique d'activité ici",
                   style: TextStyle(
                     fontFamily: 'Josefin',
                     fontSize: 18,
-                    color: Colors.grey,
+                    color: textColor.withOpacity(0.6),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const Text(
+                Text(
                   "3h 45min étudiées cette semaine",
                   style: TextStyle(
                     fontFamily: 'Josefin',
                     fontSize: 15,
-                    color: Colors.grey,
+                    color: textColor.withOpacity(0.5),
                   ),
                 ),
               ],
@@ -157,17 +206,16 @@ class _ProfileState extends State<Profile> {
           ),
           const SizedBox(height: 30),
 
-          // Autres informations (ex: Paramètres, Aide, Déconnexion)
-          _buildOptionTile(Icons.settings, "Paramètres", () {
+          _buildOptionTile(Icons.settings, "Paramètres", primaryColor, textColor, () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const SettingsPage()),
             );
           }),
-          _buildOptionTile(Icons.help_outline, "Aide et Support", () { /* Naviguer vers l'aide */ }),
-          _buildOptionTile(Icons.logout, "Déconnexion", () {
-    DeconnexionService.showLogoutConfirmation(context);
-    }),
+          _buildOptionTile(Icons.help_outline, "Aide et Support", primaryColor, textColor, () { /* Naviguer vers l'aide */ }),
+          _buildOptionTile(Icons.logout, "Déconnexion", primaryColor, textColor, () {
+            DeconnexionService.showLogoutConfirmation(context, _authService);
+          }),
         ],
       ),
     );
@@ -175,51 +223,45 @@ class _ProfileState extends State<Profile> {
 
   // --- Widgets de construction pour la réutilisabilité ---
 
-  // AppBar personnalisée pour la page de profil
-  AppBar _buildAppBar() {
+  AppBar _buildAppBar(Color primaryColor, Color onPrimaryColor) {
     return AppBar(
-      backgroundColor: Colors.blueAccent, // Couleur de fond de l'AppBar
-      elevation: 0, // Pas d'ombre sous l'AppBar
+      backgroundColor: primaryColor,
+      elevation: 0,
       centerTitle: true,
-      title: const Text(
+      title: Text(
         "Mon Profil",
         style: TextStyle(
           fontFamily: 'Josefin',
           fontSize: 22,
           fontWeight: FontWeight.w700,
-          color: Colors.white, // Texte en blanc
+          color: onPrimaryColor,
         ),
       ),
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.white), // Icône de retour blanche
-        onPressed: () {
-          Navigator.of(context).pop(); // Revenir à la page précédente
-        },
-      ),
+      // Le bouton retour a déjà été retiré ici, ce qui est correct.
+      automaticallyImplyLeading: false, // Assure qu'aucun bouton retour par défaut n'apparaît
     );
   }
 
-  // Titre de section réutilisable
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(String title, Color color) {
     return Text(
       title,
-      style: const TextStyle(
+      style: TextStyle(
         fontFamily: 'Josefin',
         fontSize: 20,
         fontWeight: FontWeight.w700,
-        color: Color.fromARGB(166, 0, 0, 0),
+        color: color,
       ),
     );
   }
 
-  // Carte de cours pour la liste horizontale
-  Widget _buildCourseCard(String imagePath, String title, String duration) {
+  Widget _buildCourseCard(String imagePath, String title, String duration, Color textColor) {
     return Container(
-      width: 140, // Largeur fixe pour chaque carte de cours
-      margin: const EdgeInsets.only(right: 15), // Marge à droite pour l'espacement
+      width: 140,
+      margin: const EdgeInsets.only(right: 15),
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        color: Theme.of(context).cardColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -230,36 +272,36 @@ class _ProfileState extends State<Profile> {
                   imagePath,
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
+                  errorBuilder: (context, error, stackTrace) => Icon(
                     Icons.school,
                     size: 60,
-                    color: Colors.grey,
+                    color: Theme.of(context).iconTheme.color?.withOpacity(0.5),
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0), // Padding pour le titre du cours (tous les côtés)
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Josefin',
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
+                  color: textColor,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            // Correction ici : Utilisation de EdgeInsets.only pour le padding inférieur
             Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
               child: Text(
                 duration,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Josefin',
                   fontSize: 12,
-                  color: Colors.grey,
+                  color: textColor.withOpacity(0.7),
                 ),
               ),
             ),
@@ -269,25 +311,26 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  // Tuile d'option réutilisable (pour Paramètres, Aide, Déconnexion)
-  Widget _buildOptionTile(IconData icon, String title, VoidCallback onTap) {
+  Widget _buildOptionTile(IconData icon, String title, Color iconColor, Color textColor, VoidCallback onTap) {
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      color: Theme.of(context).cardColor,
       child: ListTile(
-        leading: Icon(icon, color: Colors.blueAccent),
+        leading: Icon(icon, color: iconColor),
         title: Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Josefin',
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: Color.fromARGB(166, 0, 0, 0),
+            color: textColor,
           ),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+        trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color?.withOpacity(0.7)),
         onTap: onTap,
       ),
     );
-  }}
+  }
+}

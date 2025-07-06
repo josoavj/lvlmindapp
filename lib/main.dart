@@ -28,14 +28,23 @@ class LvlMindApp extends StatelessWidget {
       title: 'LvlMindBeta',
       debugShowCheckedModeBanner: false,
 
-      // --- Définition du Thème Clair (inchangé) ---
+      // --- Définition du Thème Clair (inchangé et correct pour blueAccent) ---
       theme: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.blueAccent,
+        primarySwatch: Colors.blue, // Utilisé pour générer une palette de bleus
+        primaryColor: Colors.blueAccent, // La couleur primaire principale
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blueAccent,
+          seedColor: Colors.blueAccent, // La couleur à partir de laquelle le ColorScheme est dérivé
           brightness: Brightness.light,
+        ).copyWith(
+          primary: Colors.blueAccent,
+          onPrimary: Colors.white,
+          secondary: Colors.pinkAccent,
+          onSecondary: Colors.white,
+          surface: Colors.white,
+          onSurface: Colors.black87,
+          error: Colors.red,
+          onError: Colors.white,
         ),
         scaffoldBackgroundColor: Colors.white,
         cardColor: Colors.white,
@@ -54,14 +63,14 @@ class LvlMindApp extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black54),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent,
+            backgroundColor: Colors.blueAccent, // Utilise la couleur primaire du thème
             foregroundColor: Colors.white,
             shape: const StadiumBorder(),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: Colors.blueAccent,
+            foregroundColor: Colors.blueAccent, // Utilise la couleur primaire du thème
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
@@ -91,34 +100,44 @@ class LvlMindApp extends StatelessWidget {
         ),
       ),
 
-      // --- Définition du Thème Sombre (modifié pour une meilleure visibilité des textes) ---
+      // --- Définition du Thème Sombre (Corrigé pour la couleur des ElevatedButtons) ---
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
-        primaryColor: Colors.blueAccent,
+        primaryColor: Colors.blueAccent, // La couleur primaire principale
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blueAccent,
           brightness: Brightness.dark,
+        ).copyWith(
+          primary: Colors.blueAccent, // Assure que la primary de ColorScheme est bien BlueAccent
+          onPrimary: Colors.white,
+          secondary: Colors.pinkAccent, // Adaptez aussi si utilisé en mode sombre
+          onSecondary: Colors.white,
+          surface: const Color(0xFF1E1E1E),
+          onSurface: Colors.white70,
+          background: const Color(0xFF121212),
+          onBackground: Colors.white70,
+          error: Colors.redAccent,
+          onError: Colors.black,
         ),
         scaffoldBackgroundColor: Colors.grey[900],
         cardColor: Colors.grey[850],
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.grey[900],
-          foregroundColor: Colors.white, // Toujours blanc pour les icônes/texte d'AppBar
+          backgroundColor: Colors.blueAccent[700],
+          foregroundColor: Colors.white,
           elevation: 0,
         ),
         textTheme: const TextTheme(
-          // Rendu plus clair pour une meilleure visibilité en mode sombre
-          bodyLarge: TextStyle(color: Colors.white), // Plus lumineux
-          bodyMedium: TextStyle(color: Colors.white70), // Légèrement moins lumineux
-          titleLarge: TextStyle(color: Colors.white), // Blanc pur pour les titres importants
-          titleMedium: TextStyle(color: Colors.white), // Blanc pur
-          titleSmall: TextStyle(color: Colors.white70), // Légèrement moins lumineux
+          bodyLarge: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white70),
+          titleLarge: TextStyle(color: Colors.white),
+          titleMedium: TextStyle(color: Colors.white),
+          titleSmall: TextStyle(color: Colors.white70),
         ).apply(fontFamily: 'Josefin'),
-        iconTheme: const IconThemeData(color: Colors.white), // Icônes blanches
+        iconTheme: const IconThemeData(color: Colors.white),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(225, 249, 29, 88),
+            backgroundColor: Colors.blueAccent, // C'EST LA LIGNE CLÉ MODIFIÉE !
             foregroundColor: Colors.white,
             shape: const StadiumBorder(),
           ),

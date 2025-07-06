@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lvlmindbeta/navbar/navbar.dart'; // Make sure this path is correct
+import 'package:lvlmindbeta/navbar/navbar.dart';
 
 class Transition extends StatefulWidget {
   const Transition({super.key});
@@ -10,25 +10,31 @@ class Transition extends StatefulWidget {
 }
 
 class _TransitionState extends State<Transition> {
+  static const int _transitionDurationSeconds = 5;
+
   @override
   void initState() {
     super.initState();
-    _navigateToHome(); // Call the navigation function when the state initializes
+    // Appel de la fonction de navigation après un délai lors de l'initialisation de l'état.
+    _navigateToHome();
   }
 
-  // Asynchronous function to handle the delay and navigation
+  /// Fonction asynchrone pour gérer le délai et la navigation.
+  /// Elle attend une durée définie puis navigue vers la page d'accueil.
   Future<void> _navigateToHome() async {
-    // Wait for 2 seconds before navigating
-    await Future.delayed(const Duration(seconds: 2));
+    // Attend la durée spécifiée.
+    await Future.delayed(const Duration(seconds: _transitionDurationSeconds));
 
-    // Check if the widget is still mounted before performing navigation.
-    // This prevents the "use_build_context_synchronously" warning and potential errors
-    // if the widget is disposed before the delay completes.
+    // Vérifie si le widget est toujours monté avant d'effectuer la navigation.
+    // Ceci est crucial pour éviter l'avertissement "use_build_context_synchronously"
+    // et pour prévenir des erreurs si le widget est supprimé (par exemple, si l'utilisateur
+    // quitte l'application) avant la fin du délai.
     if (!mounted) {
       return;
     }
 
-    // Replace the current route with the BottomNavBar route
+    // Remplace la route actuelle par la route de la BottomNavBar.
+    // pushReplacement empêche l'utilisateur de revenir à l'écran de transition via le bouton retour.
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const BottomNavBar()),
@@ -39,45 +45,83 @@ class _TransitionState extends State<Transition> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        // The entire screen will be covered by this container
+        // Le conteneur couvre toute la surface de l'écran.
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          // Gradient background
-          gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xff2441e7), Color(0xffff1053)],
-          ),
-          // Background image with an overlay to darken it
-          image: DecorationImage(
-            image: const AssetImage('assets/images/background/fond2.jpg'),
-            fit: BoxFit.cover,
-            // Apply a color filter to darken the image
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.5), // 50% black overlay
-              BlendMode.dstATop, // Blends the color with the destination alpha
-            ),
-          ),
-        ),
+        // Appel de la méthode pour la décoration de fond (dégradé et image).
+        decoration: _buildBackgroundDecoration(context),
         child: Center(
-          // Center the content (logo) vertically and horizontally
+          // Centre le contenu (logo et indicateur) verticalement et horizontalement.
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // Center items vertically
-            crossAxisAlignment: CrossAxisAlignment.center, // Center items horizontally
+            mainAxisAlignment: MainAxisAlignment.center, // Centre les éléments verticalement.
+            crossAxisAlignment: CrossAxisAlignment.center, // Centre les éléments horizontalement.
             children: [
-              // Display the SVG logo
-              SvgPicture.asset(
-                'assets/images/logo/LevelMind.svg',
-                width: 250, // Set a fixed width for the SVG
-                // alignment property here is less relevant as SvgPicture.asset
-                // will size itself based on width/height or intrinsic size.
-                // The Column's alignment will handle its position on screen.
+              // Affiche le logo SVG de LevelMind.
+              _buildLogo(), // Appel de la méthode pour le logo.
+              const SizedBox(height: 50), // Espacement après le logo.
+
+              // Ajout d'un indicateur de chargement circulaire pour une meilleure expérience utilisateur.
+              CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  // Utilise la couleur "onPrimary" du thème pour contraster avec le fond.
+                  Theme.of(context).colorScheme.onPrimary,
+                ),
+                strokeWidth: 4, // Épaisseur de la ligne de l'indicateur.
+              ),
+              const SizedBox(height: 20), // Espacement après l'indicateur.
+
+              // Message de chargement pour informer l'utilisateur.
+              Text(
+                'Chargement de votre aventure...',
+                style: TextStyle(
+                  fontFamily: 'Josefin',
+                  fontSize: 18,
+                  // Utilise également la couleur "onPrimary" du thème pour le texte.
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  // --- Méthodes de construction des widgets pour une meilleure lisibilité ---
+
+  /// Construit la décoration de fond du conteneur.
+  /// Inclut un dégradé de couleurs et une image de fond assombrie.
+  BoxDecoration _buildBackgroundDecoration(BuildContext context) {
+    // Détermine les couleurs du dégradé en fonction de la luminosité du thème (mode clair/sombre).
+    final Brightness brightness = Theme.of(context).brightness;
+    final List<Color> gradientColors = brightness == Brightness.dark
+        ? [const Color(0xFF0D1A3F), const Color(0xFF5D0E2B)] // Couleurs pour le mode sombre
+        : const [Color(0xff2441e7), Color(0xffff1053)]; // Couleurs d'origine pour le mode clair
+
+    return BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: gradientColors,
+      ),
+      image: DecorationImage(
+        image: const AssetImage('assets/images/background/fond2.jpg'),
+        fit: BoxFit.cover,
+        // Applique un filtre de couleur pour assombrir l'image de fond,
+        // la rendant plus lisible sous le texte et le logo.
+        colorFilter: ColorFilter.mode(
+          Colors.black.withOpacity(0.5), // Surcouche noire à 50% d'opacité
+          BlendMode.dstATop, // Mode de fusion
+        ),
+      ),
+    );
+  }
+
+  /// Construit le widget du logo SVG.
+  Widget _buildLogo() {
+    return SvgPicture.asset(
+      'assets/images/logo/LevelMind.svg',
+      width: 250,
     );
   }
 }
