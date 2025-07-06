@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/animations/simpleDelayedAnimation.dart';
 import 'package:lvlmindbeta/screens/presentation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../animations/simpleDelayedAnimation.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -33,8 +33,10 @@ class WelcomePage extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Phrase d'introduction
+                  // Utilisation d'une courbe plus douce pour l'apparition du texte
                   DelayedAnimation(
-                    delay: 850,
+                    delay: 900, // Légèrement augmenté pour un meilleur timing
+                    curve: Curves.easeOutQuad, // Une courbe d'accélération/décélération douce
                     child: Flexible(
                       flex: 1,
                       child: _buildIntroText(),
@@ -42,20 +44,26 @@ class WelcomePage extends StatelessWidget {
                   ),
 
                   // Titre LevelMind (SVG)
+                  // Animation légèrement plus rapide et avec un léger rebond pour le titre
                   DelayedAnimation(
-                    delay: 850,
+                    delay: 1000, // Démarre un peu après le texte d'intro
+                    curve: Curves.elasticOut, // Effet "élastique" à la fin
+                    animationDuration: const Duration(milliseconds: 1200), // Durée plus longue pour l'effet élastique
                     child: _buildLvlMindNameSvg(),
                   ),
 
                   // Slogan
                   DelayedAnimation(
-                    delay: 950,
+                    delay: 1200, // Démarre après le titre LevelMind
+                    curve: Curves.easeOutCubic, // Courbe un peu plus prononcée
                     child: _buildSloganText(),
                   ),
 
                   // Bouton "Get Started"
                   DelayedAnimation(
-                    delay: 1000,
+                    delay: 1400, // Démarre après le slogan
+                    curve: Curves.bounceOut, // Effet de rebond pour le bouton
+                    animationDuration: const Duration(milliseconds: 1000), // Durée pour l'effet de rebond
                     child: SizedBox(
                       width: double.infinity,
                       child: _buildStartButton(context),
@@ -99,7 +107,9 @@ class WelcomePage extends StatelessWidget {
       children: [
         // Logo de l'ISPM
         DelayedAnimation(
-          delay: 800,
+          delay: 500, // Débute plus tôt
+          curve: Curves.easeOutBack, // Un petit effet de "retour en arrière"
+          slideStartOffset: const Offset(-0.5, 0.0), // Vient de la gauche
           child: SizedBox(
             height: 85,
             child: Image.asset(
@@ -113,7 +123,9 @@ class WelcomePage extends StatelessWidget {
         const SizedBox(width: 70),
         // Notre logo d'application
         DelayedAnimation(
-          delay: 800,
+          delay: 700, // Débute un peu après le logo ISPM
+          curve: Curves.easeOutBack, // Le même effet pour la cohérence
+          slideStartOffset: const Offset(0.5, 0.0), // Vient de la droite
           child: Flexible(
             flex: 2,
             child: SizedBox(
