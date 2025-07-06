@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../Models/userProfile.dart';
 import '../screens/deconnexion.dart';
 import '../screens/settings.dart';
-import '../services/authentificationService.dart';
+import '../services/authentificationService.dart'; // Nom du fichier tel que fourni
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -13,7 +13,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   UserProfile? _currentUserProfile;
-  final AuthService _authService = AuthService(); // NOUVEAU: Instance du service d'authentification
+  final AuthService _authService = AuthService(); // Instance du service d'authentification
 
   @override
   void initState() {
@@ -169,6 +169,7 @@ class _ProfileState extends State<Profile> {
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
+                // CORRECTION ICI: Changement de BoxBoxShadow à BoxShadow
                 BoxShadow(
                   color: Theme.of(context).shadowColor.withOpacity(0.3),
                   spreadRadius: 2,
@@ -213,7 +214,6 @@ class _ProfileState extends State<Profile> {
           }),
           _buildOptionTile(Icons.help_outline, "Aide et Support", primaryColor, textColor, () { /* Naviguer vers l'aide */ }),
           _buildOptionTile(Icons.logout, "Déconnexion", primaryColor, textColor, () {
-            // C'EST LA LIGNE CLÉ MODIFIÉE !
             DeconnexionService.showLogoutConfirmation(context, _authService);
           }),
         ],
@@ -237,12 +237,8 @@ class _ProfileState extends State<Profile> {
           color: onPrimaryColor,
         ),
       ),
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: onPrimaryColor),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      ),
+      // Le bouton retour a déjà été retiré ici, ce qui est correct.
+      automaticallyImplyLeading: false, // Assure qu'aucun bouton retour par défaut n'apparaît
     );
   }
 
