@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-
-import 'loginpage.dart'; // Assurez-vous que ce chemin est correct
+import '../services/authentificationService.dart';
+import 'package:lvlmindbeta/screens/loginpage.dart';
 
 /// Gère la logique de déconnexion et la navigation vers la page de connexion.
 class DeconnexionService {
   /// Affiche une boîte de dialogue de confirmation et, si l'utilisateur confirme,
   /// effectue la déconnexion et redirige vers la LoginPage.
-  static Future<void> showLogoutConfirmation(BuildContext context) async {
+  // CHANGEMENT: Ajout d'un paramètre authService
+  static Future<void> showLogoutConfirmation(BuildContext context, AuthService authService) async {
     final bool? confirmLogout = await showDialog<bool>(
       context: context,
       builder: (BuildContext dialogContext) {
@@ -63,19 +64,19 @@ class DeconnexionService {
     );
 
     if (confirmLogout == true) {
-      // --- LOGIQUE DE DÉCONNEXION ICI ---
-      // - Effacer le token d'authentification (ex: SharedPreferences, secure storage)
-      // - Réinitialiser l'état de l'utilisateur dans votre application (ex: Provider, Riverpod, BLoC)
-      // - Nettoyer les données de session si nécessaire.
-      print("Déconnexion de l'utilisateur..."); // Pour le débogage
+      // NOUVEAU: Appelle la méthode logout de votre AuthService
+      await authService.logout();
+      debugPrint("Déconnexion de l'utilisateur effectuée via AuthService."); // Pour le débogage
 
       // Redirection vers la page de connexion
       // Utilisation de `pushAndRemoveUntil` pour empêcher l'utilisateur de revenir
       // à la page précédente après la déconnexion.
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-            (Route<dynamic> route) => false, // Supprime toutes les routes précédentes de la pile
-      );
+      if (context.mounted) { // Bonne pratique pour éviter les erreurs si le widget n'est plus monté
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+              (Route<dynamic> route) => false, // Supprime toutes les routes précédentes de la pile
+        );
+      }
     }
   }
 }
