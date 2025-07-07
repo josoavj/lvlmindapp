@@ -172,9 +172,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
             ),
           ),
           const SizedBox(height: 30),
-          // --- FIN DE LA SECTION "PROFESSEURS" ---
 
-          // --- SECTION "MATIERES" (MODIFIÉE AVEC BOUTON "VOIR TOUT") ---
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -282,7 +280,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
       automaticallyImplyLeading: false,
       centerTitle: true,
       title: Text(
-        'Matériel de cours',
+        'Matières',
         style: TextStyle(
           fontFamily: 'Josefin',
           fontSize: 22,
