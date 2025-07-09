@@ -253,7 +253,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                       ),
                     ),
                     trailing: Text(
-                      matiere.number, // Affiche le nombre de chapitres comme avant
+                      matiere.chapterCount as String, 
                       style: const TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 13,
