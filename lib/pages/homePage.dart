@@ -4,10 +4,9 @@ import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 import 'package:lvlmindbeta/pages/profilePage.dart';
 import 'package:lvlmindbeta/services/authentificationService.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import pour la persistance
+import 'dart:convert';
 
-import '../Models/screenModels/matiereDetails.dart';
-
-// Définition de la page d'accueil de l'application
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -15,30 +14,28 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 
-// État de la page d'accueil
 class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
-  // Listes de données
-  List<Section> _sections = []; // Pour le menu popup et la liste horizontale des filtres
-  List<Matiere> _allMatieres = []; // Toutes les matières disponibles
-  List<Matiere> _displayedMatieres = []; // Les matières actuellement affichées dans la grille
+  List<Section> _sections = [];
+  List<Matiere> _allMatieres = [];
+  List<Matiere> _displayedMatieres = [];
 
-  String? _activeFilterTag; // Le tag du filtre actif (null, "TOP", ou nom de section)
+  String? _activeFilterTag;
   String _userName = "Cher(ère) étudiant(e)";
 
   @override
   void initState() {
     super.initState();
-    _loadInitialData(); // Charge toutes les données initiales
-    _loadUserName(); // Charge le nom de l'utilisateur
+    _loadInitialData();
+    _loadUserName();
   }
 
-  // Charge toutes les données nécessaires au démarrage
-  void _loadInitialData() {
-    _sections = Section.getSections(context); // Obtient les sections/filtres
-    _allMatieres = Matiere.getFictionalCourses(); // Obtient toutes les matières
+  // Charge toutes les données initiales, y compris les sections persistantes
+  Future<void> _loadInitialData() async {
+    await _loadSections(); // Charge les sections depuis la persistance
+    _allMatieres = Matiere.getFictionalCourses();
     _applyFilter(null); // Applique le filtre initial (afficher tout)
   }
 
@@ -53,20 +50,156 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
     }
   }
 
+  // --- Gestion de la persistance des sections ---
+  Future<void> _loadSections() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? sectionsString = prefs.getString('sections_list');
+    if (sectionsString != null) {
+      final List<dynamic> jsonList = jsonDecode(sectionsString);
+      setState(() {
+        _sections = jsonList.map((json) => Section.fromJson(json)).toList();
+      });
+    } else {
+      // Si aucune section n'est sauvegardée, initialiser avec des sections par défaut
+      setState(() {
+        _sections = [
+          Section.fromIconData(name: 'TOP', icon: Icons.star),
+          Section.fromIconData(name: 'Électronique', icon: Icons.electric_bolt),
+          Section.fromIconData(name: 'Intelligence Artificielle', icon: Icons.psychology_alt),
+          Section.fromIconData(name: 'Programmation', icon: Icons.code),
+          Section.fromIconData(name: 'Design', icon: Icons.brush),
+          Section.fromIconData(name: 'Gestion', icon: Icons.business_center),
+          Section.fromIconData(name: 'Cybersécurité', icon: Icons.security),
+          Section.fromIconData(name: 'Réseaux', icon: Icons.lan),
+          Section.fromIconData(name: 'Cloud Computing', icon: Icons.cloud),
+          Section.fromIconData(name: 'Big Data', icon: Icons.storage),
+          Section.fromIconData(name: 'DevOps', icon: Icons.build),
+          Section.fromIconData(name: 'Blockchain', icon: Icons.link),
+          Section.fromIconData(name: 'Analyse de Données', icon: Icons.analytics),
+          Section.fromIconData(name: 'Génie Logiciel', icon: Icons.precision_manufacturing),
+          Section.fromIconData(name: 'Robotique', icon: Icons.android),
+        ];
+      });
+      _saveSections(); // Sauvegarde les sections par défaut
+    }
+  }
+
+  Future<void> _saveSections() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String sectionsString = jsonEncode(_sections.map((s) => s.toJson()).toList());
+    await prefs.setString('sections_list', sectionsString);
+  }
+
+  // --- Logique d'ajout et de suppression de sections ---
+  Future<void> _addSection(String name, IconData icon) async {
+    setState(() {
+      _sections.add(Section.fromIconData(name: name, icon: icon));
+    });
+    await _saveSections();
+    _applyFilter(name); // Applique le filtre à la nouvelle section
+  }
+
+  Future<void> _deleteSection(Section sectionToDelete) async {
+    setState(() {
+      _sections.removeWhere((s) => s.name == sectionToDelete.name);
+      if (_activeFilterTag == sectionToDelete.name) {
+        _activeFilterTag = null; // Réinitialise le filtre si la section active est supprimée
+      }
+    });
+    await _saveSections();
+    _applyFilter(_activeFilterTag); // Réapplique le filtre
+  }
+
+  // Dialogue pour ajouter une nouvelle section
+  Future<void> _showAddSectionDialog() async {
+    String newSectionName = '';
+    IconData? selectedIcon = Section.availableIcons.first; // Icône par défaut
+
+    await showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Ajouter une nouvelle section'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  onChanged: (value) {
+                    newSectionName = value;
+                  },
+                  decoration: const InputDecoration(labelText: 'Nom de la section'),
+                ),
+                const SizedBox(height: 15),
+                Text('Choisir une icône:', style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 150, // Hauteur fixe pour la grille d'icônes
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    ),
+                    itemCount: Section.availableIcons.length,
+                    itemBuilder: (context, index) {
+                      final icon = Section.availableIcons[index];
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() { // setState ici pour rafraîchir l'icône sélectionnée dans le dialogue
+                            selectedIcon = icon;
+                          });
+                          // Ne pas fermer le dialogue, juste mettre à jour la sélection
+                          (dialogContext as Element).markNeedsBuild(); // Force le rafraîchissement du dialogue
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: selectedIcon == icon ? Theme.of(context).primaryColor : Colors.grey[200],
+                          child: Icon(icon, color: selectedIcon == icon ? Colors.white : Colors.black),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Annuler'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Ajouter'),
+              onPressed: () {
+                if (newSectionName.isNotEmpty && selectedIcon != null) {
+                  _addSection(newSectionName, selectedIcon!);
+                  Navigator.of(dialogContext).pop();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Veuillez entrer un nom et choisir une icône.')),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   // Applique un filtre aux matières affichées
   void _applyFilter(String? filterTag) {
     setState(() {
       _activeFilterTag = filterTag;
 
       if (filterTag == null) {
-        // Afficher toutes les matières si aucun filtre n'est sélectionné
         _displayedMatieres = List.from(_allMatieres);
       } else if (filterTag == 'TOP') {
-        // Logique pour les matières "TOP" (exemple: les 5 premières, ou celles marquées comme top)
-        // Vous pouvez ajouter une propriété `isTop: bool` à `Matiere` si vous voulez une logique plus complexe.
-        _displayedMatieres = _allMatieres.take(5).toList(); // Exemple: les 5 premières matières
+        // Logique pour les matières "TOP" (exemple: les 5 premières)
+        _displayedMatieres = _allMatieres.take(5).toList();
       } else {
-        // Filtrer par le filterTag (nom de la section)
         _displayedMatieres = _allMatieres
             .where((matiere) => matiere.filterTag == filterTag)
             .toList();
@@ -92,7 +225,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
               alignment: Alignment.topLeft,
               child: IconButton(
                 onPressed: () {
-                  Scaffold.of(context).openDrawer(); // Ouvre le Drawer
+                  Scaffold.of(context).openDrawer();
                   debugPrint("Bouton de menu tapé!");
                 },
                 icon: Icon(
@@ -166,7 +299,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextButton(
-                    onPressed: () => _applyFilter('TOP'), // Applique le filtre "TOP"
+                    onPressed: () => _applyFilter('TOP'),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       child: Text(
@@ -184,12 +317,13 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
 
                 // Menu glissant (sections agissant comme filtres)
                 _SectionsFilterList(
-                  sections: _sections.where((s) => s.name != 'TOP').toList(), // Exclut "TOP" ici pour ne pas le dupliquer
+                  sections: _sections.where((s) => s.name != 'TOP').toList(),
                   activeFilterTag: _activeFilterTag,
                   onFilterSelected: _applyFilter,
+                  onSectionDeleted: _deleteSection, // Passe la fonction de suppression
                 ),
 
-                // Bouton de menu contextuel (pour choisir parmi toutes les sections, y compris "TOP" si désiré)
+                // Bouton de menu contextuel (pour choisir parmi toutes les sections et ajouter)
                 Builder(
                   builder: (innerContext) {
                     return IconButton(
@@ -204,18 +338,32 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                             Offset.zero & mediaQuery.size,
                           ),
                           items: [
+                            // Option pour ajouter une section
+                            PopupMenuItem(
+                              child: ListTile(
+                                leading: Icon(Icons.add, color: colorScheme.primary),
+                                title: Text('Ajouter une section', style: textTheme.bodyMedium),
+                                onTap: () {
+                                  Navigator.pop(innerContext); // Ferme le menu
+                                  _showAddSectionDialog(); // Ouvre le dialogue d'ajout
+                                },
+                              ),
+                            ),
+                            const PopupMenuDivider(), // Séparateur
+
+                            // Liste des sections existantes
                             PopupMenuItem(
                               padding: EdgeInsets.zero,
                               child: SizedBox(
                                 width: 180,
-                                height: 180,
+                                height: 250, // Hauteur ajustée pour plus d'éléments
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
                                     final sectionItem = _sections[index];
                                     return ListTile(
                                       onTap: () {
                                         Navigator.pop(context);
-                                        _applyFilter(sectionItem.name); // Applique le filtre de la section
+                                        _applyFilter(sectionItem.name);
                                       },
                                       title: Text(
                                         sectionItem.name,
@@ -254,7 +402,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Matières", // Titre changé
+                  "Matières",
                   textAlign: TextAlign.left,
                   style: textTheme.titleLarge?.copyWith(
                     fontSize: 25,
@@ -264,7 +412,6 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                 ),
                 TextButton(
                   onPressed: () {
-                    // Navigue vers FilesPage qui listera toutes les matières
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Files()),
@@ -284,10 +431,9 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             ),
             const SizedBox(height: 15),
 
-            // Grille des matières filtrées
             SizedBox(
               height: mediaQuery.size.width > 400 ? 400 : 350,
-              child: MatiereGridView(matieres: _displayedMatieres), // Passe les matières filtrées
+              child: MatiereGridView(matieres: _displayedMatieres),
             ),
           ],
         ),
@@ -301,12 +447,14 @@ class _SectionsFilterList extends StatelessWidget {
   final List<Section> sections;
   final String? activeFilterTag;
   final Function(String?) onFilterSelected;
+  final Function(Section) onSectionDeleted; // Nouvelle callback pour la suppression
 
   const _SectionsFilterList({
     super.key,
     required this.sections,
     required this.activeFilterTag,
     required this.onFilterSelected,
+    required this.onSectionDeleted,
   });
 
   @override
@@ -326,7 +474,36 @@ class _SectionsFilterList extends StatelessWidget {
             final section = sections[index];
             final bool isActive = activeFilterTag == section.name;
             return GestureDetector(
-              onTap: () => onFilterSelected(section.name), // Applique le filtre au clic
+              onTap: () => onFilterSelected(section.name),
+              onLongPress: () {
+                // Permet la suppression par un appui long, sauf pour "TOP"
+                if (section.name != 'TOP') {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext dialogContext) {
+                      return AlertDialog(
+                        title: const Text('Supprimer la section ?'),
+                        content: Text('Voulez-vous vraiment supprimer la section "${section.name}" ?'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('Annuler'),
+                            onPressed: () {
+                              Navigator.of(dialogContext).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text('Supprimer'),
+                            onPressed: () {
+                              onSectionDeleted(section); // Appelle la fonction de suppression
+                              Navigator.of(dialogContext).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
               child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -350,79 +527,6 @@ class _SectionsFilterList extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-// Widget pour la grille de matières
-class MatiereGridView extends StatelessWidget {
-  final List<Matiere> matieres;
-
-  const MatiereGridView({super.key, required this.matieres});
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        childAspectRatio: 0.9,
-      ),
-      itemCount: matieres.length,
-      itemBuilder: (context, index) {
-        final matiere = matieres[index];
-        return GestureDetector(
-          onTap: () {
-            debugPrint("Matière ${matiere.name} tapée!");
-            // Navigue vers la page de détail de la matière
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MatiereDetailsPage(matiere: matiere)),
-            );
-          },
-          child: Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      matiere.image, // Utilise le champ 'image' de Matiere
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) => Icon(
-                        Icons.school,
-                        size: 60,
-                        color: Theme.of(context).iconTheme.color,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
-                  child: Text(
-                    matiere.name,
-                    textAlign: TextAlign.center,
-                    style: textTheme.bodyMedium?.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface.withOpacity(0.8),
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }
