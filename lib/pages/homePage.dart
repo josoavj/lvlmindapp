@@ -5,6 +5,8 @@ import 'package:lvlmindbeta/Models/matiere.dart';
 import 'package:lvlmindbeta/pages/profilePage.dart';
 import 'package:lvlmindbeta/services/authentificationService.dart';
 
+import '../Models/screenModels/matiereDetails.dart';
+
 // Définition de la page d'accueil de l'application
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -18,49 +20,58 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
   @override
   bool get wantKeepAlive => true;
 
-  List<Section> _sections = [];
-  List<Secteur> _secteurs = [];
-  List<CategoryItemData> _categoriesData = [];
+  // Listes de données
+  List<Section> _sections = []; // Pour le menu popup et la liste horizontale des filtres
+  List<Matiere> _allMatieres = []; // Toutes les matières disponibles
+  List<Matiere> _displayedMatieres = []; // Les matières actuellement affichées dans la grille
 
-  String _userName = "Cher(ère) étudiant(e)"; // Initialisation par défaut
+  String? _activeFilterTag; // Le tag du filtre actif (null, "TOP", ou nom de section)
+  String _userName = "Cher(ère) étudiant(e)";
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _loadInitialData(); // Charge toutes les données initiales
     _loadUserName(); // Charge le nom de l'utilisateur
   }
 
-  // Charge toutes les données nécessaires pour la page
-  void _loadData() {
-    setState(() {
-      _sections = Section.getSections();
-      _secteurs = Secteur.getFictionalSectors();
-      _categoriesData = _getCategoryItems();
-    });
+  // Charge toutes les données nécessaires au démarrage
+  void _loadInitialData() {
+    _sections = Section.getSections(context); // Obtient les sections/filtres
+    _allMatieres = Matiere.getFictionalCourses(); // Obtient toutes les matières
+    _applyFilter(null); // Applique le filtre initial (afficher tout)
   }
 
   // Charge le nom de l'utilisateur connecté
   Future<void> _loadUserName() async {
-    final authService = AuthService(); // Créez une instance de votre AuthService
+    final authService = AuthService();
     final user = await authService.getLoggedInUser();
     if (mounted && user != null) {
       setState(() {
-        _userName = user.name.split(' ').first; // Affiche seulement le prénom
+        _userName = user.name.split(' ').first;
       });
     }
   }
 
-  // Fonction utilitaire pour obtenir les données des éléments de catégorie
-  static List<CategoryItemData> _getCategoryItems() {
-    return const [
-      CategoryItemData('assets/images/icons/Electronic.jpg', 'Électronique'),
-      CategoryItemData('assets/images/icons/Programming.jpg', 'Programmation'),
-      CategoryItemData('assets/images/icons/management.jpg', 'Gestion'),
-      CategoryItemData('assets/images/icons/math.jpg', 'Mathématiques'),
-      CategoryItemData('assets/images/icons/design.jpg', 'Design'),
-      CategoryItemData('assets/images/icons/robotics.jpg', 'Robotique'),
-    ];
+  // Applique un filtre aux matières affichées
+  void _applyFilter(String? filterTag) {
+    setState(() {
+      _activeFilterTag = filterTag;
+
+      if (filterTag == null) {
+        // Afficher toutes les matières si aucun filtre n'est sélectionné
+        _displayedMatieres = List.from(_allMatieres);
+      } else if (filterTag == 'TOP') {
+        // Logique pour les matières "TOP" (exemple: les 5 premières, ou celles marquées comme top)
+        // Vous pouvez ajouter une propriété `isTop: bool` à `Matiere` si vous voulez une logique plus complexe.
+        _displayedMatieres = _allMatieres.take(5).toList(); // Exemple: les 5 premières matières
+      } else {
+        // Filtrer par le filterTag (nom de la section)
+        _displayedMatieres = _allMatieres
+            .where((matiere) => matiere.filterTag == filterTag)
+            .toList();
+      }
+    });
   }
 
   @override
@@ -77,34 +88,31 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Bouton de menu
             Align(
               alignment: Alignment.topLeft,
               child: IconButton(
                 onPressed: () {
-                  // TODO: Implémenter l'ouverture d'un Drawer ou d'un menu latéral
-                  Scaffold.of(context).openDrawer(); // Nécessite un Drawer dans le Scaffold parent (ex: dans BottomNavBar ou dans main.dart)
+                  Scaffold.of(context).openDrawer(); // Ouvre le Drawer
                   debugPrint("Bouton de menu tapé!");
                 },
                 icon: Icon(
                   Icons.menu,
-                  size: 30, // Taille ajustée pour la visibilité
-                  color: colorScheme.onBackground, // Couleur cohérente avec le thème
+                  size: 30,
+                  color: colorScheme.onBackground,
                 ),
               ),
             ),
             const SizedBox(height: 30),
 
-            // Section de bienvenue avec avatar
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Text.rich(
                     TextSpan(
-                      text: "Salut $_userName ! \n\n", // Affiche le nom de l'utilisateur
+                      text: "Salut $_userName ! \n\n",
                       style: textTheme.titleLarge?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.9), // Couleur du thème
+                        color: colorScheme.onSurface.withOpacity(0.9),
                         fontSize: 25,
                         fontWeight: FontWeight.w800,
                       ),
@@ -113,7 +121,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                           text: "Commençons une journée passionnante \n en apprenant avec nous",
                           style: textTheme.bodyMedium?.copyWith(
                             fontSize: 17,
-                            color: colorScheme.onSurface.withOpacity(0.7), // Couleur du thème
+                            color: colorScheme.onSurface.withOpacity(0.7),
                           ),
                         )
                       ],
@@ -121,7 +129,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   ),
                 ),
                 const SizedBox(width: 10),
-                GestureDetector( // Rend l'avatar cliquable
+                GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -131,12 +139,12 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   child: SizedBox(
                     width: 90,
                     child: Image.asset(
-                      'assets/images/icons/avatar1.jpg', // Votre image d'avatar
+                      'assets/images/icons/avatar1.jpg',
                       alignment: Alignment.topRight,
                       errorBuilder: (context, error, stackTrace) => Icon(
                         Icons.person_outline,
                         size: 90,
-                        color: colorScheme.onSurface.withOpacity(0.5), // Couleur du thème
+                        color: colorScheme.onSurface.withOpacity(0.5),
                       ),
                     ),
                   ),
@@ -145,7 +153,6 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             ),
             const SizedBox(height: 50),
 
-            // Section Catégories (TOP / Menu glissant / Menu contextuel)
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,35 +161,35 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                 Card(
                   elevation: 5,
                   clipBehavior: Clip.antiAlias,
-                  color: colorScheme.primary, // Utilise la couleur primaire du thème (BlueAccent)
+                  color: _activeFilterTag == 'TOP' ? colorScheme.primary : Theme.of(context).cardColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextButton(
-                    onPressed: () {
-                      // Action pour le bouton TOP
-                      debugPrint("Bouton TOP tapé!");
-                    },
+                    onPressed: () => _applyFilter('TOP'), // Applique le filtre "TOP"
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       child: Text(
                         "TOP",
                         textAlign: TextAlign.center,
                         style: textTheme.bodyMedium?.copyWith(
-                          fontFamily: 'Josefin', // Conserve Josefin si override global échoue
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
-                          color: colorScheme.onPrimary, // Texte blanc sur la couleur primaire
+                          color: _activeFilterTag == 'TOP' ? colorScheme.onPrimary : colorScheme.onSurface.withOpacity(0.8),
                         ),
                       ),
                     ),
                   ),
                 ),
 
-                // Menu glissant (matières principales)
-                _BestSubjectsList(secteurs: _secteurs),
+                // Menu glissant (sections agissant comme filtres)
+                _SectionsFilterList(
+                  sections: _sections.where((s) => s.name != 'TOP').toList(), // Exclut "TOP" ici pour ne pas le dupliquer
+                  activeFilterTag: _activeFilterTag,
+                  onFilterSelected: _applyFilter,
+                ),
 
-                // Bouton de menu contextuel (pour personnaliser les catégories)
+                // Bouton de menu contextuel (pour choisir parmi toutes les sections, y compris "TOP" si désiré)
                 Builder(
                   builder: (innerContext) {
                     return IconButton(
@@ -208,19 +215,19 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                                     return ListTile(
                                       onTap: () {
                                         Navigator.pop(context);
-                                        sectionItem.onTap?.call();
+                                        _applyFilter(sectionItem.name); // Applique le filtre de la section
                                       },
                                       title: Text(
                                         sectionItem.name,
                                         style: textTheme.bodyMedium?.copyWith(
-                                          color: colorScheme.onSurface.withOpacity(0.8), // Couleur du thème
+                                          color: colorScheme.onSurface.withOpacity(0.8),
                                           fontSize: 15,
                                         ),
                                       ),
                                       leading: Icon(
                                         sectionItem.icon,
                                         size: 20,
-                                        color: colorScheme.primary, // Couleur primaire du thème
+                                        color: colorScheme.primary,
                                       ),
                                     );
                                   },
@@ -234,7 +241,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                       icon: Icon(
                         Icons.filter_list,
                         size: 28,
-                        color: colorScheme.primary, // Couleur primaire du thème
+                        color: colorScheme.primary,
                       ),
                     );
                   },
@@ -243,24 +250,24 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             ),
             const SizedBox(height: 40),
 
-            // Titre de la section "Catégories"
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Catégories",
+                  "Matières", // Titre changé
                   textAlign: TextAlign.left,
                   style: textTheme.titleLarge?.copyWith(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
-                    color: colorScheme.onSurface.withOpacity(0.8), // Couleur du thème
+                    color: colorScheme.onSurface.withOpacity(0.8),
                   ),
                 ),
                 TextButton(
                   onPressed: () {
+                    // Navigue vers FilesPage qui listera toutes les matières
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Files()), // Utilisez const si Files est stateless
+                      MaterialPageRoute(builder: (context) => const Files()),
                     );
                   },
                   child: Text(
@@ -269,7 +276,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                     style: textTheme.titleMedium?.copyWith(
                       fontSize: 21,
                       fontWeight: FontWeight.w700,
-                      color: colorScheme.secondary, // Utilise la couleur secondaire (rose) du thème
+                      color: colorScheme.secondary,
                     ),
                   ),
                 ),
@@ -277,10 +284,10 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             ),
             const SizedBox(height: 15),
 
-            // Grille des catégories (Matières suggérées)
+            // Grille des matières filtrées
             SizedBox(
               height: mediaQuery.size.width > 400 ? 400 : 350,
-              child: CategoryGridView(categories: _categoriesData),
+              child: MatiereGridView(matieres: _displayedMatieres), // Passe les matières filtrées
             ),
           ],
         ),
@@ -289,13 +296,18 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
   }
 }
 
-// --- Widgets enfants refactorisés ---
+// Widget pour la liste horizontale des filtres de sections
+class _SectionsFilterList extends StatelessWidget {
+  final List<Section> sections;
+  final String? activeFilterTag;
+  final Function(String?) onFilterSelected;
 
-// Widget pour la liste horizontale des "meilleures" matières (secteurs)
-class _BestSubjectsList extends StatelessWidget {
-  final List<Secteur> secteurs;
-
-  const _BestSubjectsList({super.key, required this.secteurs}); // Ajout de super.key
+  const _SectionsFilterList({
+    super.key,
+    required this.sections,
+    required this.activeFilterTag,
+    required this.onFilterSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -309,27 +321,26 @@ class _BestSubjectsList extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 5),
           separatorBuilder: (context, index) => const SizedBox(width: 5),
-          itemCount: secteurs.length,
+          itemCount: sections.length,
           itemBuilder: (context, index) {
-            final secteur = secteurs[index];
+            final section = sections[index];
+            final bool isActive = activeFilterTag == section.name;
             return GestureDetector(
-              onTap: () {
-                debugPrint("Secteur ${secteur.name} tapé!");
-              },
+              onTap: () => onFilterSelected(section.name), // Applique le filtre au clic
               child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                color: isActive ? colorScheme.primary : Theme.of(context).cardColor,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Center(
                     child: Text(
-                      secteur.name,
+                      section.name,
                       textAlign: TextAlign.center,
                       style: textTheme.bodyMedium?.copyWith(
-                        fontFamily: 'Josefin',
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: colorScheme.primary, // Utilise la couleur primaire du thème
+                        color: isActive ? colorScheme.onPrimary : colorScheme.primary,
                       ),
                     ),
                   ),
@@ -343,19 +354,11 @@ class _BestSubjectsList extends StatelessWidget {
   }
 }
 
-// Données pour un élément de la grille de catégories (inchangé)
-class CategoryItemData {
-  final String imagePath;
-  final String title;
+// Widget pour la grille de matières
+class MatiereGridView extends StatelessWidget {
+  final List<Matiere> matieres;
 
-  const CategoryItemData(this.imagePath, this.title);
-}
-
-// Widget pour la grille de suggestion des matières (catégories)
-class CategoryGridView extends StatelessWidget {
-  final List<CategoryItemData> categories;
-
-  const CategoryGridView({super.key, required this.categories});
+  const MatiereGridView({super.key, required this.matieres});
 
   @override
   Widget build(BuildContext context) {
@@ -369,14 +372,17 @@ class CategoryGridView extends StatelessWidget {
         mainAxisSpacing: 10,
         childAspectRatio: 0.9,
       ),
-      itemCount: categories.length,
+      itemCount: matieres.length,
       itemBuilder: (context, index) {
-        final categoryItem = categories[index];
+        final matiere = matieres[index];
         return GestureDetector(
           onTap: () {
-            debugPrint("Catégorie ${categoryItem.title} tapée!");
-            // Exemple de navigation:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => MatiereScreen(categoryName: categoryItem.title)));
+            debugPrint("Matière ${matiere.name} tapée!");
+            // Navigue vers la page de détail de la matière
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MatiereDetailsPage(matiere: matiere)),
+            );
           },
           child: Card(
             elevation: 4,
@@ -388,27 +394,28 @@ class CategoryGridView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
-                      categoryItem.imagePath,
+                      matiere.image, // Utilise le champ 'image' de Matiere
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) => Icon(
-                        Icons.category,
+                        Icons.school,
                         size: 60,
-                        color: Theme.of(context).iconTheme.color, // Utilise la couleur d'icône du thème
+                        color: Theme.of(context).iconTheme.color,
                       ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
                   child: Text(
-                    categoryItem.title,
+                    matiere.name,
                     textAlign: TextAlign.center,
                     style: textTheme.bodyMedium?.copyWith(
-                      fontFamily: 'Josefin',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface.withOpacity(0.8), // Utilise la couleur du thème
+                      color: colorScheme.onSurface.withOpacity(0.8),
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
