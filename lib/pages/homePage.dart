@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:lvlmindbeta/Models/screenModels/allMatiereSection.dart';
+import 'package:lvlmindbeta/Models/screenModels/matieresList.dart';
 import 'package:lvlmindbeta/pages/filesPage.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
+import 'package:lvlmindbeta/pages/profilePage.dart';
+import 'package:lvlmindbeta/services/authentificationService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import '../Models/screenModels/matiereDetails.dart'; // Pour jsonEncode/jsonDecode
 
-// Définition de la page d'accueil de l'application
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -11,91 +17,256 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 
-// État de la page d'accueil
 class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin {
-  // Conserve l'état du widget même si la page n'est plus visible (ex: via BottomNavBar)
   @override
   bool get wantKeepAlive => true;
 
-  // Listes pour les données du menu popup et des catégories
   List<Section> _sections = [];
-  List<Secteur> _secteurs = [];
-  List<CategoryItemData> _categoriesData = []; // Données pour la grille de catégories
+  List<Matiere> _allMatieres = [];
+  List<Matiere> _displayedMatieres = [];
+
+  String? _activeFilterTag;
+  String _userName = "Cher(ère) étudiant(e)";
 
   @override
   void initState() {
     super.initState();
-    _loadData(); // Charge les données une seule fois lors de l'initialisation de l'état
+    _loadInitialData();
+    _loadUserName();
   }
 
-  // Charge toutes les données nécessaires pour la page
-  void _loadData() {
+  // Charge toutes les données initiales, y compris les sections persistantes
+  Future<void> _loadInitialData() async {
+    await _loadSections(); // Charge les sections depuis la persistance
+    _allMatieres = Matiere.getFictionalCourses();
+    _applyFilter(null); // Applique le filtre initial (afficher tout)
+  }
+
+  // Charge le nom de l'utilisateur connecté
+  Future<void> _loadUserName() async {
+    final authService = AuthService();
+    final user = await authService.getLoggedInUser();
+    if (mounted && user != null) {
+      setState(() {
+        _userName = user.name.split(' ').first;
+      });
+    }
+  }
+
+  // --- Gestion de la persistance des sections ---
+  Future<void> _loadSections() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? sectionsString = prefs.getString('sections_list');
+    if (sectionsString != null) {
+      final List<dynamic> jsonList = jsonDecode(sectionsString);
+      setState(() {
+        _sections = jsonList.map((json) => Section.fromJson(json)).toList();
+      });
+    } else {
+      // Si aucune section n'est sauvegardée, initialiser avec des sections par défaut
+      setState(() {
+        _sections = [
+          Section.fromIconData(name: 'TOP', icon: Icons.star),
+          Section.fromIconData(name: 'Électronique', icon: Icons.electric_bolt),
+          Section.fromIconData(name: 'Intelligence Artificielle', icon: Icons.psychology_alt),
+          Section.fromIconData(name: 'Programmation', icon: Icons.code),
+          Section.fromIconData(name: 'Design', icon: Icons.brush),
+          Section.fromIconData(name: 'Gestion', icon: Icons.business_center),
+          Section.fromIconData(name: 'Cybersécurité', icon: Icons.security),
+          Section.fromIconData(name: 'Réseaux', icon: Icons.lan),
+          Section.fromIconData(name: 'Cloud Computing', icon: Icons.cloud),
+          Section.fromIconData(name: 'Big Data', icon: Icons.storage),
+          Section.fromIconData(name: 'DevOps', icon: Icons.build),
+          Section.fromIconData(name: 'Blockchain', icon: Icons.link),
+          Section.fromIconData(name: 'Analyse de Données', icon: Icons.analytics),
+          Section.fromIconData(name: 'Génie Logiciel', icon: Icons.precision_manufacturing),
+          Section.fromIconData(name: 'Robotique', icon: Icons.android),
+        ];
+      });
+      _saveSections(); // Sauvegarde les sections par défaut
+    }
+  }
+
+  Future<void> _saveSections() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String sectionsString = jsonEncode(_sections.map((s) => s.toJson()).toList());
+    await prefs.setString('sections_list', sectionsString);
+  }
+
+  // --- Logique d'ajout et de suppression de sections ---
+  Future<void> _addSection(String name, IconData icon) async {
+    // Empêcher l'ajout de sections avec le même nom (sauf si c'est voulu)
+    if (_sections.any((s) => s.name.toLowerCase() == name.toLowerCase())) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Une section nommée "$name" existe déjà.')),
+      );
+      return;
+    }
+
     setState(() {
-      _sections = Section.getSections(); // Utilise getSections() de la classe Section améliorée
-      _secteurs = Secteur.getFictionalSectors(); // Utilise getFictionalSectors() de la classe Secteur améliorée
-      _categoriesData = _getCategoryItems(); // Charge les données pour la grille de catégories
+      _sections.add(Section.fromIconData(name: name, icon: icon));
     });
+    await _saveSections();
+    _applyFilter(name); // Applique le filtre à la nouvelle section
   }
 
-  // Fonction utilitaire pour obtenir les données des éléments de catégorie
-  static List<CategoryItemData> _getCategoryItems() {
-    return const [
-      CategoryItemData('assets/images/icons/Electronic.jpg', 'Électronique'),
-      CategoryItemData('assets/images/icons/Programming.jpg', 'Programmation'),
-      CategoryItemData('assets/images/icons/management.jpg', 'Gestion'),
-      CategoryItemData('assets/images/icons/math.jpg', 'Mathématiques'),
-      CategoryItemData('assets/images/icons/design.jpg', 'Design'),
-      CategoryItemData('assets/images/icons/robotics.jpg', 'Robotique'),
-    ];
+  Future<void> _deleteSection(Section sectionToDelete) async {
+    setState(() {
+      _sections.removeWhere((s) => s.name == sectionToDelete.name);
+      if (_activeFilterTag == sectionToDelete.name) {
+        _activeFilterTag = null; // Réinitialise le filtre si la section active est supprimée
+      }
+    });
+    await _saveSections();
+    _applyFilter(_activeFilterTag); // Réapplique le filtre
+  }
+
+  // Dialogue pour ajouter une nouvelle section
+  Future<void> _showAddSectionDialog() async {
+    String newSectionName = '';
+    IconData? selectedIcon = Section.availableIcons.first; // Icône par défaut
+
+    await showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return StatefulBuilder( // Utiliser StatefulBuilder pour mettre à jour le dialogue
+          builder: (context, setInnerState) {
+            return AlertDialog(
+              title: const Text('Ajouter une nouvelle section'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      onChanged: (value) {
+                        newSectionName = value;
+                      },
+                      decoration: const InputDecoration(labelText: 'Nom de la section'),
+                    ),
+                    const SizedBox(height: 15),
+                    Text('Choisir une icône:', style: Theme.of(context).textTheme.titleSmall),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 150,
+                      child: GridView.builder(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 5,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                        ),
+                        itemCount: Section.availableIcons.length,
+                        itemBuilder: (context, index) {
+                          final icon = Section.availableIcons[index];
+                          return GestureDetector(
+                            onTap: () {
+                              setInnerState(() { // Utilise setInnerState pour le dialogue
+                                selectedIcon = icon;
+                              });
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: selectedIcon == icon ? Theme.of(context).primaryColor : Colors.grey[200],
+                              child: Icon(icon, color: selectedIcon == icon ? Colors.white : Colors.black),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Annuler'),
+                  onPressed: () {
+                    Navigator.of(dialogContext).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text('Ajouter'),
+                  onPressed: () {
+                    if (newSectionName.isNotEmpty && selectedIcon != null) {
+                      _addSection(newSectionName, selectedIcon!);
+                      Navigator.of(dialogContext).pop();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Veuillez entrer un nom et choisir une icône.')),
+                      );
+                    }
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // Applique un filtre aux matières affichées
+  void _applyFilter(String? filterTag) {
+    setState(() {
+      _activeFilterTag = filterTag;
+
+      if (filterTag == null) {
+        _displayedMatieres = List.from(_allMatieres);
+      } else if (filterTag == 'TOP') {
+        _displayedMatieres = _allMatieres.take(5).toList();
+      } else {
+        _displayedMatieres = _allMatieres
+            .where((matiere) => matiere.filterTag == filterTag)
+            .toList();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // Nécessaire pour AutomaticKeepAliveClientMixin
+    super.build(context);
 
     final mediaQuery = MediaQuery.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
-    // Retourne le Scaffold principal avec une structure adaptée à la taille de l'écran
     return Scaffold(
-      body: SingleChildScrollView( // Permet le défilement si le contenu dépasse la taille de l'écran
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Alignement à gauche
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Bouton de menu (à améliorer pour être un bouton interactif)
             Align(
               alignment: Alignment.topLeft,
-              child: SizedBox(
-                width: 50,
-                child: Image.asset(
-                  'assets/images/icons/menubutton.jpg',
-                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.menu),
+              child: IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                  debugPrint("Bouton de menu tapé!");
+                },
+                icon: Icon(
+                  Icons.menu,
+                  size: 30,
+                  color: colorScheme.onBackground,
                 ),
               ),
             ),
             const SizedBox(height: 30),
 
-            // Section de bienvenue avec avatar
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Expanded(
+                Expanded(
                   child: Text.rich(
                     TextSpan(
-                      text: "Salut ! \n\n",
-                      style: TextStyle(
-                        fontFamily: 'Josefin',
-                        color: Color.fromARGB(180, 0, 0, 0),
+                      text: "Salut $_userName ! \n\n",
+                      style: textTheme.titleLarge?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.9),
                         fontSize: 25,
                         fontWeight: FontWeight.w800,
                       ),
                       children: [
                         TextSpan(
                           text: "Commençons une journée passionnante \n en apprenant avec nous",
-                          style: TextStyle(
-                            fontFamily: 'Josefin',
+                          style: textTheme.bodyMedium?.copyWith(
                             fontSize: 17,
-                            color: Color.fromARGB(171, 0, 0, 0),
+                            color: colorScheme.onSurface.withOpacity(0.7),
                           ),
                         )
                       ],
@@ -103,19 +274,30 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   ),
                 ),
                 const SizedBox(width: 10),
-                SizedBox(
-                  width: 90,
-                  child: Image.asset(
-                    'assets/images/icons/avatar1.jpg',
-                    alignment: Alignment.topRight,
-                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.person_outline, size: 90),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Profile()),
+                    );
+                  },
+                  child: SizedBox(
+                    width: 90,
+                    child: Image.asset(
+                      'assets/images/icons/avatar1.jpg',
+                      alignment: Alignment.topRight,
+                      errorBuilder: (context, error, stackTrace) => Icon(
+                        Icons.person_outline,
+                        size: 90,
+                        color: colorScheme.onSurface.withOpacity(0.5),
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 50),
 
-            // Section Catégories (TOP / Menu glissant / Menu contextuel)
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -124,90 +306,91 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                 Card(
                   elevation: 5,
                   clipBehavior: Clip.antiAlias,
-                  color: const Color.fromARGB(255, 121, 38, 238),
+                  color: _activeFilterTag == 'TOP' ? colorScheme.primary : Theme.of(context).cardColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextButton(
-                    onPressed: () {
-                      // Action pour le bouton TOP
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    onPressed: () => _applyFilter('TOP'),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       child: Text(
                         "TOP",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Josefin',
+                        style: textTheme.bodyMedium?.copyWith(
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: _activeFilterTag == 'TOP' ? colorScheme.onPrimary : colorScheme.onSurface.withOpacity(0.8),
                         ),
                       ),
                     ),
                   ),
                 ),
 
-                // Menu glissant (matières principales)
-                // Le widget est maintenant `Expanded` pour prendre l'espace disponible
-                _BestSubjectsList(secteurs: _secteurs),
+                // Menu glissant (sections agissant comme filtres)
+                _SectionsFilterList(
+                  sections: _sections.where((s) => s.name != 'TOP').toList(),
+                  activeFilterTag: _activeFilterTag,
+                  onFilterSelected: _applyFilter,
+                  onSectionDeleted: _deleteSection,
+                ),
 
-                // Bouton de menu contextuel (pour personnaliser les catégories)
-                Builder( // Utilise Builder pour obtenir un BuildContext pour le RenderBox
+                // Bouton de menu contextuel (pour choisir parmi toutes les sections et ajouter)
+                Builder(
                   builder: (innerContext) {
                     return IconButton(
                       onPressed: () {
-                        // Récupère la position et la taille du bouton pour positionner le menu
                         final RenderBox button = innerContext.findRenderObject() as RenderBox;
                         final Rect buttonRect = button.localToGlobal(Offset.zero) & button.size;
 
                         showMenu(
                           context: innerContext,
-                          // Positionne le menu relatif au bouton
                           position: RelativeRect.fromRect(
                             buttonRect,
-                            Offset.zero & mediaQuery.size, // Limites de l'écran
+                            Offset.zero & mediaQuery.size,
                           ),
-                          items: [
+                          items: <PopupMenuEntry<dynamic>>[ // Explicit type for clarity
+                            // Option pour ajouter une section
                             PopupMenuItem(
-                              padding: EdgeInsets.zero,
-                              child: SizedBox(
-                                width: 180, // Largeur fixe pour le menu popup
-                                height: 180, // Hauteur fixe pour le menu popup
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    final sectionItem = _sections[index];
-                                    return ListTile(
-                                      onTap: () {
-                                        Navigator.pop(context); // Ferme le menu popup
-                                        sectionItem.onTap?.call(); // Exécute l'action associée
-                                      },
-                                      title: Text(
-                                        sectionItem.name,
-                                        style: const TextStyle(
-                                          color: Color.fromARGB(255, 63, 63, 63),
-                                          fontFamily: 'Josefin',
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                      leading: Icon(
-                                        sectionItem.icon,
-                                        size: 20,
-                                        color: Colors.blueAccent,
-                                      ),
-                                    );
-                                  },
-                                  itemCount: _sections.length,
-                                ),
+                              child: ListTile(
+                                leading: Icon(Icons.add, color: colorScheme.primary),
+                                title: Text('Ajouter une section', style: textTheme.bodyMedium),
+                                onTap: () {
+                                  Navigator.pop(innerContext); // Ferme le menu
+                                  _showAddSectionDialog(); // Ouvre le dialogue d'ajout
+                                },
                               ),
                             ),
+                            const PopupMenuDivider(), // Séparateur
+
+                            // Liste des sections existantes
+                            // Generates a PopupMenuItem for each section
+                            ..._sections.map((sectionItem) {
+                              return PopupMenuItem(
+                                value: sectionItem.name, // The value returned when this item is selected
+                                child: ListTile(
+                                  leading: Icon(sectionItem.icon, size: 20, color: colorScheme.primary),
+                                  title: Text(
+                                    sectionItem.name,
+                                    style: textTheme.bodyMedium?.copyWith(
+                                      color: colorScheme.onSurface.withOpacity(0.8),
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.pop(context); // Ferme le menu
+                                    _applyFilter(sectionItem.name); // Applique le filtre
+                                  },
+                                ),
+                              );
+                            }).toList(),
                           ],
                         );
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.filter_list,
                         size: 28,
-                        color: Colors.blueAccent,
+                        color: colorScheme.primary,
                       ),
                     );
                   },
@@ -216,36 +399,32 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             ),
             const SizedBox(height: 40),
 
-            // Titre de la section "Catégories"
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Catégories",
+                Text(
+                  "Matières",
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Josefin',
+                  style: textTheme.titleLarge?.copyWith(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
-                    color: Color.fromARGB(166, 0, 0, 0),
+                    color: colorScheme.onSurface.withOpacity(0.8),
                   ),
                 ),
                 TextButton(
                   onPressed: () {
-                    // Redirection vers la page des fichiers (qui liste les matières/catégories)
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Files()),
+                      MaterialPageRoute(builder: (context) => const AllMatieresPage()),
                     );
                   },
-                  child: const Text(
+                  child: Text(
                     "Voir tout",
                     textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: 'Josefin',
+                    style: textTheme.titleMedium?.copyWith(
                       fontSize: 21,
                       fontWeight: FontWeight.w700,
-                      color: Color.fromARGB(223, 222, 75, 161),
+                      color: colorScheme.secondary,
                     ),
                   ),
                 ),
@@ -253,10 +432,10 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             ),
             const SizedBox(height: 15),
 
-            // Grille des catégories (Matières suggérées)
+            // Grille des matières filtrées
             SizedBox(
-              height: mediaQuery.size.width > 400 ? 400 : 350, // Hauteur ajustée pour la grille
-              child: CategoryGridView(categories: _categoriesData),
+              height: mediaQuery.size.width > 400 ? 400 : 350,
+              child: MatiereGridView(matieres: _displayedMatieres), // MatiereGridView est maintenant défini en dessous
             ),
           ],
         ),
@@ -265,44 +444,82 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
   }
 }
 
-// --- Widgets enfants refactorisés ---
+// Widget pour la liste horizontale des filtres de sections
+class _SectionsFilterList extends StatelessWidget {
+  final List<Section> sections;
+  final String? activeFilterTag;
+  final Function(String?) onFilterSelected;
+  final Function(Section) onSectionDeleted; // Nouvelle callback pour la suppression
 
-// Widget pour la liste horizontale des "meilleures" matières (secteurs)
-class _BestSubjectsList extends StatelessWidget {
-  final List<Secteur> secteurs;
-
-  const _BestSubjectsList({required this.secteurs});
+  const _SectionsFilterList({
+    super.key,
+    required this.sections,
+    required this.activeFilterTag,
+    required this.onFilterSelected,
+    required this.onSectionDeleted,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded( // Permet à cette liste de prendre l'espace horizontal restant
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Expanded(
       child: SizedBox(
         height: 38,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 5),
           separatorBuilder: (context, index) => const SizedBox(width: 5),
-          itemCount: secteurs.length,
+          itemCount: sections.length,
           itemBuilder: (context, index) {
-            final secteur = secteurs[index];
+            final section = sections[index];
+            final bool isActive = activeFilterTag == section.name;
             return GestureDetector(
-              onTap: () {
-                debugPrint("Secteur ${secteur.name} tapé!");
+              onTap: () => onFilterSelected(section.name),
+              onLongPress: () {
+                // Permet la suppression par un appui long, sauf pour "TOP"
+                if (section.name != 'TOP') { // Empêche la suppression de la section "TOP"
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext dialogContext) {
+                      return AlertDialog(
+                        title: const Text('Supprimer la section ?'),
+                        content: Text('Voulez-vous vraiment supprimer la section "${section.name}" ?'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('Annuler'),
+                            onPressed: () {
+                              Navigator.of(dialogContext).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text('Supprimer'),
+                            onPressed: () {
+                              onSectionDeleted(section); // Appelle la fonction de suppression
+                              Navigator.of(dialogContext).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
               },
               child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                color: isActive ? colorScheme.primary : Theme.of(context).cardColor,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Center(
                     child: Text(
-                      secteur.name,
+                      section.name,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: 'Josefin',
+                      style: textTheme.bodyMedium?.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Colors.blue,
+                        color: isActive ? colorScheme.onPrimary : colorScheme.primary,
                       ),
                     ),
                   ),
@@ -316,22 +533,17 @@ class _BestSubjectsList extends StatelessWidget {
   }
 }
 
-// Données pour un élément de la grille de catégories
-class CategoryItemData {
-  final String imagePath;
-  final String title;
+// Widget pour la grille de matières (solution pour le deuxième erreur)
+class MatiereGridView extends StatelessWidget {
+  final List<Matiere> matieres;
 
-  const CategoryItemData(this.imagePath, this.title);
-}
-
-// Widget pour la grille de suggestion des matières (catégories)
-class CategoryGridView extends StatelessWidget {
-  final List<CategoryItemData> categories;
-
-  const CategoryGridView({super.key, required this.categories});
+  const MatiereGridView({super.key, required this.matieres});
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -339,13 +551,17 @@ class CategoryGridView extends StatelessWidget {
         mainAxisSpacing: 10,
         childAspectRatio: 0.9,
       ),
-      itemCount: categories.length,
+      itemCount: matieres.length,
       itemBuilder: (context, index) {
-        final categoryItem = categories[index];
+        final matiere = matieres[index];
         return GestureDetector(
           onTap: () {
-            debugPrint("Catégorie ${categoryItem.title} tapée!");
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => MatiereScreen(categoryName: categoryItem.title)));
+            debugPrint("Matière ${matiere.name} tapée!");
+            // Navigue vers la page de détail de la matière
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MatiereDetailsPage(matiere: matiere)),
+            );
           },
           child: Card(
             elevation: 4,
@@ -357,23 +573,28 @@ class CategoryGridView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
-                      categoryItem.imagePath,
+                      matiere.image, // Utilise le champ 'image' de Matiere
                       fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) => const Icon(Icons.category, size: 60, color: Colors.grey),
+                      errorBuilder: (context, error, stackTrace) => Icon(
+                        Icons.school,
+                        size: 60,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
                   child: Text(
-                    categoryItem.title,
+                    matiere.name,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontFamily: 'Josefin',
+                    style: textTheme.bodyMedium?.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 65, 64, 64),
+                      color: colorScheme.onSurface.withOpacity(0.8),
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],

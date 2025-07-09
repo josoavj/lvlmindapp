@@ -71,7 +71,7 @@ class MatiereDetailsPage extends StatelessWidget {
 
             // Nombre de chapitres
             Text(
-              "Total : ${matiere.number}",
+              "Total : ${matiere.chapterCount}",
               style: TextStyle(
                 fontFamily: 'Josefin',
                 fontSize: 18,

@@ -1,25 +1,30 @@
-import 'package:flutter/material.dart'; // Importation nécessaire pour IconData, si jamais on ajoute des icônes
+import 'package:flutter/material.dart';
 
 class Matiere {
   final String name; // Nom de la matière
-  final String number; // Par exemple, "10 Chapitres"
+  final int chapterCount; // Nombre de chapitres (dérivé de la longueur de chapters)
+  final String professor; // Nom du professeur (NOUVEAU)
   final String image; // Chemin de l'image
   final List<String> chapters; // Liste des noms de chapitres
+  final String filterTag; // Tag pour le filtrage (ex: "Électronique", "IA", "TOP") (NOUVEAU)
 
   // Constructeur constant pour la classe
   const Matiere({
     required this.name,
-    required this.number,
+    required this.chapterCount, // Maintenant un int
+    required this.professor, // Requis
     required this.image,
-    required this.chapters, // Le champ chapters est maintenant requis
+    required this.chapters,
+    required this.filterTag, // Requis
   });
 
-  // Retourne une liste statique de matières fictives avec 10 chapitres chacune
+  // Retourne une liste statique de matières fictives avec les nouvelles propriétés
   static List<Matiere> getFictionalCourses() {
     return const [
       Matiere(
         name: "Électronique",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "Dr. Jean Dupont", // Ajouté
         image: 'assets/images/courses/electronic.png',
         chapters: [
           "Chapitre 1: Fondamentaux de l'Électricité",
@@ -33,10 +38,12 @@ class Matiere {
           "Chapitre 9: Conversion Analogique-Numérique (CAN/CNA)",
           "Chapitre 10: Systèmes Embarqués et Microcontrôleurs",
         ],
+        filterTag: "Électronique", // Ajouté
       ),
       Matiere(
         name: "Intelligence Artificielle",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "Mme. Sophie Martin", // Ajouté
         image: 'assets/images/courses/ai.png',
         chapters: [
           "Chapitre 1: Introduction à l'IA et son Histoire",
@@ -50,10 +57,12 @@ class Matiere {
           "Chapitre 9: Vision par Ordinateur",
           "Chapitre 10: Éthique de l'IA et Enjeux Sociétaux",
         ],
+        filterTag: "Intelligence Artificielle", // Ajouté
       ),
       Matiere(
         name: "Structures de Données",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "M. Marc Dubois", // Ajouté
         image: 'assets/images/courses/data_structure.png',
         chapters: [
           "Chapitre 1: Introduction aux Structures de Données",
@@ -67,10 +76,12 @@ class Matiere {
           "Chapitre 9: Algorithmes sur les Graphes (Chemin le plus court, arbres couvrants)",
           "Chapitre 10: Structures de Données Avancées et Disques",
         ],
+        filterTag: "Programmation", // Assumer une catégorie "Programmation"
       ),
       Matiere(
         name: "Algorithmes",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "Dr. Anne Léger", // Ajouté
         image: 'assets/images/courses/algorithm.png',
         chapters: [
           "Chapitre 1: Introduction à l'Analyse d'Algorithmes",
@@ -84,10 +95,12 @@ class Matiere {
           "Chapitre 9: Algorithmes sur les Chaînes de Caractères",
           "Chapitre 10: Complexité des Algorithmes et Classes P/NP",
         ],
+        filterTag: "Programmation", // Assumer une catégorie "Programmation"
       ),
       Matiere(
         name: "UI/UX Design",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "Mme. Claire Bernard", // Ajouté
         image: 'assets/images/courses/ui_ux.png',
         chapters: [
           "Chapitre 1: Fondamentaux de l'UI/UX",
@@ -101,10 +114,12 @@ class Matiere {
           "Chapitre 9: Outils de Design (Figma, Sketch, Adobe XD)",
           "Chapitre 10: Portfolio UI/UX et Carrière",
         ],
+        filterTag: "Design", // Ajouté
       ),
       Matiere(
         name: "Gestion de Projet",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "M. Paul Dubois", // Ajouté
         image: 'assets/images/courses/project_management.png',
         chapters: [
           "Chapitre 1: Introduction à la Gestion de Projet",
@@ -118,10 +133,12 @@ class Matiere {
           "Chapitre 9: Clôture du Projet et Leçons Apprises",
           "Chapitre 10: Leadership et Équipes de Projet",
         ],
+        filterTag: "Gestion", // Ajouté
       ),
       Matiere(
         name: "Développement Web",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "M. Thomas Petit", // Ajouté
         image: 'assets/images/courses/web_dev.png',
         chapters: [
           "Chapitre 1: Fondamentaux du Web (HTML, CSS)",
@@ -135,10 +152,12 @@ class Matiere {
           "Chapitre 9: Sécurité Web",
           "Chapitre 10: Déploiement et Maintenance",
         ],
+        filterTag: "Programmation", // Ajouté
       ),
       Matiere(
         name: "Cybersécurité",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "Dr. Emilie Leroy", // Ajouté
         image: 'assets/images/courses/cybersecurity.png',
         chapters: [
           "Chapitre 1: Introduction à la Cybersécurité",
@@ -152,10 +171,12 @@ class Matiere {
           "Chapitre 9: Lois et Régulations en Cybersécurité",
           "Chapitre 10: Carrières en Cybersécurité",
         ],
+        filterTag: "Cybersécurité", // Ajouté
       ),
       Matiere(
         name: "Bases de Données",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "Mme. Laura Morel", // Ajouté
         image: 'assets/images/courses/database.png',
         chapters: [
           "Chapitre 1: Concepts Fondamentaux des Bases de Données",
@@ -169,10 +190,12 @@ class Matiere {
           "Chapitre 9: Administration de Bases de Données (Sauvegarde, Restauration)",
           "Chapitre 10: Sécurité des Bases de Données",
         ],
+        filterTag: "Programmation", // Ajouté
       ),
       Matiere(
         name: "Réseaux Informatiques",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "Dr. Philippe Lambert", // Ajouté
         image: 'assets/images/courses/networking.png',
         chapters: [
           "Chapitre 1: Introduction aux Réseaux",
@@ -186,10 +209,12 @@ class Matiere {
           "Chapitre 9: Technologies Sans Fil",
           "Chapitre 10: Administration et Dépannage Réseau",
         ],
+        filterTag: "Réseaux", // Ajouté
       ),
       Matiere(
         name: "Développement Mobile",
-        number: "10 Chapitres",
+        chapterCount: 10,
+        professor: "Mme. Aline Moreau", // Ajouté
         image: 'assets/images/courses/mobile_dev.png',
         chapters: [
           "Chapitre 1: Introduction au Développement Mobile",
@@ -203,12 +228,13 @@ class Matiere {
           "Chapitre 9: Tests et Débogage d'Applications Mobiles",
           "Chapitre 10: Déploiement sur App Stores (Google Play, Apple App Store)",
         ],
+        filterTag: "Programmation", // Ajouté
       ),
-      // --- NOUVELLES MATIERES AJOUTÉES (Réutilisant les images existantes) ---
       Matiere(
         name: "Programmation Orientée Objet",
-        number: "10 Chapitres",
-        image: 'assets/images/courses/data_structure.png', // Réutilisation d'une image existante
+        chapterCount: 10,
+        professor: "M. Antoine Dubois", // Ajouté
+        image: 'assets/images/courses/data_structure.png',
         chapters: [
           "Chapitre 1: Concepts Fondamentaux de l'POO",
           "Chapitre 2: Classes et Objets",
@@ -221,11 +247,13 @@ class Matiere {
           "Chapitre 9: UML pour la Conception POO",
           "Chapitre 10: POO dans les Langages Modernes (Java, C++, Python)",
         ],
+        filterTag: "Programmation", // Ajouté
       ),
       Matiere(
         name: "Cloud Computing",
-        number: "10 Chapitres",
-        image: 'assets/images/courses/networking.png', // Réutilisation d'une image existante
+        chapterCount: 10,
+        professor: "Dr. Léo Grand", // Ajouté
+        image: 'assets/images/courses/networking.png',
         chapters: [
           "Chapitre 1: Introduction au Cloud Computing",
           "Chapitre 2: Modèles de Service (IaaS, PaaS, SaaS)",
@@ -238,11 +266,13 @@ class Matiere {
           "Chapitre 9: Gestion des Coûts et Optimisation",
           "Chapitre 10: Serverless Computing (Fonctions Lambda, Azure Functions)",
         ],
+        filterTag: "Cloud Computing", // Ajouté
       ),
       Matiere(
         name: "Big Data",
-        number: "10 Chapitres",
-        image: 'assets/images/courses/database.png', // Réutilisation d'une image existante
+        chapterCount: 10,
+        professor: "Mme. Clara Roux", // Ajouté
+        image: 'assets/images/courses/database.png',
         chapters: [
           "Chapitre 1: Introduction au Big Data",
           "Chapitre 2: Les 3 V du Big Data (Volume, Vélocité, Variété)",
@@ -255,11 +285,13 @@ class Matiere {
           "Chapitre 9: Pipelines de Données et ETL",
           "Chapitre 10: Cas d'Usage et Applications du Big Data",
         ],
+        filterTag: "Big Data", // Ajouté
       ),
       Matiere(
         name: "DevOps",
-        number: "10 Chapitres",
-        image: 'assets/images/courses/project_management.png', // Réutilisation d'une image existante
+        chapterCount: 10,
+        professor: "M. Jean-Luc Blanc", // Ajouté
+        image: 'assets/images/courses/project_management.png',
         chapters: [
           "Chapitre 1: Introduction au DevOps et ses Principes",
           "Chapitre 2: Intégration Continue (CI)",
@@ -272,11 +304,13 @@ class Matiere {
           "Chapitre 9: Sécurité dans le Pipeline DevOps (DevSecOps)",
           "Chapitre 10: Culture DevOps et Collaboration",
         ],
+        filterTag: "DevOps", // Ajouté
       ),
       Matiere(
         name: "Blockchain",
-        number: "10 Chapitres",
-        image: 'assets/images/courses/electronic.png', // Réutilisation d'une image existante
+        chapterCount: 10,
+        professor: "Dr. Sylvie Conte", // Ajouté
+        image: 'assets/images/courses/electronic.png',
         chapters: [
           "Chapitre 1: Introduction à la Blockchain",
           "Chapitre 2: Cryptographie et Hachage",
@@ -289,11 +323,13 @@ class Matiere {
           "Chapitre 9: Défis et Régulation de la Blockchain",
           "Chapitre 10: Développer avec des Frameworks Blockchain",
         ],
+        filterTag: "Blockchain", // Ajouté
       ),
       Matiere(
         name: "Analyse de Données",
-        number: "10 Chapitres",
-        image: 'assets/images/courses/ai.png', // Réutilisation d'une image existante
+        chapterCount: 10,
+        professor: "Mme. Céline Dufour", // Ajouté
+        image: 'assets/images/courses/ai.png',
         chapters: [
           "Chapitre 1: Introduction à l'Analyse de Données",
           "Chapitre 2: Collecte et Nettoyage des Données",
@@ -306,11 +342,13 @@ class Matiere {
           "Chapitre 9: Modélisation Prédictive Simple",
           "Chapitre 10: Rapports et Présentation des Résultats",
         ],
+        filterTag: "Analyse de Données", // Ajouté
       ),
       Matiere(
         name: "Génie Logiciel",
-        number: "10 Chapitres",
-        image: 'assets/images/courses/web_dev.png', // Réutilisation d'une image existante
+        chapterCount: 10,
+        professor: "M. Charles Duval", // Ajouté
+        image: 'assets/images/courses/web_dev.png',
         chapters: [
           "Chapitre 1: Introduction au Génie Logiciel",
           "Chapitre 2: Modèles de Processus Logiciels (Cascade, Agile)",
@@ -323,11 +361,13 @@ class Matiere {
           "Chapitre 9: Maintenance et Évolution du Logiciel",
           "Chapitre 10: Éthique et Responsabilité Professionnelle",
         ],
+        filterTag: "Génie Logiciel",
       ),
       Matiere(
         name: "Robotique",
-        number: "10 Chapitres",
-        image: 'assets/images/courses/algorithm.png', // Réutilisation d'une image existante
+        chapterCount: 10,
+        professor: "Dr. Victor Durand", // Ajouté
+        image: 'assets/images/courses/algorithm.png',
         chapters: [
           "Chapitre 1: Introduction à la Robotique",
           "Chapitre 2: Composants d'un Robot (Capteurs, Actionneurs)",
@@ -340,6 +380,7 @@ class Matiere {
           "Chapitre 9: Robotique Mobile et Navigation",
           "Chapitre 10: Applications Industrielles et Humanoïdes",
         ],
+        filterTag: "Robotique",
       ),
     ];
   }
@@ -349,13 +390,11 @@ class Secteur {
   final String name; // Nom du secteur
   final String image; // Chemin de l'image
 
-  // Constructeur constant pour la classe
   const Secteur({
     required this.name,
     required this.image,
   });
 
-  // Retourne une liste statique de secteurs fictifs
   static List<Secteur> getFictionalSectors() {
     return const [
       Secteur(name: "Hacking Éthique", image: 'assets/images/sectors/hacking.png'),
