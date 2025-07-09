@@ -81,7 +81,7 @@ class MatieresListPage extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  matiere.chapterCount as String, // Affiche "10 Chapitres"
+                  matiere.chapterCount.toString(),
                   style: TextStyle(
                     fontFamily: 'Josefin',
                     fontSize: 14,
