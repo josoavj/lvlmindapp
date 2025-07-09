@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/pages/filesPage.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
+import 'package:lvlmindbeta/pages/profilePage.dart';
+import 'package:lvlmindbeta/services/authentificationService.dart';
 
 // Définition de la page d'accueil de l'application
 class Homepage extends StatefulWidget {
@@ -13,28 +15,40 @@ class Homepage extends StatefulWidget {
 
 // État de la page d'accueil
 class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin {
-  // Conserve l'état du widget même si la page n'est plus visible (ex: via BottomNavBar)
   @override
   bool get wantKeepAlive => true;
 
-  // Listes pour les données du menu popup et des catégories
   List<Section> _sections = [];
   List<Secteur> _secteurs = [];
-  List<CategoryItemData> _categoriesData = []; // Données pour la grille de catégories
+  List<CategoryItemData> _categoriesData = [];
+
+  String _userName = "Cher(ère) étudiant(e)"; // Initialisation par défaut
 
   @override
   void initState() {
     super.initState();
-    _loadData(); // Charge les données une seule fois lors de l'initialisation de l'état
+    _loadData();
+    _loadUserName(); // Charge le nom de l'utilisateur
   }
 
   // Charge toutes les données nécessaires pour la page
   void _loadData() {
     setState(() {
-      _sections = Section.getSections(); // Utilise getSections() de la classe Section améliorée
-      _secteurs = Secteur.getFictionalSectors(); // Utilise getFictionalSectors() de la classe Secteur améliorée
-      _categoriesData = _getCategoryItems(); // Charge les données pour la grille de catégories
+      _sections = Section.getSections();
+      _secteurs = Secteur.getFictionalSectors();
+      _categoriesData = _getCategoryItems();
     });
+  }
+
+  // Charge le nom de l'utilisateur connecté
+  Future<void> _loadUserName() async {
+    final authService = AuthService(); // Créez une instance de votre AuthService
+    final user = await authService.getLoggedInUser();
+    if (mounted && user != null) {
+      setState(() {
+        _userName = user.name.split(' ').first; // Affiche seulement le prénom
+      });
+    }
   }
 
   // Fonction utilitaire pour obtenir les données des éléments de catégorie
@@ -51,25 +65,31 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // Nécessaire pour AutomaticKeepAliveClientMixin
+    super.build(context);
 
     final mediaQuery = MediaQuery.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
-    // Retourne le Scaffold principal avec une structure adaptée à la taille de l'écran
     return Scaffold(
-      body: SingleChildScrollView( // Permet le défilement si le contenu dépasse la taille de l'écran
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Alignement à gauche
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Bouton de menu (à améliorer pour être un bouton interactif)
+            // Bouton de menu
             Align(
               alignment: Alignment.topLeft,
-              child: SizedBox(
-                width: 50,
-                child: Image.asset(
-                  'assets/images/icons/menubutton.jpg',
-                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.menu),
+              child: IconButton(
+                onPressed: () {
+                  // TODO: Implémenter l'ouverture d'un Drawer ou d'un menu latéral
+                  Scaffold.of(context).openDrawer(); // Nécessite un Drawer dans le Scaffold parent (ex: dans BottomNavBar ou dans main.dart)
+                  debugPrint("Bouton de menu tapé!");
+                },
+                icon: Icon(
+                  Icons.menu,
+                  size: 30, // Taille ajustée pour la visibilité
+                  color: colorScheme.onBackground, // Couleur cohérente avec le thème
                 ),
               ),
             ),
@@ -79,23 +99,21 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Expanded(
+                Expanded(
                   child: Text.rich(
                     TextSpan(
-                      text: "Salut ! \n\n",
-                      style: TextStyle(
-                        fontFamily: 'Josefin',
-                        color: Color.fromARGB(180, 0, 0, 0),
+                      text: "Salut $_userName ! \n\n", // Affiche le nom de l'utilisateur
+                      style: textTheme.titleLarge?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.9), // Couleur du thème
                         fontSize: 25,
                         fontWeight: FontWeight.w800,
                       ),
                       children: [
                         TextSpan(
                           text: "Commençons une journée passionnante \n en apprenant avec nous",
-                          style: TextStyle(
-                            fontFamily: 'Josefin',
+                          style: textTheme.bodyMedium?.copyWith(
                             fontSize: 17,
-                            color: Color.fromARGB(171, 0, 0, 0),
+                            color: colorScheme.onSurface.withOpacity(0.7), // Couleur du thème
                           ),
                         )
                       ],
@@ -103,12 +121,24 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   ),
                 ),
                 const SizedBox(width: 10),
-                SizedBox(
-                  width: 90,
-                  child: Image.asset(
-                    'assets/images/icons/avatar1.jpg',
-                    alignment: Alignment.topRight,
-                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.person_outline, size: 90),
+                GestureDetector( // Rend l'avatar cliquable
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Profile()),
+                    );
+                  },
+                  child: SizedBox(
+                    width: 90,
+                    child: Image.asset(
+                      'assets/images/icons/avatar1.jpg', // Votre image d'avatar
+                      alignment: Alignment.topRight,
+                      errorBuilder: (context, error, stackTrace) => Icon(
+                        Icons.person_outline,
+                        size: 90,
+                        color: colorScheme.onSurface.withOpacity(0.5), // Couleur du thème
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -124,24 +154,25 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                 Card(
                   elevation: 5,
                   clipBehavior: Clip.antiAlias,
-                  color: const Color.fromARGB(255, 121, 38, 238),
+                  color: colorScheme.primary, // Utilise la couleur primaire du thème (BlueAccent)
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextButton(
                     onPressed: () {
                       // Action pour le bouton TOP
+                      debugPrint("Bouton TOP tapé!");
                     },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       child: Text(
                         "TOP",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Josefin',
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontFamily: 'Josefin', // Conserve Josefin si override global échoue
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: colorScheme.onPrimary, // Texte blanc sur la couleur primaire
                         ),
                       ),
                     ),
@@ -149,51 +180,47 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                 ),
 
                 // Menu glissant (matières principales)
-                // Le widget est maintenant `Expanded` pour prendre l'espace disponible
                 _BestSubjectsList(secteurs: _secteurs),
 
                 // Bouton de menu contextuel (pour personnaliser les catégories)
-                Builder( // Utilise Builder pour obtenir un BuildContext pour le RenderBox
+                Builder(
                   builder: (innerContext) {
                     return IconButton(
                       onPressed: () {
-                        // Récupère la position et la taille du bouton pour positionner le menu
                         final RenderBox button = innerContext.findRenderObject() as RenderBox;
                         final Rect buttonRect = button.localToGlobal(Offset.zero) & button.size;
 
                         showMenu(
                           context: innerContext,
-                          // Positionne le menu relatif au bouton
                           position: RelativeRect.fromRect(
                             buttonRect,
-                            Offset.zero & mediaQuery.size, // Limites de l'écran
+                            Offset.zero & mediaQuery.size,
                           ),
                           items: [
                             PopupMenuItem(
                               padding: EdgeInsets.zero,
                               child: SizedBox(
-                                width: 180, // Largeur fixe pour le menu popup
-                                height: 180, // Hauteur fixe pour le menu popup
+                                width: 180,
+                                height: 180,
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
                                     final sectionItem = _sections[index];
                                     return ListTile(
                                       onTap: () {
-                                        Navigator.pop(context); // Ferme le menu popup
-                                        sectionItem.onTap?.call(); // Exécute l'action associée
+                                        Navigator.pop(context);
+                                        sectionItem.onTap?.call();
                                       },
                                       title: Text(
                                         sectionItem.name,
-                                        style: const TextStyle(
-                                          color: Color.fromARGB(255, 63, 63, 63),
-                                          fontFamily: 'Josefin',
+                                        style: textTheme.bodyMedium?.copyWith(
+                                          color: colorScheme.onSurface.withOpacity(0.8), // Couleur du thème
                                           fontSize: 15,
                                         ),
                                       ),
                                       leading: Icon(
                                         sectionItem.icon,
                                         size: 20,
-                                        color: Colors.blueAccent,
+                                        color: colorScheme.primary, // Couleur primaire du thème
                                       ),
                                     );
                                   },
@@ -204,10 +231,10 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                           ],
                         );
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.filter_list,
                         size: 28,
-                        color: Colors.blueAccent,
+                        color: colorScheme.primary, // Couleur primaire du thème
                       ),
                     );
                   },
@@ -220,32 +247,29 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   "Catégories",
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Josefin',
+                  style: textTheme.titleLarge?.copyWith(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
-                    color: Color.fromARGB(166, 0, 0, 0),
+                    color: colorScheme.onSurface.withOpacity(0.8), // Couleur du thème
                   ),
                 ),
                 TextButton(
                   onPressed: () {
-                    // Redirection vers la page des fichiers (qui liste les matières/catégories)
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Files()),
+                      MaterialPageRoute(builder: (context) => const Files()), // Utilisez const si Files est stateless
                     );
                   },
-                  child: const Text(
+                  child: Text(
                     "Voir tout",
                     textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: 'Josefin',
+                    style: textTheme.titleMedium?.copyWith(
                       fontSize: 21,
                       fontWeight: FontWeight.w700,
-                      color: Color.fromARGB(223, 222, 75, 161),
+                      color: colorScheme.secondary, // Utilise la couleur secondaire (rose) du thème
                     ),
                   ),
                 ),
@@ -255,7 +279,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
 
             // Grille des catégories (Matières suggérées)
             SizedBox(
-              height: mediaQuery.size.width > 400 ? 400 : 350, // Hauteur ajustée pour la grille
+              height: mediaQuery.size.width > 400 ? 400 : 350,
               child: CategoryGridView(categories: _categoriesData),
             ),
           ],
@@ -271,11 +295,14 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
 class _BestSubjectsList extends StatelessWidget {
   final List<Secteur> secteurs;
 
-  const _BestSubjectsList({required this.secteurs});
+  const _BestSubjectsList({super.key, required this.secteurs}); // Ajout de super.key
 
   @override
   Widget build(BuildContext context) {
-    return Expanded( // Permet à cette liste de prendre l'espace horizontal restant
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Expanded(
       child: SizedBox(
         height: 38,
         child: ListView.separated(
@@ -298,11 +325,11 @@ class _BestSubjectsList extends StatelessWidget {
                     child: Text(
                       secteur.name,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: textTheme.bodyMedium?.copyWith(
                         fontFamily: 'Josefin',
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Colors.blue,
+                        color: colorScheme.primary, // Utilise la couleur primaire du thème
                       ),
                     ),
                   ),
@@ -316,7 +343,7 @@ class _BestSubjectsList extends StatelessWidget {
   }
 }
 
-// Données pour un élément de la grille de catégories
+// Données pour un élément de la grille de catégories (inchangé)
 class CategoryItemData {
   final String imagePath;
   final String title;
@@ -332,6 +359,9 @@ class CategoryGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -345,6 +375,7 @@ class CategoryGridView extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             debugPrint("Catégorie ${categoryItem.title} tapée!");
+            // Exemple de navigation:
             // Navigator.push(context, MaterialPageRoute(builder: (context) => MatiereScreen(categoryName: categoryItem.title)));
           },
           child: Card(
@@ -359,7 +390,11 @@ class CategoryGridView extends StatelessWidget {
                     child: Image.asset(
                       categoryItem.imagePath,
                       fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) => const Icon(Icons.category, size: 60, color: Colors.grey),
+                      errorBuilder: (context, error, stackTrace) => Icon(
+                        Icons.category,
+                        size: 60,
+                        color: Theme.of(context).iconTheme.color, // Utilise la couleur d'icône du thème
+                      ),
                     ),
                   ),
                 ),
@@ -368,11 +403,11 @@ class CategoryGridView extends StatelessWidget {
                   child: Text(
                     categoryItem.title,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: textTheme.bodyMedium?.copyWith(
                       fontFamily: 'Josefin',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 65, 64, 64),
+                      color: colorScheme.onSurface.withOpacity(0.8), // Utilise la couleur du thème
                     ),
                   ),
                 ),
