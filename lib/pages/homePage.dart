@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lvlmindbeta/Models/screenModels/allMatiereSection.dart';
+import 'package:lvlmindbeta/Models/screenModels/matieresList.dart';
 import 'package:lvlmindbeta/pages/filesPage.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
@@ -413,7 +415,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Files()),
+                      MaterialPageRoute(builder: (context) => const AllMatieresPage()),
                     );
                   },
                   child: Text(
