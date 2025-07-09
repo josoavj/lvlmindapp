@@ -253,7 +253,7 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                       ),
                     ),
                     trailing: Text(
-                      matiere.chapterCount as String,
+                      matiere.chapterCount.toString(),
                       style: const TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 13,
