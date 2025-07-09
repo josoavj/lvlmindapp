@@ -4,8 +4,9 @@ import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 import 'package:lvlmindbeta/pages/profilePage.dart';
 import 'package:lvlmindbeta/services/authentificationService.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Import pour la persistance
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import '../Models/screenModels/matiereDetails.dart'; // Pour jsonEncode/jsonDecode
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -92,6 +93,14 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
 
   // --- Logique d'ajout et de suppression de sections ---
   Future<void> _addSection(String name, IconData icon) async {
+    // Empêcher l'ajout de sections avec le même nom (sauf si c'est voulu)
+    if (_sections.any((s) => s.name.toLowerCase() == name.toLowerCase())) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Une section nommée "$name" existe déjà.')),
+      );
+      return;
+    }
+
     setState(() {
       _sections.add(Section.fromIconData(name: name, icon: icon));
     });
@@ -118,72 +127,74 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
     await showDialog<void>(
       context: context,
       builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: const Text('Ajouter une nouvelle section'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  onChanged: (value) {
-                    newSectionName = value;
-                  },
-                  decoration: const InputDecoration(labelText: 'Nom de la section'),
-                ),
-                const SizedBox(height: 15),
-                Text('Choisir une icône:', style: Theme.of(context).textTheme.titleSmall),
-                const SizedBox(height: 10),
-                SizedBox(
-                  height: 150, // Hauteur fixe pour la grille d'icônes
-                  child: GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
+        return StatefulBuilder( // Utiliser StatefulBuilder pour mettre à jour le dialogue
+          builder: (context, setInnerState) {
+            return AlertDialog(
+              title: const Text('Ajouter une nouvelle section'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      onChanged: (value) {
+                        newSectionName = value;
+                      },
+                      decoration: const InputDecoration(labelText: 'Nom de la section'),
                     ),
-                    itemCount: Section.availableIcons.length,
-                    itemBuilder: (context, index) {
-                      final icon = Section.availableIcons[index];
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() { // setState ici pour rafraîchir l'icône sélectionnée dans le dialogue
-                            selectedIcon = icon;
-                          });
-                          // Ne pas fermer le dialogue, juste mettre à jour la sélection
-                          (dialogContext as Element).markNeedsBuild(); // Force le rafraîchissement du dialogue
-                        },
-                        child: CircleAvatar(
-                          backgroundColor: selectedIcon == icon ? Theme.of(context).primaryColor : Colors.grey[200],
-                          child: Icon(icon, color: selectedIcon == icon ? Colors.white : Colors.black),
+                    const SizedBox(height: 15),
+                    Text('Choisir une icône:', style: Theme.of(context).textTheme.titleSmall),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 150,
+                      child: GridView.builder(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 5,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
                         ),
+                        itemCount: Section.availableIcons.length,
+                        itemBuilder: (context, index) {
+                          final icon = Section.availableIcons[index];
+                          return GestureDetector(
+                            onTap: () {
+                              setInnerState(() { // Utilise setInnerState pour le dialogue
+                                selectedIcon = icon;
+                              });
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: selectedIcon == icon ? Theme.of(context).primaryColor : Colors.grey[200],
+                              child: Icon(icon, color: selectedIcon == icon ? Colors.white : Colors.black),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Annuler'),
+                  onPressed: () {
+                    Navigator.of(dialogContext).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text('Ajouter'),
+                  onPressed: () {
+                    if (newSectionName.isNotEmpty && selectedIcon != null) {
+                      _addSection(newSectionName, selectedIcon!);
+                      Navigator.of(dialogContext).pop();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Veuillez entrer un nom et choisir une icône.')),
                       );
-                    },
-                  ),
+                    }
+                  },
                 ),
               ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Annuler'),
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('Ajouter'),
-              onPressed: () {
-                if (newSectionName.isNotEmpty && selectedIcon != null) {
-                  _addSection(newSectionName, selectedIcon!);
-                  Navigator.of(dialogContext).pop();
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Veuillez entrer un nom et choisir une icône.')),
-                  );
-                }
-              },
-            ),
-          ],
+            );
+          },
         );
       },
     );
@@ -197,7 +208,6 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
       if (filterTag == null) {
         _displayedMatieres = List.from(_allMatieres);
       } else if (filterTag == 'TOP') {
-        // Logique pour les matières "TOP" (exemple: les 5 premières)
         _displayedMatieres = _allMatieres.take(5).toList();
       } else {
         _displayedMatieres = _allMatieres
@@ -320,7 +330,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   sections: _sections.where((s) => s.name != 'TOP').toList(),
                   activeFilterTag: _activeFilterTag,
                   onFilterSelected: _applyFilter,
-                  onSectionDeleted: _deleteSection, // Passe la fonction de suppression
+                  onSectionDeleted: _deleteSection,
                 ),
 
                 // Bouton de menu contextuel (pour choisir parmi toutes les sections et ajouter)
@@ -337,7 +347,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                             buttonRect,
                             Offset.zero & mediaQuery.size,
                           ),
-                          items: [
+                          items: <PopupMenuEntry<dynamic>>[ // Explicit type for clarity
                             // Option pour ajouter une section
                             PopupMenuItem(
                               child: ListTile(
@@ -352,37 +362,26 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                             const PopupMenuDivider(), // Séparateur
 
                             // Liste des sections existantes
-                            PopupMenuItem(
-                              padding: EdgeInsets.zero,
-                              child: SizedBox(
-                                width: 180,
-                                height: 250, // Hauteur ajustée pour plus d'éléments
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    final sectionItem = _sections[index];
-                                    return ListTile(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        _applyFilter(sectionItem.name);
-                                      },
-                                      title: Text(
-                                        sectionItem.name,
-                                        style: textTheme.bodyMedium?.copyWith(
-                                          color: colorScheme.onSurface.withOpacity(0.8),
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                      leading: Icon(
-                                        sectionItem.icon,
-                                        size: 20,
-                                        color: colorScheme.primary,
-                                      ),
-                                    );
+                            // Generates a PopupMenuItem for each section
+                            ..._sections.map((sectionItem) {
+                              return PopupMenuItem(
+                                value: sectionItem.name, // The value returned when this item is selected
+                                child: ListTile(
+                                  leading: Icon(sectionItem.icon, size: 20, color: colorScheme.primary),
+                                  title: Text(
+                                    sectionItem.name,
+                                    style: textTheme.bodyMedium?.copyWith(
+                                      color: colorScheme.onSurface.withOpacity(0.8),
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.pop(context); // Ferme le menu
+                                    _applyFilter(sectionItem.name); // Applique le filtre
                                   },
-                                  itemCount: _sections.length,
                                 ),
-                              ),
-                            ),
+                              );
+                            }).toList(),
                           ],
                         );
                       },
@@ -431,9 +430,10 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             ),
             const SizedBox(height: 15),
 
+            // Grille des matières filtrées
             SizedBox(
               height: mediaQuery.size.width > 400 ? 400 : 350,
-              child: MatiereGridView(matieres: _displayedMatieres),
+              child: MatiereGridView(matieres: _displayedMatieres), // MatiereGridView est maintenant défini en dessous
             ),
           ],
         ),
@@ -477,7 +477,7 @@ class _SectionsFilterList extends StatelessWidget {
               onTap: () => onFilterSelected(section.name),
               onLongPress: () {
                 // Permet la suppression par un appui long, sauf pour "TOP"
-                if (section.name != 'TOP') {
+                if (section.name != 'TOP') { // Empêche la suppression de la section "TOP"
                   showDialog(
                     context: context,
                     builder: (BuildContext dialogContext) {
@@ -527,6 +527,79 @@ class _SectionsFilterList extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+// Widget pour la grille de matières (solution pour le deuxième erreur)
+class MatiereGridView extends StatelessWidget {
+  final List<Matiere> matieres;
+
+  const MatiereGridView({super.key, required this.matieres});
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 0.9,
+      ),
+      itemCount: matieres.length,
+      itemBuilder: (context, index) {
+        final matiere = matieres[index];
+        return GestureDetector(
+          onTap: () {
+            debugPrint("Matière ${matiere.name} tapée!");
+            // Navigue vers la page de détail de la matière
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MatiereDetailsPage(matiere: matiere)),
+            );
+          },
+          child: Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      matiere.image, // Utilise le champ 'image' de Matiere
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) => Icon(
+                        Icons.school,
+                        size: 60,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+                  child: Text(
+                    matiere.name,
+                    textAlign: TextAlign.center,
+                    style: textTheme.bodyMedium?.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface.withOpacity(0.8),
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
