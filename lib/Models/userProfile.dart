@@ -1,13 +1,14 @@
+import 'dart:convert';
+
 class UserProfile {
   final String username;
-  final String password; // Garder le mot de passe dans l'objet pour la logique interne si besoin, mais ne pas le sérialiser directement pour la persistance locale si non nécessaire.
+  final String password;
   final String name;
   final String email;
   final String status;
   final String matricule;
   final String establishment;
   final String avatarPath;
-
 
   UserProfile({
     required this.username,
@@ -20,38 +21,28 @@ class UserProfile {
     required this.avatarPath,
   });
 
-  // Convertit un objet UserProfile en un Map (utile pour la sauvegarde JSON)
-  // Incluez l'email ici pour qu'il soit sauvegardé.
-  // N'incluez PAS le mot de passe pour des raisons de sécurité évidentes avec SharedPreferences.
-  Map<String, dynamic> toJson() {
-    return {
-      'username': username,
-      // 'password': password, // Ne PAS inclure le mot de passe pour la persistance locale simple
-      'name': name,
-      'email': email, // Assurez-vous que l'email est inclus
-      'status': status,
-      'matricule': matricule,
-      'establishment': establishment,
-      'avatarPath': avatarPath,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    'username': username,
+    'name': name,
+    'email': email, // Assurez-vous que l'email est ici !
+    'status': status,
+    'matricule': matricule,
+    'establishment': establishment,
+    'avatarPath': avatarPath,
+  };
 
-  // Méthode pour créer un UserProfile à partir d'une Map (pour SharedPreferences)
-  factory UserProfile.fromJson(Map<String, dynamic> json) {
-    return UserProfile(
-      username: json['username'] as String,
-      password: '', // Le mot de passe ne doit PAS être stocké ici ou dans SharedPreferences pour des raisons de sécurité. Il devrait être vérifié via un backend.
-      name: json['name'] as String,
-      email: json['email'] as String, // Récupérez l'email ici
-      status: json['status'] as String,
-      matricule: json['matricule'] as String,
-      establishment: json['establishment'] as String,
-      avatarPath: json['avatarPath'] as String,
-    );
-  }
+  factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
+    username: json['username'] as String,
+    password: '', // Le mot de passe ne doit pas être récupéré de SharedPreferences
+    name: json['name'] as String,
+    email: json['email'] as String, // Assurez-vous que l'email est récupéré ici !
+    status: json['status'] as String,
+    matricule: json['matricule'] as String,
+    establishment: json['establishment'] as String,
+    avatarPath: json['avatarPath'] as String,
+  );
 
-  // Méthode copyWith pour créer une nouvelle instance avec des valeurs mises à jour.
-  // Ceci est très utile pour les objets immuables comme UserProfile.
+  // Assurez-vous que cette méthode est présente et correcte
   UserProfile copyWith({
     String? username,
     String? password,
@@ -64,7 +55,7 @@ class UserProfile {
   }) {
     return UserProfile(
       username: username ?? this.username,
-      password: password ?? this.password, // À utiliser avec précaution si le mot de passe n'est pas géré via ce flux
+      password: password ?? this.password,
       name: name ?? this.name,
       email: email ?? this.email,
       status: status ?? this.status,
