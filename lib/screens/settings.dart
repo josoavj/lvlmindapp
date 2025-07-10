@@ -4,6 +4,7 @@ import 'package:lvlmindbeta/providers/theme_notifier.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'aboutDevelopers.dart';
+import 'editProfilePage.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -137,7 +138,10 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
             trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              _showSnackBar(context, "Fonctionnalité 'Modifier le profil' à implémenter");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EditProfilePage()),
+              );
             },
           ),
           ListTile(
