@@ -5,6 +5,7 @@ final List<UserProfile> users = [
     username: 'josoa',
     password: 'password123',
     name: 'Josoa Vonjiniaina',
+    email: 'josoa.vonjiniaina@example.com', // Ajout d'un email pour l'exemple
     status: 'Étudiant',
     matricule: '202301',
     establishment: 'Université d\'Antananarivo',
@@ -14,8 +15,9 @@ final List<UserProfile> users = [
     username: 'fana',
     password: 'password123',
     name: 'Fanantenana Andriamaro',
+    email: 'fanantenana.andriamaro@example.com', // Ajout d'un email
     status: 'Étudiant',
-    matricule: '202302', // Vérifiez ce matricule
+    matricule: '202302',
     establishment: 'ESPA Vontovorona',
     avatarPath: 'assets/images/profil_placeholder_fana.png',
   ),
@@ -23,8 +25,9 @@ final List<UserProfile> users = [
     username: 'admin',
     password: 'adminpassword',
     name: 'Administrateur Test',
+    email: 'admin@lvlmind.com', // Ajout d'un email
     status: 'Professeur',
-    matricule: '202303', // Vérifiez ce matricule
+    matricule: '202303',
     establishment: 'LVLMIND Academy',
     avatarPath: 'assets/images/profil_placeholder_admin.png',
   ),
