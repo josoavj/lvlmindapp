@@ -40,7 +40,7 @@ class UserProfile {
       status: json['status'] as String,
       matricule: json['matricule'] as String,
       establishment: json['establishment'] as String,
-      avatarPath: json['avatarPath'] as String,
+      avatarPath: json['avatarPath'] as String, email: '',
     );
   }
 }
