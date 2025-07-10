@@ -2,15 +2,18 @@ class UserProfile {
   final String username;
   final String password;
   final String name;
+  final String email;
   final String status;
   final String matricule;
   final String establishment;
-  final String avatarPath; 
+  final String avatarPath;
+
 
   UserProfile({
     required this.username,
     required this.password,
     required this.name,
+    required this.email,
     required this.status,
     required this.matricule,
     required this.establishment,
