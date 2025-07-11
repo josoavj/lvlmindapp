@@ -1,7 +1,5 @@
-// File: lib/screens/about_developers_page.dart
-
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart'; // N'oubliez pas l'importation
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutDevelopersPage extends StatelessWidget {
   const AboutDevelopersPage({super.key});
@@ -10,10 +8,8 @@ class AboutDevelopersPage extends StatelessWidget {
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri)) {
-      // Pour une meilleure gestion d'erreur, vous pourriez afficher un SnackBar
-      // ou une boîte de dialogue si le lien ne peut pas être ouvert.
       debugPrint('Impossible de lancer $url'); // Affichage dans la console de debug
-      //throw 'Impossible de lancer $url'; // Vous pouvez choisir de relancer une erreur si nécessaire
+      //throw 'Impossible de lancer $url';
     }
   }
 
@@ -133,7 +129,7 @@ class AboutDevelopersPage extends StatelessWidget {
         required String githubProfileUrl,
       }) {
     // Construction de l'URL de l'image de profil GitHub
-    final String githubAvatarUrl = 'https://github.com/$githubUsername.png?size=200'; // Taille 200px
+    final String githubAvatarUrl = 'https://github.com/$githubUsername.png?size=200';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
