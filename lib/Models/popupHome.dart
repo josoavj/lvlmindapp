@@ -25,7 +25,6 @@ class Section {
       Section(name: 'Analyse de Données', icon: Icons.analytics),
       Section(name: 'Génie Logiciel', icon: Icons.precision_manufacturing),
       Section(name: 'Robotique', icon: Icons.android),
-      // Ajoutez d'autres sections/filtres si vous avez plus de catégories de matières
     ];
   }
 }
