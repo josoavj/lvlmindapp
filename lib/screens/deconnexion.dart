@@ -6,7 +6,6 @@ import 'package:lvlmindbeta/screens/loginpage.dart';
 class DeconnexionService {
   /// Affiche une boîte de dialogue de confirmation et, si l'utilisateur confirme,
   /// effectue la déconnexion et redirige vers la LoginPage.
-  // CHANGEMENT: Ajout d'un paramètre authService
   static Future<void> showLogoutConfirmation(BuildContext context, AuthService authService) async {
     final bool? confirmLogout = await showDialog<bool>(
       context: context,
@@ -64,14 +63,13 @@ class DeconnexionService {
     );
 
     if (confirmLogout == true) {
-      // NOUVEAU: Appelle la méthode logout de votre AuthService
       await authService.logout();
       debugPrint("Déconnexion de l'utilisateur effectuée via AuthService."); // Pour le débogage
 
       // Redirection vers la page de connexion
       // Utilisation de `pushAndRemoveUntil` pour empêcher l'utilisateur de revenir
       // à la page précédente après la déconnexion.
-      if (context.mounted) { // Bonne pratique pour éviter les erreurs si le widget n'est plus monté
+      if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const LoginPage()),
               (Route<dynamic> route) => false, // Supprime toutes les routes précédentes de la pile
