@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/Models/screenModels/allMatiereSection.dart';
-import 'package:lvlmindbeta/Models/screenModels/matieresList.dart';
-import 'package:lvlmindbeta/pages/filesPage.dart';
 import 'package:lvlmindbeta/Models/popuphome.dart';
 import 'package:lvlmindbeta/Models/matiere.dart';
 import 'package:lvlmindbeta/pages/profilePage.dart';
@@ -263,7 +261,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                       ),
                       children: [
                         TextSpan(
-                          text: "Commençons une journée passionnante \n en apprenant avec nous",
+                          text: "Commençons une journée passionnante\n en apprenant avec nous",
                           style: textTheme.bodyMedium?.copyWith(
                             fontSize: 17,
                             color: colorScheme.onSurface.withOpacity(0.7),
@@ -449,7 +447,7 @@ class _SectionsFilterList extends StatelessWidget {
   final List<Section> sections;
   final String? activeFilterTag;
   final Function(String?) onFilterSelected;
-  final Function(Section) onSectionDeleted; // Nouvelle callback pour la suppression
+  final Function(Section) onSectionDeleted;
 
   const _SectionsFilterList({
     super.key,
