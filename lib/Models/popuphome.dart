@@ -1,7 +1,4 @@
-// lib/Models/popuphome.dart
-
 import 'package:flutter/material.dart';
-import 'dart:convert'; // Nécessaire pour jsonEncode/jsonDecode
 
 class Section {
   String name; // Le nom de la section
