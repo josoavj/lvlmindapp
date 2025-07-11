@@ -1,5 +1,3 @@
-// lib/screens/editProfilePage.dart
-
 import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/Models/userProfile.dart'; // <--- CORRECTION ICI
 import 'package:lvlmindbeta/services/authentificationService.dart';
