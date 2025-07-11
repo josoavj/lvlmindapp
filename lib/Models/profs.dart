@@ -1,11 +1,11 @@
 class Profs {
-  final String pname; // Nom du professeur (renommé de profname pour correspondre à ton code)
-  final String iconpath; // Chemin de l'image du professeur (renommé de profpic)
-  final String? bio; // Champ optionnel pour une courte biographie ou spécialité
-  final String? email; // Champ optionnel pour l'email de contact
-  final String profeducation; // Ajouté: niveau d'éducation/diplôme
-  final String phone; // Ajouté: numéro de téléphone
-  final List<String> courses; // Ajouté: liste des cours enseignés
+  final String pname;
+  final String iconpath;
+  final String? bio;
+  final String? email;
+  final String profeducation;
+  final String phone;
+  final List<String> courses;
 
   // Constructeur constant pour la classe Profs
   const Profs({
