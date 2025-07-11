@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../Models/userProfile.dart';
 import '../screens/deconnexion.dart';
 import '../screens/settings.dart';
-import '../services/authentificationService.dart'; // Nom du fichier tel que fourni
+import '../services/authentificationService.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -13,7 +13,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   UserProfile? _currentUserProfile;
-  final AuthService _authService = AuthService(); // Instance du service d'authentification
+  final AuthService _authService = AuthService();
 
   @override
   void initState() {
@@ -237,7 +237,6 @@ class _ProfileState extends State<Profile> {
           color: onPrimaryColor,
         ),
       ),
-      // Le bouton retour a déjà été retiré ici, ce qui est correct.
       automaticallyImplyLeading: false, // Assure qu'aucun bouton retour par défaut n'apparaît
     );
   }
