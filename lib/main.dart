@@ -100,7 +100,7 @@ class LvlMindApp extends StatelessWidget {
         ),
       ),
 
-      // --- Définition du Thème Sombre (Corrigé pour la couleur des ElevatedButtons) ---
+      // --- Définition du Thème Sombre  ---
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
@@ -111,7 +111,7 @@ class LvlMindApp extends StatelessWidget {
         ).copyWith(
           primary: Colors.blueAccent, // Assure que la primary de ColorScheme est bien BlueAccent
           onPrimary: Colors.white,
-          secondary: Colors.pinkAccent, // Adaptez aussi si utilisé en mode sombre
+          secondary: Colors.pinkAccent,
           onSecondary: Colors.white,
           surface: const Color(0xFF1E1E1E),
           onSurface: Colors.white70,
@@ -137,7 +137,7 @@ class LvlMindApp extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent, // C'EST LA LIGNE CLÉ MODIFIÉE !
+            backgroundColor: Colors.blueAccent,
             foregroundColor: Colors.white,
             shape: const StadiumBorder(),
           ),
