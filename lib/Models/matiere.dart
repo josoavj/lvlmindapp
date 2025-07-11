@@ -74,7 +74,7 @@ class Matiere {
           "Chapitre 9: Algorithmes sur les Graphes (Chemin le plus court, arbres couvrants)",
           "Chapitre 10: Structures de Données Avancées et Disques",
         ],
-        filterTag: "Programmation", 
+        filterTag: "Programmation",
       ),
       Matiere(
         name: "Algorithmes",
