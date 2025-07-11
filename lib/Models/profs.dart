@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Profs {
   final String pname; // Nom du professeur (renommé de profname pour correspondre à ton code)
   final String iconpath; // Chemin de l'image du professeur (renommé de profpic)
@@ -13,11 +11,11 @@ class Profs {
   const Profs({
     required this.pname,
     required this.iconpath,
-    required this.profeducation, // Rendu requis
-    required this.phone,         // Rendu requis
-    required this.email,         // Rendu requis
-    required this.courses,       // Rendu requis
-    this.bio, // Bio reste optionnel, mais je recommande de le rendre requis pour les détails de prof
+    required this.profeducation,
+    required this.phone,
+    required this.email,
+    required this.courses,
+    this.bio,
   });
 
   // Méthode statique pour obtenir une liste de professeurs fictifs
