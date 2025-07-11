@@ -42,7 +42,6 @@ class Section {
       name: json['name'],
       iconCodePoint: json['iconCodePoint'],
       iconFontFamily: json['iconFontFamily'],
-      // onTap n'est pas inclus dans la persistance, il doit être recréé si nécessaire
     );
   }
 
