@@ -142,7 +142,7 @@ class AboutDevelopersPage extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 30,
-              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest ?? Colors.grey.shade300,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               child: ClipOval(
                 child: Image.network(
                   githubAvatarUrl,
