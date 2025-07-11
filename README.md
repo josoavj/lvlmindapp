@@ -24,9 +24,14 @@
 
 ## Source
 
+<p>
+  <img align="center" height=85 src="https://github.com/Josoa886/lvlmindapp/assets/76913187/5dda5a6a-5e5d-41e6-a818-17b853a7957f" alt="Logo de lvlmind"/>
+</p>
+
 - LevelMind project (Source) : [lvlmind](https://github.com/TahianSylvain/teamEsiia3)
 
 ### 📃 License
+
 
 This project can be used as a personal project. If you'd like to contribute, please contact one of the current contributors.
 

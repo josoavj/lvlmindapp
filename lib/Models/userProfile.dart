@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class UserProfile {
   final String username;
   final String password;

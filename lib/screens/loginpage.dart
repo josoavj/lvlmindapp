@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/navbar/transition.dart'; // Page de transition après connexion réussie
-import 'package:lvlmindbeta/screens/presentation.dart'; // Page de présentation pour le bouton retour
+import 'package:lvlmindbeta/navbar/transition.dart';
+import 'package:lvlmindbeta/screens/presentation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../animations/simpleDelayedAnimation.dart';
 import '../services/authentificationService.dart';
@@ -155,8 +155,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          // Le formulaire de connexion (maintenant avec la logique d'authentification)
-          const LoginForm(), // LoginForm est désormais une const
+          const LoginForm(),
         ],
       ),
     );
@@ -380,6 +379,7 @@ class _LoginFormState extends State<LoginForm> {
                   vertical: 15,
                 ),
               ),
+              onPressed: _login,
               child: const Text(
                 'CONFIRMER',
                 style: TextStyle(
@@ -387,8 +387,7 @@ class _LoginFormState extends State<LoginForm> {
                   color: Colors.white,
                   fontWeight: FontWeight.w800, // Poids de police plus fort pour le bouton
                 ),
-              ),
-              onPressed: _login, // Appel de la méthode _login
+              ), // Appel de la méthode _login
             ),
           ),
           const SizedBox(height: 90),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Models/userProfile.dart'; // Assurez-vous que ce chemin est correct
-import '../data/userData.dart'; // Assurez-vous que ce chemin est correct
+import '../Models/userProfile.dart';
+import '../data/userData.dart';
 
 class AuthService {
   static const String _loggedInUserKey = 'loggedInUser';
