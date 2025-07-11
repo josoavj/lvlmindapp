@@ -1,12 +1,16 @@
+// android/build.gradle (fichier au niveau du projet)
+
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.7.10' // Vous pourriez envisager de mettre à jour Kotlin aussi, mais ce n'est pas la cause de l'erreur actuelle
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
+        // ANCIEN : classpath 'com.android.tools.build:gradle:7.3.0'
+        // NOUVEAU : Mettre à jour vers une version compatible avec Java 21 et Gradle 8.14
+        classpath 'com.android.tools.build:gradle:8.4.0' // <-- MODIFIÉ ICI
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
