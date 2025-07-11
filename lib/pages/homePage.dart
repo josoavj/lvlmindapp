@@ -261,7 +261,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                       ),
                       children: [
                         TextSpan(
-                          text: "Commençons une journée passionnante\n en apprenant avec nous",
+                          text: "Commençons une journée passionnante\nen apprenant avec nous",
                           style: textTheme.bodyMedium?.copyWith(
                             fontSize: 17,
                             color: colorScheme.onSurface.withOpacity(0.7),
