@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/navbar/transition.dart'; // Page de transition après connexion réussie
-import 'package:lvlmindbeta/screens/presentation.dart'; // Page de présentation pour le bouton retour
+import 'package:lvlmindbeta/navbar/transition.dart';
+import 'package:lvlmindbeta/screens/presentation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../animations/simpleDelayedAnimation.dart';
 import '../services/authentificationService.dart';
