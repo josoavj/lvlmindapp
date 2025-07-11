@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Matiere {
   final String name; // Nom de la matière
   final int chapterCount; // Nombre de chapitres (dérivé de la longueur de chapters)
