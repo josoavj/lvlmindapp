@@ -1,6 +1,3 @@
-<p>
-  <img align="center" height=100 src="https://github.com/josoavj/lvlmindapp/assets/76913187/5dda5a6a-5e5d-41e6-a818-17b853a7957f" alt="LevelMind Logo"/>
-</p>
 <p align="center">
   <img src="https://github.com/josoavj/lvlmindapp/assets/76913187/5dda5a6a-5e5d-41e6-a818-17b853a7957f" alt="LevelMind Logo" width="150"/>
 </p>
@@ -57,6 +54,8 @@ Pour faire fonctionner ce projet en local, suivez ces étapes :
 
 1.  Clonez le dépôt :  [lvlmind](https://github.com/TahianSylvain/teamEsiia3)
 2.  Lancez l'installation des dépendances.
+3.  Vérifier si Gradle est fonctionnel dans votre environnement.
+4.  Lancez `flutter run`
 
 
 ## 👥 Équipe
@@ -68,7 +67,7 @@ Pour faire fonctionner ce projet en local, suivez ces étapes :
   - [Nyr](https://github.com/Manamahefa)
   - [Koloina](https://github.com/koulienathalie) 
 
-### 📃 License
+### 📃 Licence
 
 
 This project can be used as a personal project. If you'd like to contribute, please contact one of the current contributors.
