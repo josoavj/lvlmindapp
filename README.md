@@ -36,7 +36,7 @@ Notre objectif est de fournir un outil centralisé et facile d'accès pour les �
 *   📄 **Gestion de Documents :** Organisez et consultez vos documents importants.
 *   🗓️ **Emplois du Temps :** Visualisez votre emploi du temps et ne manquez aucune session.
 *   📢 **Annonces :** Restez informé des dernières actualités de votre établissement.
-*   💬 **Messagerie (si applicable) :** Communiquez avec vos camarades et enseignants.
+*   💬 **Messagerie :** Communiquez avec vos camarades et enseignants.
 *   *... et d'autres fonctionnalités à venir !*
 
 
