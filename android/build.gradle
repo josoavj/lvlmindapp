@@ -8,9 +8,7 @@ buildscript {
     }
 
     dependencies {
-        // ANCIEN : classpath 'com.android.tools.build:gradle:7.3.0'
-        // NOUVEAU : Mettre à jour vers une version compatible avec Java 21 et Gradle 8.14
-        classpath 'com.android.tools.build:gradle:8.4.0' // <-- MODIFIÉ ICI
+        classpath 'com.android.tools.build:gradle:8.4.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
