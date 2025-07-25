@@ -11,7 +11,7 @@ class ProfDetailsPage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true, // Permet au contenu de s'étendre derrière l'AppBar
       appBar: AppBar(
-        backgroundColor: Colors.transparent, 
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
           prof.pname, // Utilise pname
