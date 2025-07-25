@@ -107,9 +107,9 @@ class WelcomePage extends StatelessWidget {
       children: [
         // Logo de l'ISPM
         DelayedAnimation(
-          delay: 500, // Débute plus tôt
-          curve: Curves.easeOutBack, // Un petit effet de "retour en arrière"
-          slideStartOffset: const Offset(-0.5, 0.0), // Vient de la gauche
+          delay: 500,
+          curve: Curves.easeOutBack,
+          slideStartOffset: const Offset(-0.5, 0.0),
           child: SizedBox(
             height: 85,
             child: Image.asset(
@@ -123,9 +123,9 @@ class WelcomePage extends StatelessWidget {
         const SizedBox(width: 70),
         // Notre logo d'application
         DelayedAnimation(
-          delay: 700, // Débute un peu après le logo ISPM
-          curve: Curves.easeOutBack, // Le même effet pour la cohérence
-          slideStartOffset: const Offset(0.5, 0.0), // Vient de la droite
+          delay: 700,
+          curve: Curves.easeOutBack,
+          slideStartOffset: const Offset(0.5, 0.0),
           child: Flexible(
             flex: 2,
             child: SizedBox(
@@ -170,8 +170,6 @@ class WelcomePage extends StatelessWidget {
         'assets/images/logo/LevelMind.svg',
         width: 250,
         alignment: Alignment.bottomCenter,
-        // Si votre SVG a une couleur par défaut, vous pouvez le colorer ici
-        // colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
       ),
     );
   }
@@ -210,11 +208,11 @@ class WelcomePage extends StatelessWidget {
         );
       },
       child: GradientText(
-        'COMMENCER', // Traduction du texte du bouton
+        'COMMENCER',
         style: const TextStyle(
           fontFamily: 'TiltNeon',
           fontWeight: FontWeight.w600,
-          fontSize: 18, // Taille de police légèrement augmentée pour le bouton
+          fontSize: 18, 
         ),
         gradientType: GradientType.linear,
         colors: const [Color(0xff2441e7), Color(0xffff1053)],
