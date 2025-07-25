@@ -212,7 +212,7 @@ class WelcomePage extends StatelessWidget {
         style: const TextStyle(
           fontFamily: 'TiltNeon',
           fontWeight: FontWeight.w600,
-          fontSize: 18, 
+          fontSize: 18,
         ),
         gradientType: GradientType.linear,
         colors: const [Color(0xff2441e7), Color(0xffff1053)],
