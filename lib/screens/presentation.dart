@@ -177,7 +177,7 @@ class Presentation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GradientText(
-            'Se connecter avec un ID personnel', // Traduit le texte du bouton
+            'Se connecter',
             style: const TextStyle(
               fontFamily: 'Josefin',
               fontSize: 18,
