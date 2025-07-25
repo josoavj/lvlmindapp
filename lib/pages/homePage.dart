@@ -347,25 +347,22 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                             buttonRect,
                             Offset.zero & mediaQuery.size,
                           ),
-                          items: <PopupMenuEntry<dynamic>>[ // Explicit type for clarity
-                            // Option pour ajouter une section
+                          items: <PopupMenuEntry<dynamic>>[
                             PopupMenuItem(
                               child: ListTile(
                                 leading: Icon(Icons.add, color: colorScheme.primary),
                                 title: Text('Ajouter une section', style: textTheme.bodyMedium),
                                 onTap: () {
-                                  Navigator.pop(innerContext); // Ferme le menu
-                                  _showAddSectionDialog(); // Ouvre le dialogue d'ajout
+                                  Navigator.pop(innerContext);
+                                  _showAddSectionDialog();
                                 },
                               ),
                             ),
                             const PopupMenuDivider(), // Séparateur
 
-                            // Liste des sections existantes
-                            // Generates a PopupMenuItem for each section
                             ..._sections.map((sectionItem) {
                               return PopupMenuItem(
-                                value: sectionItem.name, // The value returned when this item is selected
+                                value: sectionItem.name,
                                 child: ListTile(
                                   leading: Icon(sectionItem.icon, size: 20, color: colorScheme.primary),
                                   title: Text(
@@ -406,7 +403,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   style: textTheme.titleLarge?.copyWith(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
-                    color: colorScheme.onSurface.withOpacity(0.8),
+                    color: colorScheme.onSurface.withAlpha((1 * 0.8).round()),
                   ),
                 ),
                 TextButton(

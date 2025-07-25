@@ -1,10 +1,12 @@
 # LevelMind Application (Project)
+
 ## About
-- Dart 3.2.6
-- Flutter 3.16.9 (Stable)
+
+- Flutter **version 3.32.5**
 - May use Restful API or Firebase 
 
 ## Liste des choses à faires:
+
 - Change the presentation's page design
 - Add User authentification on the Login page
 - Revisisiting the full UX(User Xperience)
