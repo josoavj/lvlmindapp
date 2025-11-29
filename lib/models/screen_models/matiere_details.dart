@@ -48,7 +48,7 @@ class MatiereDetailsPage extends StatelessWidget {
                     return Icon(
                       Icons.menu_book,
                       size: 150,
-                      color: Theme.of(context).iconTheme.color?.withOpacity(0.6),
+                      color: Theme.of(context).iconTheme.color?.withValues(alpha: 0.6),
                     );
                   },
                 ),

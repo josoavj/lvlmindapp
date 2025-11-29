@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lvlmindbeta/navbar/navbar.dart';
+import 'package:provider/provider.dart';
+import 'package:lvlmindbeta/navigation/navbar_widget.dart';
+import 'package:lvlmindbeta/providers/user_notifier.dart';
 
 class Transition extends StatefulWidget {
   const Transition({super.key});
@@ -15,6 +17,17 @@ class _TransitionState extends State<Transition> {
   @override
   void initState() {
     super.initState();
+    // Charger les données utilisateur et naviguer après
+    _initializeAndNavigate();
+  }
+
+  /// Initialise les données utilisateur et navigue vers la page d'accueil
+  Future<void> _initializeAndNavigate() async {
+    // Charger l'utilisateur actuel
+    if (mounted) {
+      await Provider.of<UserNotifier>(context, listen: false).loadCurrentUser();
+    }
+
     // Appel de la fonction de navigation après un délai lors de l'initialisation de l'état.
     _navigateToHome();
   }
@@ -53,8 +66,10 @@ class _TransitionState extends State<Transition> {
         child: Center(
           // Centre le contenu (logo et indicateur) verticalement et horizontalement.
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // Centre les éléments verticalement.
-            crossAxisAlignment: CrossAxisAlignment.center, // Centre les éléments horizontalement.
+            mainAxisAlignment:
+                MainAxisAlignment.center, // Centre les éléments verticalement.
+            crossAxisAlignment: CrossAxisAlignment
+                .center, // Centre les éléments horizontalement.
             children: [
               // Affiche le logo SVG de LevelMind.
               _buildLogo(), // Appel de la méthode pour le logo.
@@ -95,8 +110,14 @@ class _TransitionState extends State<Transition> {
     // Détermine les couleurs du dégradé en fonction de la luminosité du thème (mode clair/sombre).
     final Brightness brightness = Theme.of(context).brightness;
     final List<Color> gradientColors = brightness == Brightness.dark
-        ? [const Color(0xFF0D1A3F), const Color(0xFF5D0E2B)] // Couleurs pour le mode sombre
-        : const [Color(0xff2441e7), Color(0xffff1053)]; // Couleurs d'origine pour le mode clair
+        ? [
+            const Color(0xFF0D1A3F),
+            const Color(0xFF5D0E2B)
+          ] // Couleurs pour le mode sombre
+        : const [
+            Color(0xff2441e7),
+            Color(0xffff1053)
+          ]; // Couleurs d'origine pour le mode clair
 
     return BoxDecoration(
       gradient: LinearGradient(
@@ -110,7 +131,8 @@ class _TransitionState extends State<Transition> {
         // Applique un filtre de couleur pour assombrir l'image de fond,
         // la rendant plus lisible sous le texte et le logo.
         colorFilter: ColorFilter.mode(
-          Colors.black.withOpacity(0.5), // Surcouche noire à 50% d'opacité
+          Colors.black
+              .withValues(alpha: 0.5), // Surcouche noire à 50% d'opacité
           BlendMode.dstATop, // Mode de fusion
         ),
       ),

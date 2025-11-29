@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Models/userProfile.dart';
-import '../data/userData.dart';
+import '../models/user_profile.dart';
+import '../data/user_data.dart';
+import '../utils/auth_exceptions.dart';
 
 class AuthService {
   static const String _loggedInUserKey = 'loggedInUser';
@@ -9,14 +10,14 @@ class AuthService {
   Future<UserProfile?> login(String matricule, String password) async {
     try {
       final user = users.firstWhere(
-            (u) => u.matricule == matricule && u.password == password,
+        (u) => u.matricule == matricule && u.password == password,
       );
       await _saveLoggedInUser(user);
       return user;
     } on StateError {
-      throw Exception('Numéro de matricule ou mot de passe incorrect.');
+      throw AuthException(AuthError.invalidCredentials);
     } catch (e) {
-      throw Exception('Une erreur est survenue lors de la connexion: $e');
+      throw AuthException('${AuthError.connectionError} $e');
     }
   }
 
@@ -42,7 +43,7 @@ class AuthService {
   Future<void> updateUserProfile({String? name, String? email}) async {
     final UserProfile? currentUser = await getLoggedInUser();
     if (currentUser == null) {
-      throw Exception("Aucun utilisateur connecté pour la mise à jour.");
+      throw AuthException(AuthError.noUserLoggedIn);
     }
 
     final updatedUser = currentUser.copyWith(

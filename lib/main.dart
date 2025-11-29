@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:lvlmindbeta/providers/theme_notifier.dart';
-import 'package:lvlmindbeta/screens/welcomepage.dart';
+import 'package:lvlmindbeta/providers/user_notifier.dart';
+import 'package:lvlmindbeta/screens/welcome_page.dart';
+import 'package:lvlmindbeta/services/app_initialization_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialiser la base de données locale Hive et les services
+  await appInit.initialize();
+
   final themeNotifier = ThemeNotifier(ThemeMode.system);
   await themeNotifier.loadTheme();
 
+  // Charger l'utilisateur actuel
+  final userNotifier = UserNotifier();
+  await userNotifier.loadCurrentUser();
+
   runApp(
-    ChangeNotifierProvider<ThemeNotifier>(
-      create: (_) => themeNotifier,
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeNotifier>(
+          create: (_) => themeNotifier,
+        ),
+        ChangeNotifierProvider<UserNotifier>(
+          create: (_) => userNotifier,
+        ),
+      ],
       child: const LvlMindApp(),
     ),
   );
@@ -34,7 +50,8 @@ class LvlMindApp extends StatelessWidget {
         primarySwatch: Colors.blue, // Utilisé pour générer une palette de bleus
         primaryColor: Colors.blueAccent, // La couleur primaire principale
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blueAccent, // La couleur à partir de laquelle le ColorScheme est dérivé
+          seedColor: Colors
+              .blueAccent, // La couleur à partir de laquelle le ColorScheme est dérivé
           brightness: Brightness.light,
         ).copyWith(
           primary: Colors.blueAccent,
@@ -63,14 +80,16 @@ class LvlMindApp extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black54),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent, // Utilise la couleur primaire du thème
+            backgroundColor:
+                Colors.blueAccent, // Utilise la couleur primaire du thème
             foregroundColor: Colors.white,
             shape: const StadiumBorder(),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: Colors.blueAccent, // Utilise la couleur primaire du thème
+            foregroundColor:
+                Colors.blueAccent, // Utilise la couleur primaire du thème
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
@@ -109,14 +128,13 @@ class LvlMindApp extends StatelessWidget {
           seedColor: Colors.blueAccent,
           brightness: Brightness.dark,
         ).copyWith(
-          primary: Colors.blueAccent, // Assure que la primary de ColorScheme est bien BlueAccent
+          primary: Colors
+              .blueAccent, // Assure que la primary de ColorScheme est bien BlueAccent
           onPrimary: Colors.white,
           secondary: Colors.pinkAccent,
           onSecondary: Colors.white,
           surface: const Color(0xFF1E1E1E),
           onSurface: Colors.white70,
-          background: const Color(0xFF121212),
-          onBackground: Colors.white70,
           error: Colors.redAccent,
           onError: Colors.black,
         ),
@@ -144,7 +162,8 @@ class LvlMindApp extends StatelessWidget {
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: Colors.blueAccent, // Conserve le bleu pour les TextButton
+            foregroundColor:
+                Colors.blueAccent, // Conserve le bleu pour les TextButton
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(

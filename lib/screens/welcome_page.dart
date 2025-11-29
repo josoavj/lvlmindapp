@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lvlmindbeta/screens/presentation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../animations/simpleDelayedAnimation.dart';
+import '../animations/simple_delayed_animation.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -23,7 +23,8 @@ class WelcomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 50),
               width: screenWidth,
               height: screenHeight,
-              decoration: _buildBackgroundDecoration(), // Appel de la méthode pour le fond
+              decoration:
+                  _buildBackgroundDecoration(), // Appel de la méthode pour le fond
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +37,8 @@ class WelcomePage extends StatelessWidget {
                   // Utilisation d'une courbe plus douce pour l'apparition du texte
                   DelayedAnimation(
                     delay: 900, // Légèrement augmenté pour un meilleur timing
-                    curve: Curves.easeOutQuad, // Une courbe d'accélération/décélération douce
+                    curve: Curves
+                        .easeOutQuad, // Une courbe d'accélération/décélération douce
                     child: Flexible(
                       flex: 1,
                       child: _buildIntroText(),
@@ -48,7 +50,9 @@ class WelcomePage extends StatelessWidget {
                   DelayedAnimation(
                     delay: 1000, // Démarre un peu après le texte d'intro
                     curve: Curves.elasticOut, // Effet "élastique" à la fin
-                    animationDuration: const Duration(milliseconds: 1200), // Durée plus longue pour l'effet élastique
+                    animationDuration: const Duration(
+                        milliseconds:
+                            1200), // Durée plus longue pour l'effet élastique
                     child: _buildLvlMindNameSvg(),
                   ),
 
@@ -63,7 +67,8 @@ class WelcomePage extends StatelessWidget {
                   DelayedAnimation(
                     delay: 1400, // Démarre après le slogan
                     curve: Curves.bounceOut, // Effet de rebond pour le bouton
-                    animationDuration: const Duration(milliseconds: 1000), // Durée pour l'effet de rebond
+                    animationDuration: const Duration(
+                        milliseconds: 1000), // Durée pour l'effet de rebond
                     child: SizedBox(
                       width: double.infinity,
                       child: _buildStartButton(context),
@@ -92,7 +97,7 @@ class WelcomePage extends StatelessWidget {
         image: const AssetImage('assets/images/background/fond2.jpg'),
         fit: BoxFit.cover,
         colorFilter: ColorFilter.mode(
-          Colors.black.withOpacity(0.5), // Assombrit l'image de fond
+          Colors.black.withValues(alpha: 0.5), // Assombrit l'image de fond
           BlendMode.dstATop,
         ),
       ),
@@ -114,8 +119,10 @@ class WelcomePage extends StatelessWidget {
             height: 85,
             child: Image.asset(
               'assets/images/logo/ispm.jpg',
-              errorBuilder: (context, error, stackTrace) =>
-              const Icon(Icons.school, color: Colors.white, size: 85), // Icône par défaut
+              errorBuilder: (context, error, stackTrace) => const Icon(
+                  Icons.school,
+                  color: Colors.white,
+                  size: 85), // Icône par défaut
             ),
           ),
         ),
@@ -134,8 +141,10 @@ class WelcomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
                   'assets/images/logo/lvlind10.jpg',
-                  errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.lightbulb_outline, color: Colors.white, size: 80), // Icône par défaut
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.lightbulb_outline,
+                      color: Colors.white,
+                      size: 80), // Icône par défaut
                 ),
               ),
             ),
@@ -203,7 +212,8 @@ class WelcomePage extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const Presentation(), // Redirection vers la page de présentation
+            builder: (context) =>
+                const Presentation(), // Redirection vers la page de présentation
           ),
         );
       },

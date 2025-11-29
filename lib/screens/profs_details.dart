@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../Models/profs.dart';
+import '../models/profs.dart';
 
 class ProfDetailsPage extends StatelessWidget {
   final Profs prof;
@@ -9,7 +9,8 @@ class ProfDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true, // Permet au contenu de s'étendre derrière l'AppBar
+      extendBodyBehindAppBar:
+          true, // Permet au contenu de s'étendre derrière l'AppBar
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -40,27 +41,29 @@ class ProfDetailsPage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 16),
                   _buildSectionTitle(context, "Informations Générales"),
-                  _buildInfoRow(context, Icons.school, "Éducation", prof.profeducation),
+                  _buildInfoRow(
+                      context, Icons.school, "Éducation", prof.profeducation),
                   if (prof.bio != null && prof.bio!.isNotEmpty)
                     Column(
                       children: [
                         const SizedBox(height: 10),
-                        _buildInfoRow(context, Icons.description, "Biographie", prof.bio!),
+                        _buildInfoRow(context, Icons.description, "Biographie",
+                            prof.bio!),
                       ],
                     ),
                   const SizedBox(height: 20),
-
                   _buildSectionTitle(context, "Contact"),
-                  _buildContactRow(context, Icons.phone, prof.phone, () => _launchPhone(context, prof.phone)),
+                  _buildContactRow(context, Icons.phone, prof.phone,
+                      () => _launchPhone(context, prof.phone)),
                   if (prof.email != null && prof.email!.isNotEmpty)
                     Column(
                       children: [
                         const SizedBox(height: 10),
-                        _buildContactRow(context, Icons.email, prof.email!, () => _launchEmail(context, prof.email!)),
+                        _buildContactRow(context, Icons.email, prof.email!,
+                            () => _launchEmail(context, prof.email!)),
                       ],
                     ),
                   const SizedBox(height: 20),
-
                   if (prof.courses.isNotEmpty)
                     Column(
                       children: [
@@ -87,7 +90,7 @@ class ProfDetailsPage extends StatelessWidget {
           image: AssetImage(prof.iconpath),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.4),
+            Colors.black.withValues(alpha: 0.4),
             BlendMode.darken,
           ),
         ),
@@ -137,14 +140,18 @@ class ProfDetailsPage extends StatelessWidget {
           fontFamily: 'Josefin',
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: Theme.of(context).textTheme.titleLarge?.color, // S'adapte au thème
+          color: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.color, // S'adapte au thème
         ),
       ),
     );
   }
 
   // Ligne d'information (icône, titre, contenu)
-  Widget _buildInfoRow(BuildContext context, IconData icon, String title, String content) {
+  Widget _buildInfoRow(
+      BuildContext context, IconData icon, String title, String content) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -179,7 +186,8 @@ class ProfDetailsPage extends StatelessWidget {
   }
 
   // Ligne de contact cliquable (téléphone, email)
-  Widget _buildContactRow(BuildContext context, IconData icon, String text, VoidCallback onTap) {
+  Widget _buildContactRow(
+      BuildContext context, IconData icon, String text, VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -194,7 +202,11 @@ class ProfDetailsPage extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Josefin',
                   fontSize: 16,
-                  color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({WidgetState.selected}),
+                  color: Theme.of(context)
+                      .textButtonTheme
+                      .style
+                      ?.foregroundColor
+                      ?.resolve({WidgetState.selected}),
                   decoration: TextDecoration.underline,
                 ),
               ),
@@ -206,32 +218,39 @@ class ProfDetailsPage extends StatelessWidget {
   }
 
   // Liste des cours enseignés
-  Widget _buildCoursesList(BuildContext context, List<String> courses) { // Ajoute BuildContext
+  Widget _buildCoursesList(BuildContext context, List<String> courses) {
+    // Ajoute BuildContext
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: courses
           .map(
             (course) => Padding(
-          padding: const EdgeInsets.only(bottom: 5.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(Icons.check_circle_outline, size: 20, color: Colors.green[700]), // Couleur fixe pour le checkmark
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  course,
-                  style: TextStyle(
-                    fontFamily: 'Josefin',
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyLarge?.color, // S'adapte au thème
+              padding: const EdgeInsets.only(bottom: 5.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.check_circle_outline,
+                      size: 20,
+                      color:
+                          Colors.green[700]), // Couleur fixe pour le checkmark
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      course,
+                      style: TextStyle(
+                        fontFamily: 'Josefin',
+                        fontSize: 16,
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.color, // S'adapte au thème
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
-      )
+            ),
+          )
           .toList(),
     );
   }
@@ -265,7 +284,8 @@ class ProfDetailsPage extends StatelessWidget {
     } else {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Impossible d\'ouvrir l\'application email.')),
+          const SnackBar(
+              content: Text('Impossible d\'ouvrir l\'application email.')),
         );
       }
     }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../matiere.dart';
-import 'matiereDetails.dart';
+import 'matiere_details.dart';
 
 class MatieresListPage extends StatelessWidget {
   const MatieresListPage({super.key});
@@ -9,7 +9,8 @@ class MatieresListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Récupère la liste complète des matières
-    List<Matiere> allMatieres = Matiere.getFictionalCourses().toList(); // .toList() pour la rendre modifiable si besoin
+    List<Matiere> allMatieres = Matiere.getFictionalCourses()
+        .toList(); // .toList() pour la rendre modifiable si besoin
 
     // Trie les matières par ordre alphabétique de leur nom
     allMatieres.sort((a, b) => a.name.compareTo(b.name));
@@ -29,7 +30,8 @@ class MatieresListPage extends StatelessWidget {
         elevation: Theme.of(context).appBarTheme.elevation,
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).appBarTheme.foregroundColor),
+          icon: Icon(Icons.arrow_back,
+              color: Theme.of(context).appBarTheme.foregroundColor),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -45,14 +47,16 @@ class MatieresListPage extends StatelessWidget {
               color: Theme.of(context).cardColor,
               margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
               elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: ListTile(
                 onTap: () {
                   // Navigue vers la MatiereDetailsPage en passant l'objet matiere
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MatiereDetailsPage(matiere: matiere),
+                      builder: (context) =>
+                          MatiereDetailsPage(matiere: matiere),
                     ),
                   );
                 },
@@ -90,7 +94,7 @@ class MatieresListPage extends StatelessWidget {
                 ),
                 trailing: Icon(
                   Icons.arrow_forward_ios,
-                  color: Theme.of(context).iconTheme.color?.withOpacity(0.7),
+                  color: Theme.of(context).iconTheme.color?.withValues(alpha: 0.7),
                   size: 18,
                 ),
               ),

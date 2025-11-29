@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../screens/profsDetails.dart';
+import '../../screens/profs_details.dart';
 import '../profs.dart';
 
 class ProfsListPage extends StatelessWidget {
@@ -25,7 +25,8 @@ class ProfsListPage extends StatelessWidget {
         elevation: Theme.of(context).appBarTheme.elevation,
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).appBarTheme.foregroundColor),
+          icon: Icon(Icons.arrow_back,
+              color: Theme.of(context).appBarTheme.foregroundColor),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -71,7 +72,8 @@ class ProfsListPage extends StatelessWidget {
             Expanded(
               flex: 3,
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(15)),
                 child: Image.asset(
                   prof.iconpath,
                   fit: BoxFit.cover,

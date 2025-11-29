@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart'; // Make sure this package is correctly added to your pubspec.yaml
-import 'package:lvlmindbeta/pages/homePage.dart';
-import 'package:lvlmindbeta/pages/schedulePage.dart';
-import 'package:lvlmindbeta/pages/filesPage.dart';
-import 'package:lvlmindbeta/pages/profilePage.dart';
+import 'package:lvlmindbeta/pages/home_page.dart';
+import 'package:lvlmindbeta/pages/schedule_page.dart';
+import 'package:lvlmindbeta/pages/files_page.dart';
+import 'package:lvlmindbeta/pages/profile_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -36,7 +36,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               spreadRadius: 2,
               blurRadius: 8,
               offset: const Offset(0, 4),
@@ -52,10 +52,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 _pageIndex = value;
               });
             },
-            type: BottomNavigationBarType.fixed, // Ensures all items are visible
-            backgroundColor: Colors.transparent, // Make inner background transparent
+            type:
+                BottomNavigationBarType.fixed, // Ensures all items are visible
+            backgroundColor:
+                Colors.transparent, // Make inner background transparent
             selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withOpacity(0.7), // Slightly dim unselected icons
+            unselectedItemColor:
+                Colors.white.withValues(alpha: 0.7), // Slightly dim unselected icons
             selectedFontSize: 12, // Adjusted font size for better fit
             unselectedFontSize: 10,
             iconSize: 25,
@@ -68,17 +71,23 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 tooltip: "Accueil",
               ),
               BottomNavigationBarItem(
-                icon: Icon(_pageIndex == 1 ? CupertinoIcons.calendar_circle_fill : CupertinoIcons.calendar_circle),
+                icon: Icon(_pageIndex == 1
+                    ? CupertinoIcons.calendar_circle_fill
+                    : CupertinoIcons.calendar_circle),
                 label: "Agenda",
                 tooltip: "Agenda",
               ),
               BottomNavigationBarItem(
-                icon: Icon(_pageIndex == 2 ? CupertinoIcons.folder_fill : CupertinoIcons.folder),
+                icon: Icon(_pageIndex == 2
+                    ? CupertinoIcons.folder_fill
+                    : CupertinoIcons.folder),
                 label: "Fichiers",
                 tooltip: "Fichiers",
               ),
               BottomNavigationBarItem(
-                icon: Icon(_pageIndex == 3 ? CupertinoIcons.person_circle_fill : CupertinoIcons.person_circle),
+                icon: Icon(_pageIndex == 3
+                    ? CupertinoIcons.person_circle_fill
+                    : CupertinoIcons.person_circle),
                 label: "Profil",
                 tooltip: "Profil",
               ),

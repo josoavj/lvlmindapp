@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../Models/userProfile.dart';
-import '../screens/deconnexion.dart';
+import 'package:provider/provider.dart';
+import '../models/user_profile.dart';
+import '../providers/user_notifier.dart';
 import '../screens/settings.dart';
-import '../services/authentificationService.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -13,7 +13,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   UserProfile? _currentUserProfile;
-  final AuthService _authService = AuthService();
 
   @override
   void initState() {
@@ -22,11 +21,15 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _loadUserProfile() async {
-    final user = await _authService.getLoggedInUser();
+    // Charger depuis le UserNotifier
     if (mounted) {
-      setState(() {
-        _currentUserProfile = user;
-      });
+      final userNotifier = Provider.of<UserNotifier>(context, listen: false);
+      await userNotifier.loadCurrentUser();
+      if (mounted) {
+        setState(() {
+          _currentUserProfile = userNotifier.currentUser;
+        });
+      }
     }
   }
 
@@ -34,7 +37,8 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     if (_currentUserProfile == null) {
       return Scaffold(
-        appBar: _buildAppBar(Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.onPrimary),
+        appBar: _buildAppBar(Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.onPrimary),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -48,7 +52,8 @@ class _ProfileState extends State<Profile> {
     final Color primaryColor = Theme.of(context).colorScheme.primary;
     final Color onPrimaryColor = Theme.of(context).colorScheme.onPrimary;
     final Color textColor = Theme.of(context).textTheme.bodyMedium!.color!;
-    final Color sectionTitleColor = Theme.of(context).textTheme.titleLarge?.color ?? Colors.black;
+    final Color sectionTitleColor =
+        Theme.of(context).textTheme.titleLarge?.color ?? Colors.black;
 
     return Scaffold(
       appBar: _buildAppBar(primaryColor, onPrimaryColor),
@@ -80,7 +85,10 @@ class _ProfileState extends State<Profile> {
                           return Icon(
                             Icons.person,
                             size: 60,
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withValues(alpha: 0.5),
                           );
                         },
                       ),
@@ -108,7 +116,7 @@ class _ProfileState extends State<Profile> {
                             fontFamily: 'Josefin',
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
-                            color: onPrimaryColor.withOpacity(0.8),
+                            color: onPrimaryColor.withValues(alpha: 0.8),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -118,7 +126,7 @@ class _ProfileState extends State<Profile> {
                             fontFamily: 'Josefin',
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: onPrimaryColor.withOpacity(0.7),
+                            color: onPrimaryColor.withValues(alpha: 0.7),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -128,7 +136,7 @@ class _ProfileState extends State<Profile> {
                             fontFamily: 'Josefin',
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: onPrimaryColor.withOpacity(0.7),
+                            color: onPrimaryColor.withValues(alpha: 0.7),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -140,7 +148,6 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-
           const SizedBox(height: 30),
           _buildSectionTitle("Mes Cours Préférés", sectionTitleColor),
           const SizedBox(height: 15),
@@ -159,7 +166,6 @@ class _ProfileState extends State<Profile> {
               },
             ),
           ),
-
           const SizedBox(height: 30),
           _buildSectionTitle("Activité Hebdomadaire", sectionTitleColor),
           const SizedBox(height: 15),
@@ -171,7 +177,7 @@ class _ProfileState extends State<Profile> {
               boxShadow: [
                 // CORRECTION ICI: Changement de BoxBoxShadow à BoxShadow
                 BoxShadow(
-                  color: Theme.of(context).shadowColor.withOpacity(0.3),
+                  color: Theme.of(context).shadowColor.withValues(alpha: 0.3),
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: const Offset(0, 3),
@@ -182,14 +188,15 @@ class _ProfileState extends State<Profile> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.bar_chart, size: 80, color: Theme.of(context).iconTheme.color),
+                Icon(Icons.bar_chart,
+                    size: 80, color: Theme.of(context).iconTheme.color),
                 const SizedBox(height: 10),
                 Text(
                   "Graphique d'activité ici",
                   style: TextStyle(
                     fontFamily: 'Josefin',
                     fontSize: 18,
-                    color: textColor.withOpacity(0.6),
+                    color: textColor.withValues(alpha: 0.6),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -198,23 +205,66 @@ class _ProfileState extends State<Profile> {
                   style: TextStyle(
                     fontFamily: 'Josefin',
                     fontSize: 15,
-                    color: textColor.withOpacity(0.5),
+                    color: textColor.withValues(alpha: 0.5),
                   ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 30),
-
-          _buildOptionTile(Icons.settings, "Paramètres", primaryColor, textColor, () {
+          _buildOptionTile(
+              Icons.settings, "Paramètres", primaryColor, textColor, () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const SettingsPage()),
             );
           }),
-          _buildOptionTile(Icons.help_outline, "Aide et Support", primaryColor, textColor, () { /* Naviguer vers l'aide */ }),
-          _buildOptionTile(Icons.logout, "Déconnexion", primaryColor, textColor, () {
-            DeconnexionService.showLogoutConfirmation(context, _authService);
+          _buildOptionTile(
+              Icons.help_outline, "Aide et Support", primaryColor, textColor,
+              () {/* Naviguer vers l'aide */}),
+          _buildOptionTile(Icons.logout, "Déconnexion", primaryColor, textColor,
+              () async {
+            final confirmed = await showDialog<bool>(
+              context: context,
+              builder: (BuildContext dialogContext) {
+                return AlertDialog(
+                  title: const Text(
+                    "Déconnexion",
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                  content: const Text(
+                    "Êtes-vous sûr de vouloir vous déconnecter ?",
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 16,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialogContext, false),
+                      child: const Text("Annuler"),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialogContext, true),
+                      child: const Text(
+                        "Déconnexion",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+
+            if (confirmed == true) {
+              if (mounted) {
+                Provider.of<UserNotifier>(context, listen: false).logout();
+              }
+            }
           }),
         ],
       ),
@@ -237,7 +287,8 @@ class _ProfileState extends State<Profile> {
           color: onPrimaryColor,
         ),
       ),
-      automaticallyImplyLeading: false, // Assure qu'aucun bouton retour par défaut n'apparaît
+      automaticallyImplyLeading:
+          false, // Assure qu'aucun bouton retour par défaut n'apparaît
     );
   }
 
@@ -253,7 +304,8 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _buildCourseCard(String imagePath, String title, String duration, Color textColor) {
+  Widget _buildCourseCard(
+      String imagePath, String title, String duration, Color textColor) {
     return Container(
       width: 140,
       margin: const EdgeInsets.only(right: 15),
@@ -266,7 +318,8 @@ class _ProfileState extends State<Profile> {
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(10)),
                 child: Image.asset(
                   imagePath,
                   fit: BoxFit.cover,
@@ -274,7 +327,10 @@ class _ProfileState extends State<Profile> {
                   errorBuilder: (context, error, stackTrace) => Icon(
                     Icons.school,
                     size: 60,
-                    color: Theme.of(context).iconTheme.color?.withOpacity(0.5),
+                    color: Theme.of(context)
+                        .iconTheme
+                        .color
+                        ?.withValues(alpha: 0.5),
                   ),
                 ),
               ),
@@ -294,13 +350,14 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+              padding:
+                  const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
               child: Text(
                 duration,
                 style: TextStyle(
                   fontFamily: 'Josefin',
                   fontSize: 12,
-                  color: textColor.withOpacity(0.7),
+                  color: textColor.withValues(alpha: 0.7),
                 ),
               ),
             ),
@@ -310,7 +367,8 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _buildOptionTile(IconData icon, String title, Color iconColor, Color textColor, VoidCallback onTap) {
+  Widget _buildOptionTile(IconData icon, String title, Color iconColor,
+      Color textColor, VoidCallback onTap) {
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -327,7 +385,9 @@ class _ProfileState extends State<Profile> {
             color: textColor,
           ),
         ),
-        trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color?.withOpacity(0.7)),
+        trailing: Icon(Icons.arrow_forward_ios,
+            size: 18,
+            color: Theme.of(context).iconTheme.color?.withValues(alpha: 0.7)),
         onTap: onTap,
       ),
     );

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/Models/profs.dart';
-import 'package:lvlmindbeta/Models/matiere.dart';
-import '../Models/screenModels/matiereDetails.dart';
-import '../Models/screenModels/matieresList.dart';
-import '../Models/screenModels/profsList.dart';
-import '../screens/profsDetails.dart';
-
+import 'package:lvlmindbeta/models/profs.dart';
+import 'package:lvlmindbeta/models/matiere.dart';
+import '../models/screen_models/matiere_details.dart';
+import '../models/screen_models/matieres_list.dart';
+import '../models/screen_models/profs_list.dart';
+import '../screens/profs_details.dart';
 
 class Files extends StatefulWidget {
   const Files({super.key});
@@ -75,7 +74,8 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ProfsListPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const ProfsListPage()),
                   );
                 },
                 child: Text(
@@ -84,7 +84,11 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                     fontFamily: 'Josefin',
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}),
+                    color: Theme.of(context)
+                        .textButtonTheme
+                        .style
+                        ?.foregroundColor
+                        ?.resolve({WidgetState.selected}),
                   ),
                 ),
               ),
@@ -105,19 +109,22 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProfDetailsPage(prof: prof)),
+                      MaterialPageRoute(
+                          builder: (context) => ProfDetailsPage(prof: prof)),
                     );
                   },
                   child: Card(
                     color: Theme.of(context).cardColor,
                     elevation: 2,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                     child: SizedBox(
                       width: 150,
                       child: Column(
                         children: [
                           ClipRRect(
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                            borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(12)),
                             child: Image.asset(
                               prof.iconpath,
                               fit: BoxFit.cover,
@@ -144,7 +151,10 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                                     fontFamily: 'Josefin',
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).textTheme.titleLarge?.color,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.color,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -155,7 +165,10 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                                   style: TextStyle(
                                     fontFamily: 'Josefin',
                                     fontSize: 12,
-                                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.color,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -190,7 +203,8 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                   // Redirection vers la MatieresListPage
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const MatieresListPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const MatieresListPage()),
                   );
                 },
                 child: Text(
@@ -199,7 +213,11 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                     fontFamily: 'Josefin',
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}),
+                    color: Theme.of(context)
+                        .textButtonTheme
+                        .style
+                        ?.foregroundColor
+                        ?.resolve({WidgetState.selected}),
                   ),
                 ),
               ),
@@ -209,7 +227,8 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
 
           // Liste verticale des matières (inchangée, mais le onTap changera)
           SizedBox(
-            height: 450, // Peut-être agrandir si vous avez beaucoup de matières pour éviter le scroll
+            height:
+                450, // Peut-être agrandir si vous avez beaucoup de matières pour éviter le scroll
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
               itemCount: _matieres.length,
@@ -219,13 +238,16 @@ class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
                   color: Theme.of(context).cardColor,
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   elevation: 2,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
                   child: ListTile(
                     onTap: () {
                       // Navigue vers la MatiereDetailsPage en passant l'objet matiere
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MatiereDetailsPage(matiere: matiere)),
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MatiereDetailsPage(matiere: matiere)),
                       );
                     },
                     leading: SizedBox(
