@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/navbar/transition.dart';
+import 'package:lvlmindbeta/navigation/app_transition.dart';
 import 'package:lvlmindbeta/screens/presentation.dart';
+import 'package:lvlmindbeta/screens/registration_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../animations/simpleDelayedAnimation.dart';
-import '../services/authentificationService.dart';
+import '../animations/simple_delayed_animation.dart';
+import '../services/app_initialization_service.dart';
+import '../utils/form_validators.dart';
+import '../utils/error_handler.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -11,8 +14,10 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true, // Permet au corps de s'étendre derrière l'AppBar transparente
-      appBar: _buildAppBar(context), // Utilisation de la barre d'application refactorisée
+      extendBodyBehindAppBar:
+          true, // Permet au corps de s'étendre derrière l'AppBar transparente
+      appBar: _buildAppBar(
+          context), // Utilisation de la barre d'application refactorisée
       body: Stack(
         children: [
           // Éléments de décoration SVG en arrière-plan (sans animation directe ici, ils sont statiques)
@@ -59,7 +64,8 @@ class LoginPage extends StatelessWidget {
     return AppBar(
       elevation: 0, // Pas d'ombre
       backgroundColor: Colors.transparent, // Rendre l'AppBar transparente
-      automaticallyImplyLeading: false, // Ne pas afficher le bouton retour automatique
+      automaticallyImplyLeading:
+          false, // Ne pas afficher le bouton retour automatique
       titleSpacing: 0, // Supprime l'espacement par défaut du titre
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,7 +74,8 @@ class LoginPage extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.close,
-              color: Theme.of(context).appBarTheme.foregroundColor ?? Colors.blueAccent, // Couleur adaptée au thème
+              color: Theme.of(context).appBarTheme.foregroundColor ??
+                  Colors.blueAccent, // Couleur adaptée au thème
               size: 25,
             ),
             onPressed: () {
@@ -89,7 +96,9 @@ class LoginPage extends StatelessWidget {
               image: const AssetImage('assets/images/logo/logomin.jpg'),
               errorBuilder: (context, error, stackTrace) => Icon(
                 Icons.image_not_supported,
-                color: Theme.of(context).iconTheme.color, // Couleur adaptée au thème
+                color: Theme.of(context)
+                    .iconTheme
+                    .color, // Couleur adaptée au thème
                 size: 50,
               ),
             ),
@@ -172,11 +181,11 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _matriculeController = TextEditingController(); // Renommé pour la clarté
+  final TextEditingController _matriculeController =
+      TextEditingController(); // Renommé pour la clarté
   final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
   bool _isLoading = false; // Pour l'indicateur de chargement
-  final AuthService _authService = AuthService(); // Instance du service d'authentification
 
   @override
   void dispose() {
@@ -189,48 +198,33 @@ class _LoginFormState extends State<LoginForm> {
   void _login() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _isLoading = true; // Active l'indicateur de chargement
+        _isLoading = true;
       });
 
       try {
-        // Appel du service d'authentification avec le matricule et le mot de passe
-        final user = await _authService.login(
+        final user = await appInit.authService.login(
           _matriculeController.text,
           _passwordController.text,
         );
 
         if (user != null) {
-          if (!mounted) return; // Vérifie si le widget est toujours monté
-          // Connexion réussie, navigue vers l'écran de transition
+          if (!mounted) return;
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const Transition()),
           );
-        } else {
-          // Cela ne devrait pas être atteint si l'exception est lancée par AuthService
-          _showErrorSnackBar('Numéro de matricule ou mot de passe incorrect.');
         }
       } catch (e) {
         if (!mounted) return;
-        // Affiche le message d'erreur retourné par AuthService
-        _showErrorSnackBar(e.toString().replaceFirst('Exception: ', ''));
+        ErrorHandler.showErrorSnackBar(context, e.toString());
       } finally {
-        setState(() {
-          _isLoading = false; // Désactive l'indicateur de chargement
-        });
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       }
     }
-  }
-
-  // Fonction utilitaire pour afficher les messages d'erreur
-  void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
-        duration: const Duration(seconds: 3),
-      ),
-    );
   }
 
   @override
@@ -248,18 +242,24 @@ class _LoginFormState extends State<LoginForm> {
                   curve: Curves.easeOutCubic,
                   slideStartOffset: const Offset(0.0, 0.1),
                   child: TextFormField(
-                    controller: _matriculeController, // Utilise le contrôleur pour le matricule
+                    controller:
+                        _matriculeController, // Utilise le contrôleur pour le matricule
                     keyboardType: TextInputType.number, // Clavier numérique
                     decoration: InputDecoration(
-                      labelText: 'Votre numéro de matricule (6 chiffres)', // Indication pour l'utilisateur
+                      labelText:
+                          'Votre numéro de matricule (6 chiffres)', // Indication pour l'utilisateur
                       labelStyle: TextStyle(
                         fontFamily: 'Josefin',
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
-                        color: Theme.of(context).inputDecorationTheme.labelStyle?.color,
+                        color: Theme.of(context)
+                            .inputDecorationTheme
+                            .labelStyle
+                            ?.color,
                       ),
                       filled: true,
-                      fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+                      fillColor:
+                          Theme.of(context).inputDecorationTheme.fillColor,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                         borderSide: BorderSide.none,
@@ -277,23 +277,17 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
-                        borderSide: const BorderSide(color: Colors.red, width: 2.0),
+                        borderSide:
+                            const BorderSide(color: Colors.red, width: 2.0),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
-                        borderSide: const BorderSide(color: Colors.red, width: 2.0),
+                        borderSide:
+                            const BorderSide(color: Colors.red, width: 2.0),
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Veuillez entrer votre numéro de matricule';
-                      }
-                      // Validation: uniquement des chiffres et 6 caractères
-                      if (!RegExp(r'^[0-9]{6}$').hasMatch(value)) {
-                        return 'Le matricule doit être un nombre de 6 chiffres';
-                      }
-                      return null;
-                    },
+                    validator: (value) =>
+                        FormValidators.validateMatricule(value),
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -310,14 +304,23 @@ class _LoginFormState extends State<LoginForm> {
                         fontFamily: 'Josefin',
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
-                        color: Theme.of(context).inputDecorationTheme.labelStyle?.color,
+                        color: Theme.of(context)
+                            .inputDecorationTheme
+                            .labelStyle
+                            ?.color,
                       ),
                       filled: true,
-                      fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+                      fillColor:
+                          Theme.of(context).inputDecorationTheme.fillColor,
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscureText ? Icons.visibility_off : Icons.visibility,
-                          color: Theme.of(context).iconTheme.color?.withOpacity(0.7),
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Theme.of(context)
+                              .iconTheme
+                              .color
+                              ?.withValues(alpha: 0.7),
                         ),
                         onPressed: () {
                           setState(() {
@@ -342,22 +345,17 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
-                        borderSide: const BorderSide(color: Colors.red, width: 2.0),
+                        borderSide:
+                            const BorderSide(color: Colors.red, width: 2.0),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
-                        borderSide: const BorderSide(color: Colors.red, width: 2.0),
+                        borderSide:
+                            const BorderSide(color: Colors.red, width: 2.0),
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Veuillez entrer votre mot de passe';
-                      }
-                      if (value.length < 8) {
-                        return 'Le mot de passe doit contenir au moins 8 caractères';
-                      }
-                      return null;
-                    },
+                    validator: (value) =>
+                        FormValidators.validatePassword(value),
                   ),
                 ),
               ],
@@ -371,26 +369,27 @@ class _LoginFormState extends State<LoginForm> {
             child: _isLoading // Affiche l'indicateur si en cours de chargement
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: const StadiumBorder(),
-                backgroundColor: const Color.fromARGB(225, 249, 29, 88),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 90,
-                  vertical: 15,
-                ),
-              ),
-              onPressed: _login,
-              child: const Text(
-                'CONFIRMER',
-                style: TextStyle(
-                  fontFamily: 'Josefin',
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800, // Poids de police plus fort pour le bouton
-                ),
-              ), // Appel de la méthode _login
-            ),
+                    style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                      backgroundColor: const Color.fromARGB(225, 249, 29, 88),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 90,
+                        vertical: 15,
+                      ),
+                    ),
+                    onPressed: _login,
+                    child: const Text(
+                      'CONFIRMER',
+                      style: TextStyle(
+                        fontFamily: 'Josefin',
+                        color: Colors.white,
+                        fontWeight: FontWeight
+                            .w800, // Poids de police plus fort pour le bouton
+                      ),
+                    ), // Appel de la méthode _login
+                  ),
           ),
-          const SizedBox(height: 90),
+          const SizedBox(height: 50),
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -414,6 +413,45 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ),
               ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          // Lien pour créer un compte
+          DelayedAnimation(
+            delay: 1700,
+            curve: Curves.easeOutCubic,
+            slideStartOffset: const Offset(0.0, 0.1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Pas de compte ? ",
+                  style: TextStyle(
+                    fontFamily: 'Josefin',
+                    fontSize: 14,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RegistrationPage(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "S'inscrire",
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

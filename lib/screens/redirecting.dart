@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:url_launcher/link.dart';
 
-import '../animations/simpleDelayedAnimation.dart'; // Assurez-vous que url_launcher est bien dans pubspec.yaml
+import '../animations/simple_delayed_animation.dart'; // Assurez-vous que url_launcher est bien dans pubspec.yaml
 
 class Redirecting extends StatelessWidget {
   const Redirecting({super.key});
@@ -48,11 +48,13 @@ class Redirecting extends StatelessWidget {
               ),
               elevation: 10,
               // Couleur de la carte adaptée au thème
-              color: Theme.of(context).cardColor.withOpacity(0.8),
+              color: Theme.of(context).cardColor.withValues(alpha: 0.8),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 30.0, horizontal: 20.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min, // La colonne prendra juste la taille nécessaire
+                  mainAxisSize: MainAxisSize
+                      .min, // La colonne prendra juste la taille nécessaire
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // Logos ISPM et LvlMind
@@ -98,7 +100,10 @@ class Redirecting extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'Josefin',
                             fontSize: sponsoredFontSize,
-                            color: Theme.of(context).textTheme.bodyLarge?.color, // Couleur adaptée au thème
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.color, // Couleur adaptée au thème
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -114,7 +119,8 @@ class Redirecting extends StatelessWidget {
                           colors: [
                             Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white // Plus clair en mode sombre
-                                : const Color.fromARGB(189, 0, 0, 0), // Plus sombre en mode clair
+                                : const Color.fromARGB(
+                                    189, 0, 0, 0), // Plus sombre en mode clair
                             const Color.fromARGB(255, 19, 121, 41), // Vert fixe
                           ],
                         ),
@@ -130,7 +136,10 @@ class Redirecting extends StatelessWidget {
                         fontFamily: 'Josefin',
                         fontSize: learningSloganFontSize,
                         fontWeight: FontWeight.w300,
-                        color: Theme.of(context).textTheme.bodyMedium?.color, // Couleur adaptée au thème
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.color, // Couleur adaptée au thème
                       ),
                     ),
                     const SizedBox(height: 60), // Espacement avant le lien
@@ -145,25 +154,41 @@ class Redirecting extends StatelessWidget {
                             fontFamily: 'Josefin',
                             fontSize: accountTextFontSize,
                             fontWeight: FontWeight.w400,
-                            color: Theme.of(context).textTheme.bodyLarge?.color, // Couleur adaptée au thème
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.color, // Couleur adaptée au thème
                           ),
                         ),
-                        const SizedBox(width: 5), // Espacement entre le texte et le bouton
+                        const SizedBox(
+                            width: 5), // Espacement entre le texte et le bouton
                         Link(
-                          uri: Uri.https('github.com', 'josoavj/lvlmindapp'), // Votre lien GitHub
-                          target: LinkTarget.blank, // Ouvre dans un nouvel onglet/navigateur
+                          uri: Uri.https('github.com',
+                              'josoavj/lvlmindapp'), // Votre lien GitHub
+                          target: LinkTarget
+                              .blank, // Ouvre dans un nouvel onglet/navigateur
                           builder: (context, followLink) => TextButton(
-                            onPressed: followLink, // Utilise la fonction fournie par Link
+                            onPressed:
+                                followLink, // Utilise la fonction fournie par Link
                             style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero, // Supprime le padding par défaut du TextButton si désiré
-                              minimumSize: Size.zero, // Supprime la taille minimale
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap, // Réduit la zone de tap
+                              padding: EdgeInsets
+                                  .zero, // Supprime le padding par défaut du TextButton si désiré
+                              minimumSize:
+                                  Size.zero, // Supprime la taille minimale
+                              tapTargetSize: MaterialTapTargetSize
+                                  .shrinkWrap, // Réduit la zone de tap
                             ),
                             child: Text(
                               'Créer', // Traduction du bouton
                               style: TextStyle(
                                 fontFamily: 'Josefin',
-                                color: Theme.of(context).textButtonTheme.style?.foregroundColor?.resolve({MaterialState.selected}), // Couleur adaptée au thème
+                                color: Theme.of(context)
+                                    .textButtonTheme
+                                    .style
+                                    ?.foregroundColor
+                                    ?.resolve({
+                                  WidgetState.selected
+                                }), // Couleur adaptée au thème
                                 fontSize: createButtonFontSize,
                                 fontWeight: FontWeight.w800,
                               ),
@@ -190,7 +215,9 @@ class Redirecting extends StatelessWidget {
       leading: IconButton(
         icon: Icon(
           Icons.close,
-          color: Theme.of(context).appBarTheme.foregroundColor, // Couleur adaptée au thème
+          color: Theme.of(context)
+              .appBarTheme
+              .foregroundColor, // Couleur adaptée au thème
           size: 30,
         ),
         onPressed: () {
@@ -212,7 +239,7 @@ class Redirecting extends StatelessWidget {
         image: const AssetImage('assets/images/background/fond1.jpg'),
         fit: BoxFit.cover,
         colorFilter: ColorFilter.mode(
-          Colors.black.withOpacity(0.5),
+          Colors.black.withValues(alpha: 0.5),
           BlendMode.dstATop,
         ),
       ),

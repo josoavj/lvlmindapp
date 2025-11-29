@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/Models/screenModels/allMatiereSection.dart';
-import 'package:lvlmindbeta/Models/popuphome.dart';
-import 'package:lvlmindbeta/Models/matiere.dart';
-import 'package:lvlmindbeta/pages/profilePage.dart';
-import 'package:lvlmindbeta/services/authentificationService.dart';
+import 'package:lvlmindbeta/models/screen_models/all_matiere_section.dart';
+import 'package:lvlmindbeta/models/popup_home.dart';
+import 'package:lvlmindbeta/models/matiere.dart';
+import 'package:lvlmindbeta/pages/profile_page.dart';
+import 'package:lvlmindbeta/services/authentication_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import '../Models/screenModels/matiereDetails.dart'; // Pour jsonEncode/jsonDecode
+import '../models/screen_models/matiere_details.dart'; // Pour jsonEncode/jsonDecode
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -15,7 +15,8 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 
-class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin {
+class _HomepageState extends State<Homepage>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -66,7 +67,8 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
         _sections = [
           Section.fromIconData(name: 'TOP', icon: Icons.star),
           Section.fromIconData(name: 'Électronique', icon: Icons.electric_bolt),
-          Section.fromIconData(name: 'Intelligence Artificielle', icon: Icons.psychology_alt),
+          Section.fromIconData(
+              name: 'Intelligence Artificielle', icon: Icons.psychology_alt),
           Section.fromIconData(name: 'Programmation', icon: Icons.code),
           Section.fromIconData(name: 'Design', icon: Icons.brush),
           Section.fromIconData(name: 'Gestion', icon: Icons.business_center),
@@ -76,8 +78,10 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
           Section.fromIconData(name: 'Big Data', icon: Icons.storage),
           Section.fromIconData(name: 'DevOps', icon: Icons.build),
           Section.fromIconData(name: 'Blockchain', icon: Icons.link),
-          Section.fromIconData(name: 'Analyse de Données', icon: Icons.analytics),
-          Section.fromIconData(name: 'Génie Logiciel', icon: Icons.precision_manufacturing),
+          Section.fromIconData(
+              name: 'Analyse de Données', icon: Icons.analytics),
+          Section.fromIconData(
+              name: 'Génie Logiciel', icon: Icons.precision_manufacturing),
           Section.fromIconData(name: 'Robotique', icon: Icons.android),
         ];
       });
@@ -87,7 +91,8 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
 
   Future<void> _saveSections() async {
     final prefs = await SharedPreferences.getInstance();
-    final String sectionsString = jsonEncode(_sections.map((s) => s.toJson()).toList());
+    final String sectionsString =
+        jsonEncode(_sections.map((s) => s.toJson()).toList());
     await prefs.setString('sections_list', sectionsString);
   }
 
@@ -112,7 +117,8 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
     setState(() {
       _sections.removeWhere((s) => s.name == sectionToDelete.name);
       if (_activeFilterTag == sectionToDelete.name) {
-        _activeFilterTag = null; // Réinitialise le filtre si la section active est supprimée
+        _activeFilterTag =
+            null; // Réinitialise le filtre si la section active est supprimée
       }
     });
     await _saveSections();
@@ -127,7 +133,8 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
     await showDialog<void>(
       context: context,
       builder: (BuildContext dialogContext) {
-        return StatefulBuilder( // Utiliser StatefulBuilder pour mettre à jour le dialogue
+        return StatefulBuilder(
+          // Utiliser StatefulBuilder pour mettre à jour le dialogue
           builder: (context, setInnerState) {
             return AlertDialog(
               title: const Text('Ajouter une nouvelle section'),
@@ -139,15 +146,18 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                       onChanged: (value) {
                         newSectionName = value;
                       },
-                      decoration: const InputDecoration(labelText: 'Nom de la section'),
+                      decoration:
+                          const InputDecoration(labelText: 'Nom de la section'),
                     ),
                     const SizedBox(height: 15),
-                    Text('Choisir une icône:', style: Theme.of(context).textTheme.titleSmall),
+                    Text('Choisir une icône:',
+                        style: Theme.of(context).textTheme.titleSmall),
                     const SizedBox(height: 10),
                     SizedBox(
                       height: 150,
                       child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 5,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 8,
@@ -157,13 +167,19 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                           final icon = Section.availableIcons[index];
                           return GestureDetector(
                             onTap: () {
-                              setInnerState(() { // Utilise setInnerState pour le dialogue
+                              setInnerState(() {
+                                // Utilise setInnerState pour le dialogue
                                 selectedIcon = icon;
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: selectedIcon == icon ? Theme.of(context).primaryColor : Colors.grey[200],
-                              child: Icon(icon, color: selectedIcon == icon ? Colors.white : Colors.black),
+                              backgroundColor: selectedIcon == icon
+                                  ? Theme.of(context).primaryColor
+                                  : Colors.grey[200],
+                              child: Icon(icon,
+                                  color: selectedIcon == icon
+                                      ? Colors.white
+                                      : Colors.black),
                             ),
                           );
                         },
@@ -187,7 +203,9 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                       Navigator.of(dialogContext).pop();
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Veuillez entrer un nom et choisir une icône.')),
+                        const SnackBar(
+                            content: Text(
+                                'Veuillez entrer un nom et choisir une icône.')),
                       );
                     }
                   },
@@ -241,7 +259,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                 icon: Icon(
                   Icons.menu,
                   size: 30,
-                  color: colorScheme.onBackground,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ),
@@ -255,16 +273,17 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                     TextSpan(
                       text: "Salut $_userName ! \n\n",
                       style: textTheme.titleLarge?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.9),
+                        color: colorScheme.onSurface.withValues(alpha: 0.9),
                         fontSize: 25,
                         fontWeight: FontWeight.w800,
                       ),
                       children: [
                         TextSpan(
-                          text: "Commençons une journée passionnante\nen apprenant avec nous",
+                          text:
+                              "Commençons une journée passionnante\nen apprenant avec nous",
                           style: textTheme.bodyMedium?.copyWith(
                             fontSize: 17,
-                            color: colorScheme.onSurface.withOpacity(0.7),
+                            color: colorScheme.onSurface.withValues(alpha: 0.7),
                           ),
                         )
                       ],
@@ -287,7 +306,7 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                       errorBuilder: (context, error, stackTrace) => Icon(
                         Icons.person_outline,
                         size: 90,
-                        color: colorScheme.onSurface.withOpacity(0.5),
+                        color: colorScheme.onSurface.withValues(alpha: 0.5),
                       ),
                     ),
                   ),
@@ -304,21 +323,26 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                 Card(
                   elevation: 5,
                   clipBehavior: Clip.antiAlias,
-                  color: _activeFilterTag == 'TOP' ? colorScheme.primary : Theme.of(context).cardColor,
+                  color: _activeFilterTag == 'TOP'
+                      ? colorScheme.primary
+                      : Theme.of(context).cardColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextButton(
                     onPressed: () => _applyFilter('TOP'),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       child: Text(
                         "TOP",
                         textAlign: TextAlign.center,
                         style: textTheme.bodyMedium?.copyWith(
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
-                          color: _activeFilterTag == 'TOP' ? colorScheme.onPrimary : colorScheme.onSurface.withOpacity(0.8),
+                          color: _activeFilterTag == 'TOP'
+                              ? colorScheme.onPrimary
+                              : colorScheme.onSurface.withValues(alpha: 0.8),
                         ),
                       ),
                     ),
@@ -338,8 +362,10 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   builder: (innerContext) {
                     return IconButton(
                       onPressed: () {
-                        final RenderBox button = innerContext.findRenderObject() as RenderBox;
-                        final Rect buttonRect = button.localToGlobal(Offset.zero) & button.size;
+                        final RenderBox button =
+                            innerContext.findRenderObject() as RenderBox;
+                        final Rect buttonRect =
+                            button.localToGlobal(Offset.zero) & button.size;
 
                         showMenu(
                           context: innerContext,
@@ -350,8 +376,10 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                           items: <PopupMenuEntry<dynamic>>[
                             PopupMenuItem(
                               child: ListTile(
-                                leading: Icon(Icons.add, color: colorScheme.primary),
-                                title: Text('Ajouter une section', style: textTheme.bodyMedium),
+                                leading:
+                                    Icon(Icons.add, color: colorScheme.primary),
+                                title: Text('Ajouter une section',
+                                    style: textTheme.bodyMedium),
                                 onTap: () {
                                   Navigator.pop(innerContext);
                                   _showAddSectionDialog();
@@ -364,21 +392,24 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                               return PopupMenuItem(
                                 value: sectionItem.name,
                                 child: ListTile(
-                                  leading: Icon(sectionItem.icon, size: 20, color: colorScheme.primary),
+                                  leading: Icon(sectionItem.icon,
+                                      size: 20, color: colorScheme.primary),
                                   title: Text(
                                     sectionItem.name,
                                     style: textTheme.bodyMedium?.copyWith(
-                                      color: colorScheme.onSurface.withOpacity(0.8),
+                                      color: colorScheme.onSurface
+                                          .withValues(alpha: 0.8),
                                       fontSize: 15,
                                     ),
                                   ),
                                   onTap: () {
                                     Navigator.pop(context); // Ferme le menu
-                                    _applyFilter(sectionItem.name); // Applique le filtre
+                                    _applyFilter(
+                                        sectionItem.name); // Applique le filtre
                                   },
                                 ),
                               );
-                            }).toList(),
+                            }),
                           ],
                         );
                       },
@@ -410,7 +441,8 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const AllMatieresPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const AllMatieresPage()),
                     );
                   },
                   child: Text(
@@ -430,7 +462,9 @@ class _HomepageState extends State<Homepage> with AutomaticKeepAliveClientMixin 
             // Grille des matières filtrées
             SizedBox(
               height: mediaQuery.size.width > 400 ? 400 : 350,
-              child: MatiereGridView(matieres: _displayedMatieres), // MatiereGridView est maintenant défini en dessous
+              child: MatiereGridView(
+                  matieres:
+                      _displayedMatieres), // MatiereGridView est maintenant défini en dessous
             ),
           ],
         ),
@@ -447,7 +481,6 @@ class _SectionsFilterList extends StatelessWidget {
   final Function(Section) onSectionDeleted;
 
   const _SectionsFilterList({
-    super.key,
     required this.sections,
     required this.activeFilterTag,
     required this.onFilterSelected,
@@ -474,13 +507,15 @@ class _SectionsFilterList extends StatelessWidget {
               onTap: () => onFilterSelected(section.name),
               onLongPress: () {
                 // Permet la suppression par un appui long, sauf pour "TOP"
-                if (section.name != 'TOP') { // Empêche la suppression de la section "TOP"
+                if (section.name != 'TOP') {
+                  // Empêche la suppression de la section "TOP"
                   showDialog(
                     context: context,
                     builder: (BuildContext dialogContext) {
                       return AlertDialog(
                         title: const Text('Supprimer la section ?'),
-                        content: Text('Voulez-vous vraiment supprimer la section "${section.name}" ?'),
+                        content: Text(
+                            'Voulez-vous vraiment supprimer la section "${section.name}" ?'),
                         actions: <Widget>[
                           TextButton(
                             child: const Text('Annuler'),
@@ -491,7 +526,8 @@ class _SectionsFilterList extends StatelessWidget {
                           TextButton(
                             child: const Text('Supprimer'),
                             onPressed: () {
-                              onSectionDeleted(section); // Appelle la fonction de suppression
+                              onSectionDeleted(
+                                  section); // Appelle la fonction de suppression
                               Navigator.of(dialogContext).pop();
                             },
                           ),
@@ -503,8 +539,11 @@ class _SectionsFilterList extends StatelessWidget {
               },
               child: Card(
                 elevation: 2,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                color: isActive ? colorScheme.primary : Theme.of(context).cardColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                color: isActive
+                    ? colorScheme.primary
+                    : Theme.of(context).cardColor,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Center(
@@ -514,7 +553,9 @@ class _SectionsFilterList extends StatelessWidget {
                       style: textTheme.bodyMedium?.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: isActive ? colorScheme.onPrimary : colorScheme.primary,
+                        color: isActive
+                            ? colorScheme.onPrimary
+                            : colorScheme.primary,
                       ),
                     ),
                   ),
@@ -555,12 +596,14 @@ class MatiereGridView extends StatelessWidget {
             // Navigue vers la page de détail de la matière
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MatiereDetailsPage(matiere: matiere)),
+              MaterialPageRoute(
+                  builder: (context) => MatiereDetailsPage(matiere: matiere)),
             );
           },
           child: Card(
             elevation: 4,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -579,14 +622,15 @@ class MatiereGridView extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+                  padding:
+                      const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
                   child: Text(
                     matiere.name,
                     textAlign: TextAlign.center,
                     style: textTheme.bodyMedium?.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface.withOpacity(0.8),
+                      color: colorScheme.onSurface.withValues(alpha: 0.8),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

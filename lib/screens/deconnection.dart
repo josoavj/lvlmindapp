@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import '../services/authentificationService.dart';
-import 'package:lvlmindbeta/screens/loginpage.dart';
+import '../services/authentication_service.dart';
+import 'package:lvlmindbeta/screens/login_page.dart';
 
 /// Gère la logique de déconnexion et la navigation vers la page de connexion.
 class DeconnexionService {
-  static Future<void> showLogoutConfirmation(BuildContext context, AuthService authService) async {
+  static Future<void> showLogoutConfirmation(
+      BuildContext context, AuthService authService) async {
     final bool? confirmLogout = await showDialog<bool>(
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           title: const Text(
             "Déconnexion",
             style: TextStyle(
@@ -62,12 +64,13 @@ class DeconnexionService {
 
     if (confirmLogout == true) {
       await authService.logout();
-      debugPrint("Déconnexion de l'utilisateur effectuée via AuthService."); // Pour le débogage
+      debugPrint(
+          "Déconnexion de l'utilisateur effectuée via AuthService."); // Pour le débogage
 
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const LoginPage()),
-              (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
         );
       }
     }

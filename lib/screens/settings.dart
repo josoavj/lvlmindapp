@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:lvlmindbeta/providers/theme_notifier.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'aboutDevelopers.dart';
-import 'editProfilePage.dart';
+import 'about_developers.dart';
+import 'edit_profile_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -33,7 +33,8 @@ class _SettingsPageState extends State<SettingsPage> {
             fontSize: 22,
             fontWeight: FontWeight.w700,
             // Utilise la couleur du texte de l'AppBar du thème, ou blanc par défaut
-            color: Theme.of(context).appBarTheme.titleTextStyle?.color ?? Colors.white,
+            color: Theme.of(context).appBarTheme.titleTextStyle?.color ??
+                Colors.white,
           ),
         ),
         elevation: 0,
@@ -41,7 +42,9 @@ class _SettingsPageState extends State<SettingsPage> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Theme.of(context).appBarTheme.foregroundColor, // Couleur de l'icône de l'AppBar du thème
+            color: Theme.of(context)
+                .appBarTheme
+                .foregroundColor, // Couleur de l'icône de l'AppBar du thème
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -65,13 +68,18 @@ class _SettingsPageState extends State<SettingsPage> {
               });
               // Logique pour gérer les notifications
               // Ex: Appeler une API ou un service de notification
-              _showSnackBar(context, "Notifications ${value ? 'activées' : 'désactivées'}");
+              _showSnackBar(context,
+                  "Notifications ${value ? 'activées' : 'désactivées'}");
             },
             secondary: Icon(
               Icons.notifications,
-              color: Theme.of(context).iconTheme.color, // Couleur de l'icône du thème
+              color: Theme.of(context)
+                  .iconTheme
+                  .color, // Couleur de l'icône du thème
             ),
-            activeColor: Theme.of(context).colorScheme.primary, // Couleur principale du thème
+            activeThumbColor: Theme.of(context)
+                .colorScheme
+                .primary, // Couleur principale du thème
           ),
           SwitchListTile(
             title: const Text(
@@ -86,7 +94,7 @@ class _SettingsPageState extends State<SettingsPage> {
               Icons.dark_mode,
               color: Theme.of(context).iconTheme.color,
             ),
-            activeColor: Theme.of(context).colorScheme.primary,
+            activeThumbColor: Theme.of(context).colorScheme.primary,
           ),
           ListTile(
             title: const Text(
@@ -135,12 +143,15 @@ class _SettingsPageState extends State<SettingsPage> {
               "Modifier le profil",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
-            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
+            leading:
+                Icon(Icons.person, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios,
+                size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const EditProfilePage()),
+                MaterialPageRoute(
+                    builder: (context) => const EditProfilePage()),
               );
             },
           ),
@@ -150,9 +161,11 @@ class _SettingsPageState extends State<SettingsPage> {
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
             leading: Icon(Icons.lock, color: Theme.of(context).iconTheme.color),
-            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios,
+                size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              _showSnackBar(context, "Fonctionnalité 'Changer le mot de passe' à implémenter");
+              _showSnackBar(context,
+                  "Fonctionnalité 'Changer le mot de passe' à implémenter");
             },
           ),
           const Divider(),
@@ -164,10 +177,13 @@ class _SettingsPageState extends State<SettingsPage> {
               "Politique de confidentialité",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: Icon(Icons.privacy_tip, color: Theme.of(context).iconTheme.color),
-            trailing: Icon(Icons.open_in_new, size: 18, color: Theme.of(context).iconTheme.color),
+            leading: Icon(Icons.privacy_tip,
+                color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.open_in_new,
+                size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              _launchURL('https://www.example.com/privacy'); // Remplacez par votre lien réel
+              _launchURL(
+                  'https://www.example.com/privacy'); // Remplacez par votre lien réel
             },
           ),
           ListTile(
@@ -175,10 +191,13 @@ class _SettingsPageState extends State<SettingsPage> {
               "Conditions d'utilisation",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: Icon(Icons.description, color: Theme.of(context).iconTheme.color),
-            trailing: Icon(Icons.open_in_new, size: 18, color: Theme.of(context).iconTheme.color),
+            leading: Icon(Icons.description,
+                color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.open_in_new,
+                size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              _launchURL('https://www.example.com/terms'); // Remplacez par votre lien réel
+              _launchURL(
+                  'https://www.example.com/terms'); // Remplacez par votre lien réel
             },
           ),
           SwitchListTile(
@@ -186,13 +205,16 @@ class _SettingsPageState extends State<SettingsPage> {
               "Authentification à deux facteurs",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            value: false, // Exemple, devrait être une variable d'état liée à la logique réelle
+            value:
+                false, // Exemple, devrait être une variable d'état liée à la logique réelle
             onChanged: (bool value) {
               // Logique pour activer/désactiver la 2FA
-              _showSnackBar(context, "Authentification à deux facteurs ${value ? 'activée' : 'désactivée'}");
+              _showSnackBar(context,
+                  "Authentification à deux facteurs ${value ? 'activée' : 'désactivée'}");
             },
-            secondary: Icon(Icons.security, color: Theme.of(context).iconTheme.color),
-            activeColor: Theme.of(context).colorScheme.primary,
+            secondary:
+                Icon(Icons.security, color: Theme.of(context).iconTheme.color),
+            activeThumbColor: Theme.of(context).colorScheme.primary,
           ),
           const Divider(),
 
@@ -203,8 +225,10 @@ class _SettingsPageState extends State<SettingsPage> {
               "Version de l'application",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            subtitle: const Text("1.0.0"), // Remplacer par la version réelle de l'app
-            leading: Icon(Icons.info_outline, color: Theme.of(context).iconTheme.color),
+            subtitle:
+                const Text("1.0.0"), // Remplacer par la version réelle de l'app
+            leading: Icon(Icons.info_outline,
+                color: Theme.of(context).iconTheme.color),
           ),
           ListTile(
             title: const Text(
@@ -212,12 +236,14 @@ class _SettingsPageState extends State<SettingsPage> {
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
             leading: Icon(Icons.code, color: Theme.of(context).iconTheme.color),
-            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios,
+                size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
               // Navigue vers la nouvelle page des informations sur les développeurs
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const AboutDevelopersPage()),
+                MaterialPageRoute(
+                    builder: (context) => const AboutDevelopersPage()),
               );
             },
           ),
@@ -226,10 +252,13 @@ class _SettingsPageState extends State<SettingsPage> {
               "Envoyer des retours",
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
-            leading: Icon(Icons.feedback, color: Theme.of(context).iconTheme.color),
-            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
+            leading:
+                Icon(Icons.feedback, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios,
+                size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
-              _launchURL('mailto:feedback@lvlmind.com?subject=Retour%20sur%20l\'application'); // Remplacez par votre adresse e-mail
+              _launchURL(
+                  'mailto:feedback@lvlmind.com?subject=Retour%20sur%20l\'application'); // Remplacez par votre adresse e-mail
             },
           ),
           ListTile(
@@ -238,10 +267,12 @@ class _SettingsPageState extends State<SettingsPage> {
               style: TextStyle(fontFamily: 'Josefin', fontSize: 16),
             ),
             leading: Icon(Icons.star, color: Theme.of(context).iconTheme.color),
-            trailing: Icon(Icons.arrow_forward_ios, size: 18, color: Theme.of(context).iconTheme.color),
+            trailing: Icon(Icons.arrow_forward_ios,
+                size: 18, color: Theme.of(context).iconTheme.color),
             onTap: () {
               // Rediriger vers la page de l'application sur le store (exemple Android)
-              _launchURL('market://details?id=com.lvlmind.beta'); // Remplacez par votre ID de package
+              _launchURL(
+                  'market://details?id=com.lvlmind.beta'); // Remplacez par votre ID de package
             },
           ),
         ],
@@ -275,8 +306,12 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Wrap(
             children: <Widget>[
               ListTile(
-                title: const Text('Français', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: _selectedLanguage == 'Français' ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary) : null,
+                title: const Text('Français',
+                    style: TextStyle(fontFamily: 'Josefin')),
+                trailing: _selectedLanguage == 'Français'
+                    ? Icon(Icons.check,
+                        color: Theme.of(context).colorScheme.primary)
+                    : null,
                 onTap: () {
                   setState(() {
                     _selectedLanguage = 'Français';
@@ -285,8 +320,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               ListTile(
-                title: const Text('English', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: _selectedLanguage == 'English' ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary) : null,
+                title: const Text('English',
+                    style: TextStyle(fontFamily: 'Josefin')),
+                trailing: _selectedLanguage == 'English'
+                    ? Icon(Icons.check,
+                        color: Theme.of(context).colorScheme.primary)
+                    : null,
                 onTap: () {
                   setState(() {
                     _selectedLanguage = 'English';
@@ -311,16 +350,24 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Wrap(
             children: <Widget>[
               ListTile(
-                title: const Text('Clair', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: themeNotifier.themeMode == ThemeMode.light ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary) : null,
+                title: const Text('Clair',
+                    style: TextStyle(fontFamily: 'Josefin')),
+                trailing: themeNotifier.themeMode == ThemeMode.light
+                    ? Icon(Icons.check,
+                        color: Theme.of(context).colorScheme.primary)
+                    : null,
                 onTap: () {
                   themeNotifier.setThemeMode(ThemeMode.light);
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                title: const Text('Sombre', style: TextStyle(fontFamily: 'Josefin')),
-                trailing: themeNotifier.themeMode == ThemeMode.dark ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary) : null,
+                title: const Text('Sombre',
+                    style: TextStyle(fontFamily: 'Josefin')),
+                trailing: themeNotifier.themeMode == ThemeMode.dark
+                    ? Icon(Icons.check,
+                        color: Theme.of(context).colorScheme.primary)
+                    : null,
                 onTap: () {
                   themeNotifier.setThemeMode(ThemeMode.dark);
                   Navigator.pop(context);

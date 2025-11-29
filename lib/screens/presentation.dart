@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/screens/loginpage.dart';
+import 'package:lvlmindbeta/screens/login_page.dart';
 import 'package:lvlmindbeta/screens/redirecting.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
-import '../animations/simpleDelayedAnimation.dart';
+import '../animations/simple_delayed_animation.dart';
 
 class Presentation extends StatelessWidget {
   const Presentation({super.key});
@@ -15,13 +15,16 @@ class Presentation extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      extendBodyBehindAppBar: true, // Permet au corps de s'étendre derrière l'AppBar transparente
-      appBar: _buildAppBar(context), // Utilisation de la barre d'application refactorisée
+      extendBodyBehindAppBar:
+          true, // Permet au corps de s'étendre derrière l'AppBar transparente
+      appBar: _buildAppBar(
+          context), // Utilisation de la barre d'application refactorisée
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         width: screenWidth,
         height: screenHeight,
-        decoration: _buildBackgroundDecoration(), // Appel de la méthode pour le fond
+        decoration:
+            _buildBackgroundDecoration(), // Appel de la méthode pour le fond
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,9 +50,11 @@ class Presentation extends StatelessWidget {
             DelayedAnimation(
               delay: 1100, // Démarre après le texte d'introduction
               curve: Curves.bounceOut, // Effet de rebond pour les boutons
-              animationDuration: const Duration(milliseconds: 1000), // Durée pour l'effet de rebond
+              animationDuration: const Duration(
+                  milliseconds: 1000), // Durée pour l'effet de rebond
               child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 child: Column(
                   children: [
                     _buildLoginButton(context),
@@ -98,7 +103,7 @@ class Presentation extends StatelessWidget {
         image: const AssetImage('assets/images/background/fond1.jpg'),
         fit: BoxFit.cover,
         colorFilter: ColorFilter.mode(
-          Colors.black.withOpacity(0.5), // Assombrit l'image de fond
+          Colors.black.withValues(alpha: 0.5), // Assombrit l'image de fond
           BlendMode.dstATop,
         ),
       ),
@@ -164,7 +169,8 @@ class Presentation extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const LoginPage(), // Assurez-vous que LoginPage est const
+            builder: (context) =>
+                const LoginPage(), // Assurez-vous que LoginPage est const
           ),
         );
       },
@@ -223,12 +229,14 @@ class Presentation extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const Redirecting(), // Assurez-vous que Redirecting est const
+            builder: (context) =>
+                const Redirecting(), // Assurez-vous que Redirecting est const
           ),
         );
       },
       child: const DelayedAnimation(
-        delay: 0, // Le délai est géré par le parent DelayedAnimation de la section
+        delay:
+            0, // Le délai est géré par le parent DelayedAnimation de la section
         child: Text(
           "S'inscrire", // Traduit le texte du bouton
           style: TextStyle(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/Models/matiere.dart';
+import 'package:lvlmindbeta/models/matiere.dart';
 
-import 'matiereDetails.dart';
+import 'matiere_details.dart';
+
 class AllMatieresPage extends StatelessWidget {
   const AllMatieresPage({super.key});
 
@@ -15,7 +16,8 @@ class AllMatieresPage extends StatelessWidget {
     for (var matiere in allMatieres) {
       // Utilisez le filterTag de la matière comme clé de groupe.
       // Si le filterTag est vide ou nul, vous pouvez utiliser une catégorie par défaut comme 'Autre'.
-      final String tag = matiere.filterTag.isNotEmpty ? matiere.filterTag : 'Autre';
+      final String tag =
+          matiere.filterTag.isNotEmpty ? matiere.filterTag : 'Autre';
 
       if (!groupedMatieres.containsKey(tag)) {
         groupedMatieres[tag] = [];
@@ -57,20 +59,22 @@ class AllMatieresPage extends StatelessWidget {
                 child: Text(
                   tag,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontFamily: 'Josefin',
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                        fontFamily: 'Josefin',
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                 ),
               ),
               // Afficher la liste des matières pour cette section
-              Column( // Utilisation d'une Column pour éviter les problèmes de scroll avec des ListView imbriquées
+              Column(
+                // Utilisation d'une Column pour éviter les problèmes de scroll avec des ListView imbriquées
                 children: matieresInSection.map((matiere) {
                   return Card(
                     color: Theme.of(context).cardColor,
                     margin: const EdgeInsets.symmetric(vertical: 4.0),
                     elevation: 1,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
                     child: ListTile(
                       leading: SizedBox(
                         width: 40,
@@ -90,13 +94,14 @@ class AllMatieresPage extends StatelessWidget {
                       title: Text(
                         matiere.name,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontFamily: 'Josefin',
-                          fontSize: 17,
-                          fontWeight: FontWeight.w400,
-                        ),
+                              fontFamily: 'Josefin',
+                              fontSize: 17,
+                              fontWeight: FontWeight.w400,
+                            ),
                       ),
                       trailing: Text(
-                        matiere.chapterCount.toString(), // Convertir l'int en String
+                        matiere.chapterCount
+                            .toString(), // Convertir l'int en String
                         style: const TextStyle(
                           fontFamily: 'Josefin',
                           fontSize: 13,
@@ -108,14 +113,17 @@ class AllMatieresPage extends StatelessWidget {
                         // Naviguer vers la page de détails de la matière
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MatiereDetailsPage(matiere: matiere)),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MatiereDetailsPage(matiere: matiere)),
                         );
                       },
                     ),
                   );
                 }).toList(),
               ),
-              const SizedBox(height: 16.0), // Espacement entre les différentes sections
+              const SizedBox(
+                  height: 16.0), // Espacement entre les différentes sections
             ],
           );
         },

@@ -1,4 +1,4 @@
-import '../Models/userProfile.dart';
+import '../models/user_profile.dart';
 
 final List<UserProfile> users = [
   UserProfile(
