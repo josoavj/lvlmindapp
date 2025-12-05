@@ -3,6 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:lvlmindbeta/providers/theme_notifier.dart';
 import 'package:lvlmindbeta/providers/user_notifier.dart';
 import 'package:lvlmindbeta/screens/welcome_page.dart';
+import 'package:lvlmindbeta/screens/login_page.dart';
+import 'package:lvlmindbeta/screens/registration_page.dart';
+import 'package:lvlmindbeta/screens/edit_profile_page.dart';
+import 'package:lvlmindbeta/screens/profile_page.dart';
+import 'package:lvlmindbeta/navigation/app_transition.dart';
+import 'package:lvlmindbeta/pages/home_page.dart';
 import 'package:lvlmindbeta/services/app_initialization_service.dart';
 
 void main() async {
@@ -195,6 +201,15 @@ class LvlMindApp extends StatelessWidget {
 
       themeMode: themeNotifier.themeMode,
       home: const WelcomePage(),
+      routes: {
+        '/welcome': (context) => const WelcomePage(),
+        '/login': (context) => const LoginPage(),
+        '/registration': (context) => const RegistrationPage(),
+        '/transition': (context) => const Transition(),
+        '/home': (context) => const Homepage(),
+        '/profile': (context) => const ProfilePage(),
+        '/edit_profile': (context) => const EditProfilePage(),
+      },
     );
   }
 }
