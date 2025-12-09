@@ -6,7 +6,7 @@ import 'package:lvlmindbeta/screens/welcome_page.dart';
 import 'package:lvlmindbeta/screens/login_page.dart';
 import 'package:lvlmindbeta/screens/registration_page.dart';
 import 'package:lvlmindbeta/screens/edit_profile_page.dart';
-import 'package:lvlmindbeta/screens/profile_page.dart';
+import 'package:lvlmindbeta/pages/profile_page.dart';
 import 'package:lvlmindbeta/navigation/app_transition.dart';
 import 'package:lvlmindbeta/pages/home_page.dart';
 import 'package:lvlmindbeta/services/app_initialization_service.dart';
@@ -207,7 +207,7 @@ class LvlMindApp extends StatelessWidget {
         '/registration': (context) => const RegistrationPage(),
         '/transition': (context) => const Transition(),
         '/home': (context) => const Homepage(),
-        '/profile': (context) => const ProfilePage(),
+        '/profile': (context) => const Profile(),
         '/edit_profile': (context) => const EditProfilePage(),
       },
     );
