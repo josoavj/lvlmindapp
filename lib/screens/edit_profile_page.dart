@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lvlmindbeta/models/user_profile.dart'; // <--- CORRECTION ICI
-import 'package:lvlmindbeta/services/authentication_service.dart';
+import 'package:lvlmindbeta/models/user_profile.dart';
+import 'package:lvlmindbeta/services/app_initialization_service.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -14,7 +14,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
-  final AuthService _authService = AuthService();
   bool _isLoading = false;
 
   @override
@@ -35,20 +34,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
       _isLoading = true;
     });
     try {
-      // CORRECTION ICI : Utilisez UserProfile
-      final UserProfile? user = await _authService.getLoggedInUser();
-      if (user != null) {
+      final UserProfile? user = appInit.authService.getLoggedInUser();
+      if (mounted && user != null) {
         _nameController.text = user.name;
         _emailController.text = user.email;
-      } else {
+      } else if (mounted) {
         _showSnackBar("Impossible de charger le profil de l'utilisateur.");
       }
     } catch (e) {
-      _showSnackBar("Erreur lors du chargement du profil: $e");
+      if (mounted) {
+        _showSnackBar("Erreur lors du chargement du profil: $e");
+      }
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -58,19 +60,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
         _isLoading = true;
       });
       try {
-        // CET APPEL EST MAINTENANT CORRECT SI AUTHSERVICE EST MISE À JOUR
-        await _authService.updateUserProfile(
+        final user = appInit.authService.getLoggedInUser();
+        if (user == null) {
+          throw Exception("Aucun utilisateur connecté");
+        }
+
+        await appInit.authService.updateUserProfile(
+          matricule: user.matricule,
           name: _nameController.text,
           email: _emailController.text,
         );
-        _showSnackBar("Profil mis à jour avec succès !");
-        Navigator.pop(context);
+        if (mounted) {
+          _showSnackBar("Profil mis à jour avec succès !");
+          Navigator.pop(context);
+        }
       } catch (e) {
-        _showSnackBar("Erreur lors de la mise à jour du profil: $e");
+        if (mounted) {
+          _showSnackBar("Erreur lors de la mise à jour du profil: $e");
+        }
       } finally {
-        setState(() {
-          _isLoading = false;
-        });
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       }
     }
   }
