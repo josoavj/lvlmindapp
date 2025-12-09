@@ -224,6 +224,9 @@ class _ProfileState extends State<Profile> {
               () {/* Naviguer vers l'aide */}),
           _buildOptionTile(Icons.logout, "Déconnexion", primaryColor, textColor,
               () async {
+            final userNotifier =
+                Provider.of<UserNotifier>(context, listen: false);
+            final navigator = Navigator.of(context);
             final confirmed = await showDialog<bool>(
               context: context,
               builder: (BuildContext dialogContext) {
@@ -260,9 +263,13 @@ class _ProfileState extends State<Profile> {
               },
             );
 
-            if (confirmed == true) {
+            if (confirmed == true && mounted) {
+              await userNotifier.logout();
               if (mounted) {
-                Provider.of<UserNotifier>(context, listen: false).logout();
+                navigator.pushNamedAndRemoveUntil(
+                  '/welcome',
+                  (route) => false,
+                );
               }
             }
           }),
@@ -308,6 +315,7 @@ class _ProfileState extends State<Profile> {
       String imagePath, String title, String duration, Color textColor) {
     return Container(
       width: 140,
+      height: 200,
       margin: const EdgeInsets.only(right: 15),
       child: Card(
         elevation: 4,
