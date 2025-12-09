@@ -95,13 +95,13 @@ class LocalDbService {
   Map<String, dynamic> _userProfileToMap(UserProfile user) {
     return {
       'username': user.username,
+      'password': user.password, // Stocker le hash du password (déjà hashé)
       'name': user.name,
       'email': user.email,
       'status': user.status,
       'matricule': user.matricule,
       'establishment': user.establishment,
       'avatarPath': user.avatarPath,
-      // Ne pas stocker le mot de passe en clair
     };
   }
 
@@ -109,7 +109,8 @@ class LocalDbService {
   UserProfile _mapToUserProfile(Map<String, dynamic> map) {
     return UserProfile(
       username: map['username'] as String,
-      password: '', // Jamais stocker le password localement
+      password: map['password'] as String? ??
+          '', // Récupérer le hash du password stocké
       name: map['name'] as String,
       email: map['email'] as String,
       status: map['status'] as String,

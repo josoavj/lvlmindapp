@@ -3,7 +3,7 @@ import 'package:lvlmindbeta/models/screen_models/all_matiere_section.dart';
 import 'package:lvlmindbeta/models/popup_home.dart';
 import 'package:lvlmindbeta/models/matiere.dart';
 import 'package:lvlmindbeta/pages/profile_page.dart';
-import 'package:lvlmindbeta/services/authentication_service.dart';
+import 'package:lvlmindbeta/services/app_initialization_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../models/screen_models/matiere_details.dart'; // Pour jsonEncode/jsonDecode
@@ -43,8 +43,7 @@ class _HomepageState extends State<Homepage>
 
   // Charge le nom de l'utilisateur connecté
   Future<void> _loadUserName() async {
-    final authService = AuthService();
-    final user = await authService.getLoggedInUser();
+    final user = appInit.authService.getLoggedInUser();
     if (mounted && user != null) {
       setState(() {
         _userName = user.name.split(' ').first;

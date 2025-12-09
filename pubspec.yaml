@@ -38,7 +38,7 @@ dependencies:
   video_player: ^2.8.1
   chewie: ^1.5.0
   image_picker: ^1.0.4
-  popover: ^0.3.0
+  popover: ^0.4.0
   iconsax_flutter: ^1.0.0
   get: ^4.6.6
   provider: ^6.1.5

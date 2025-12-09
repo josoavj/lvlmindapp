@@ -12,13 +12,62 @@ class _ScheduleState extends State<Schedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar(),
-      body: ListView(
+      body: Column(
         children: [
-          const SizedBox(
-            child: Card(),
+          Expanded(
+            child: Card(
+              margin: const EdgeInsets.all(16),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: Center(
+                  child: Text(
+                    'Calendrier',
+                    style: TextStyle(
+                      fontFamily: 'Josefin',
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-          Table()
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Table(
+                border: TableBorder.all(
+                  color: Colors.grey[300] ?? Colors.grey,
+                  width: 1,
+                ),
+                children: [
+                  TableRow(
+                    children: [
+                      _buildTableCell('Jour'),
+                      _buildTableCell('Heure'),
+                      _buildTableCell('Événement'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTableCell(String text) {
+    return TableCell(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontFamily: 'Josefin',
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }
@@ -43,4 +92,3 @@ class _ScheduleState extends State<Schedule> {
     );
   }
 }
-

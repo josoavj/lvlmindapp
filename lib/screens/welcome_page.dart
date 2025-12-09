@@ -35,12 +35,12 @@ class WelcomePage extends StatelessWidget {
 
                   // Phrase d'introduction
                   // Utilisation d'une courbe plus douce pour l'apparition du texte
-                  DelayedAnimation(
-                    delay: 900, // Légèrement augmenté pour un meilleur timing
-                    curve: Curves
-                        .easeOutQuad, // Une courbe d'accélération/décélération douce
-                    child: Flexible(
-                      flex: 1,
+                  Flexible(
+                    flex: 1,
+                    child: DelayedAnimation(
+                      delay: 900, // Légèrement augmenté pour un meilleur timing
+                      curve: Curves
+                          .easeOutQuad, // Une courbe d'accélération/décélération douce
                       child: _buildIntroText(),
                     ),
                   ),
@@ -129,12 +129,12 @@ class WelcomePage extends StatelessWidget {
         // Espacement entre les deux logos
         const SizedBox(width: 70),
         // Notre logo d'application
-        DelayedAnimation(
-          delay: 700,
-          curve: Curves.easeOutBack,
-          slideStartOffset: const Offset(0.5, 0.0),
-          child: Flexible(
-            flex: 2,
+        Flexible(
+          flex: 2,
+          child: DelayedAnimation(
+            delay: 700,
+            curve: Curves.easeOutBack,
+            slideStartOffset: const Offset(0.5, 0.0),
             child: SizedBox(
               height: 80,
               child: ClipRRect(

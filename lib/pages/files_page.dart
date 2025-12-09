@@ -10,10 +10,10 @@ class Files extends StatefulWidget {
   const Files({super.key});
 
   @override
-  _FilesState createState() => _FilesState();
+  State<Files> createState() => FilesState();
 }
 
-class _FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
+class FilesState extends State<Files> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 

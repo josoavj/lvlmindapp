@@ -20,10 +20,10 @@ class DelayedAnimation extends StatefulWidget {
   });
 
   @override
-  _DelayedAnimationState createState() => _DelayedAnimationState();
+  State<DelayedAnimation> createState() => DelayedAnimationState();
 }
 
-class _DelayedAnimationState extends State<DelayedAnimation>
+class DelayedAnimationState extends State<DelayedAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;

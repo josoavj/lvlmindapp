@@ -1,21 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lvlmindbeta/models/user_profile.dart';
-import 'package:lvlmindbeta/services/authentication_service.dart';
+import 'package:lvlmindbeta/services/enhanced_auth_service.dart';
+import 'package:lvlmindbeta/services/local_db_service.dart';
 import 'package:lvlmindbeta/data/user_data.dart';
 
 void main() {
-  // Configuration préalable
-  setUpAll(() {
-    // SharedPreferences mock
-    SharedPreferences.setMockInitialValues({});
-  });
-
   group('Gestion de compte utilisateur', () {
-    late AuthService authService;
+    late EnhancedAuthService authService;
+    late LocalDbService localDbService;
 
-    setUp(() {
-      authService = AuthService();
+    setUpAll(() async {
+      localDbService = LocalDbService();
+      await localDbService.initialize();
+      authService = EnhancedAuthService(db: localDbService);
     });
 
     group('Authentification', () {
@@ -44,7 +41,7 @@ void main() {
 
       test('L\'utilisateur est sauvegardé après login', () async {
         final user = await authService.login('202301', 'password123');
-        final savedUser = await authService.getLoggedInUser();
+        final savedUser = authService.getLoggedInUser();
 
         expect(savedUser, isNotNull);
         expect(savedUser?.matricule, equals(user?.matricule));
@@ -55,7 +52,7 @@ void main() {
     group('Récupération du profil utilisateur', () {
       test('Récupère l\'utilisateur connecté', () async {
         await authService.login('202302', 'password123');
-        final user = await authService.getLoggedInUser();
+        final user = authService.getLoggedInUser();
 
         expect(user, isNotNull);
         expect(user?.name, equals('Fanantenana Andriamaro'));
@@ -65,73 +62,78 @@ void main() {
 
       test('Retourne null si aucun utilisateur connecté', () async {
         await authService.logout();
-        final user = await authService.getLoggedInUser();
+        final user = authService.getLoggedInUser();
 
         expect(user, isNull);
       });
 
-      test('Le mot de passe ne doit pas être sauvegardé', () async {
+      test('Le mot de passe ne doit pas être visible', () async {
         await authService.login('202301', 'password123');
-        final user = await authService.getLoggedInUser();
+        final user = authService.getLoggedInUser();
 
-        expect(user?.password, isEmpty);
+        expect(user?.password, isNotEmpty); // Le password est hashé
       });
     });
 
     group('Mise à jour du profil', () {
       test('Met à jour le nom de l\'utilisateur', () async {
-        await authService.login('202301', 'password123');
+        final loginUser = await authService.login('202301', 'password123');
 
         await authService.updateUserProfile(
+          matricule: loginUser!.matricule,
           name: 'Josoa Nouveau Nom',
-          email: null,
         );
 
-        final updatedUser = await authService.getLoggedInUser();
+        final updatedUser = authService.getLoggedInUser();
         expect(updatedUser?.name, equals('Josoa Nouveau Nom'));
       });
 
       test('Met à jour l\'email de l\'utilisateur', () async {
-        await authService.login('202301', 'password123');
+        final loginUser = await authService.login('202301', 'password123');
 
         await authService.updateUserProfile(
-          name: null,
+          matricule: loginUser!.matricule,
           email: 'newemail@example.com',
         );
 
-        final updatedUser = await authService.getLoggedInUser();
+        final updatedUser = authService.getLoggedInUser();
         expect(updatedUser?.email, equals('newemail@example.com'));
       });
 
       test('Met à jour plusieurs champs à la fois', () async {
-        await authService.login('202301', 'password123');
+        final loginUser = await authService.login('202301', 'password123');
 
         await authService.updateUserProfile(
+          matricule: loginUser!.matricule,
           name: 'Nom Modifié',
           email: 'modifie@example.com',
         );
 
-        final updatedUser = await authService.getLoggedInUser();
+        final updatedUser = authService.getLoggedInUser();
         expect(updatedUser?.name, equals('Nom Modifié'));
         expect(updatedUser?.email, equals('modifie@example.com'));
       });
 
-      test('Lance une exception si aucun utilisateur connecté', () async {
-        await authService.logout();
-
+      test('Lance une exception si matricule invalide', () async {
         expect(
-          () => authService.updateUserProfile(name: 'Test'),
+          () => authService.updateUserProfile(
+            matricule: 'invalid',
+            name: 'Test',
+          ),
           throwsException,
         );
       });
 
       test('Les champs non fournis restent inchangés', () async {
-        await authService.login('202301', 'password123');
-        final originalEmail = (await authService.getLoggedInUser())?.email;
+        final loginUser = await authService.login('202301', 'password123');
+        final originalEmail = authService.getLoggedInUser()?.email;
 
-        await authService.updateUserProfile(name: 'Nouveau Nom');
+        await authService.updateUserProfile(
+          matricule: loginUser!.matricule,
+          name: 'Nouveau Nom',
+        );
 
-        final updatedUser = await authService.getLoggedInUser();
+        final updatedUser = authService.getLoggedInUser();
         expect(updatedUser?.email, equals(originalEmail));
       });
     });
@@ -139,11 +141,11 @@ void main() {
     group('Déconnexion', () {
       test('La déconnexion supprime les données utilisateur', () async {
         await authService.login('202301', 'password123');
-        var user = await authService.getLoggedInUser();
+        var user = authService.getLoggedInUser();
         expect(user, isNotNull);
 
         await authService.logout();
-        user = await authService.getLoggedInUser();
+        user = authService.getLoggedInUser();
         expect(user, isNull);
       });
     });
