@@ -1,9 +1,9 @@
 name: lvlmindbeta
 description: A e-learning app project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-repository: https://github.com/Josoa886/lvlmindapp/
-homepage: https://github.com/Josoa886/lvlmindapp
-maintainer: Josoa (@Josoa886) & Fiatoa (foulburst)
+repository: https://github.com/josoavj/lvlmindapp/
+homepage: https://github.com/josoavj/lvlmindapp
+maintainer: Josoa (@josoavj) & Fiatoa (foulburst)
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
