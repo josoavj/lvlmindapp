@@ -73,12 +73,14 @@ Exemple:
 ### Où Changer la Version
 
 #### 1. `pubspec.yaml`
+
 ```yaml
 version: 1.0.0-beta.1+1
 # MAJEURE.MINEURE.CORRECTIF-PRERELEASE+BUILD
 ```
 
 #### 2. `android/app/build.gradle`
+
 ```gradle
 android {
     defaultConfig {
@@ -89,6 +91,7 @@ android {
 ```
 
 #### 3. `ios/Runner/Info.plist`
+
 ```xml
 <key>CFBundleShortVersionString</key>
 <string>1.0.0-beta.1</string>
@@ -103,6 +106,7 @@ android {
 ### 1️⃣ Planification (1 semaine avant)
 
 #### Créer une issue de release
+
 ```markdown
 ## Release: 1.0.0-beta.2
 
@@ -122,6 +126,7 @@ android {
 ```
 
 #### Créer une branche release
+
 ```bash
 git checkout -b release/1.0.0-beta.2
 ```
@@ -138,6 +143,7 @@ git commit -m "docs: update README"
 ### 3️⃣ Stabilisation (2-3 jours avant)
 
 #### Geler le code
+
 ```bash
 # Plus de nouvelles features
 # Seulement des bug fixes et docs
@@ -145,6 +151,7 @@ git commit -m "fix: critical bug for beta.2"
 ```
 
 #### Vérifier les dépendances
+
 ```bash
 flutter pub get
 flutter pub outdated
@@ -152,12 +159,14 @@ flutter pub upgrade --dry-run
 ```
 
 #### Nettoyer le code
+
 ```bash
 flutter analyze          # 0 errors expected
 dart format lib/        # Formater le code
 ```
 
 #### Tester manuellement
+
 ```bash
 flutter run -v          # Tester sur Android
 flutter run -d macos   # Tester sur iOS
@@ -173,11 +182,13 @@ flutter run -d macos   # Tester sur iOS
 ### 4️⃣ Préparation Release
 
 #### Mettre à jour pubspec.yaml
+
 ```yaml
 version: 1.0.0-beta.2+2
 ```
 
 #### Mettre à jour CHANGELOG
+
 ```markdown
 ## [1.0.0-beta.2] - 2025-12-20
 
@@ -198,12 +209,14 @@ version: 1.0.0-beta.2+2
 ```
 
 #### Mettre à jour README
+
 ```markdown
 ## Status
 🟠 Beta v1.0.0-beta.2
 ```
 
 #### Version commit
+
 ```bash
 git add pubspec.yaml CHANGELOG.md README.md
 git commit -m "chore: bump version to 1.0.0-beta.2"
@@ -219,6 +232,7 @@ git push origin v1.0.0-beta.2
 ### Étape 1: Générer les Builds
 
 #### Android - APK
+
 ```bash
 # Clean
 flutter clean
@@ -232,6 +246,7 @@ ls -lh build/app/outputs/flutter-app.apk
 ```
 
 #### Android - Bundle (Google Play)
+
 ```bash
 # Build AAB
 flutter build appbundle --release
@@ -241,6 +256,7 @@ ls -lh build/app/outputs/bundle/release/app-release.aab
 ```
 
 #### iOS
+
 ```bash
 # Clean
 flutter clean
@@ -260,6 +276,7 @@ open ios/Runner.xcworkspace
 ### Étape 2: Tests de Build
 
 #### Vérifier les fichiers
+
 ```bash
 # Android
 file build/app/outputs/flutter-app.apk
@@ -271,6 +288,7 @@ file build/ios/iphoneos/Runner.app
 ```
 
 #### Tester sur appareil
+
 ```bash
 # Installer APK
 adb install build/app/outputs/flutter-app.apk
@@ -287,6 +305,7 @@ adb install build/app/outputs/flutter-app.apk
 #### Android Signing
 
 **Créer une clé de signature (première fois)**
+
 ```bash
 keytool -genkey -v -keystore \
   ~/.android/release-key.jks \
@@ -303,6 +322,7 @@ keytool -genkey -v -keystore \
 ```
 
 **Signer l'APK**
+
 ```bash
 jarsigner -verbose \
   -sigalg SHA256withRSA \
@@ -315,6 +335,7 @@ jarsigner -verbose \
 ```
 
 **Aligner l'APK (optionnel mais recommandé)**
+
 ```bash
 zipalign -v 4 \
   build/app/outputs/flutter-app.apk \
@@ -322,6 +343,7 @@ zipalign -v 4 \
 ```
 
 #### iOS Signing
+
 - Utiliser Xcode (automatique avec certificat)
 - Ou utiliser fastlane (avancé)
 
@@ -389,6 +411,7 @@ open https://play.google.com/console
 ```
 
 #### Promotion vers Stable
+
 ```
 Internal Testing (testeurs internes)
         ↓
@@ -404,7 +427,7 @@ Production (grand public)
 #### Configuration Initiale
 
 1. **Accéder à App Store Connect**
-   - https://appstoreconnect.apple.com
+   - <https://appstoreconnect.apple.com>
 
 2. **Créer l'app**
    - Apps → Ajouter une nouvelle app
@@ -461,6 +484,7 @@ git push origin v1.0.0-beta.2
 ### 1️⃣ Communication (jour de release)
 
 #### Annoncer la release
+
 ```markdown
 ## 🎉 LevelMind 1.0.0-beta.2 is Live!
 
@@ -482,9 +506,10 @@ Report issues at: https://github.com/josoavj/lvlmindapp/issues
 1.0.0-beta.3: December 30, 2025
 ```
 
-#### Postes sur:
+#### Postes sur
+
 - 📱 GitHub (Release notes)
-- 📧 Email: support@levelmind.app
+- 📧 Email: <support@levelmind.app>
 - 💬 Slack: #announcements
 - 🐙 GitHub Discussions
 - 📊 Twitter/X (si applicable)
@@ -503,6 +528,7 @@ Report issues at: https://github.com/josoavj/lvlmindapp/issues
 ```
 
 #### Seuils de tolérance
+
 - Crash rate: < 0.5%
 - ANR rate: < 0.1%
 - Bugs critiques reportés: 0-2 acceptable
@@ -609,16 +635,19 @@ git push --tags        # Push all tags
 ### ✅ Avant la Release (1 semaine)
 
 #### Code Freeze
+
 - [ ] Plus de nouvelles features
 - [ ] Seulement bug fixes et documentation
 
 #### Validation
+
 - [ ] `flutter analyze` = 0 errors
 - [ ] `flutter test` = tous passent
 - [ ] `dart format` = formaté
 - [ ] Pas d'erreurs de déploiement
 
 #### Vérification Manuelle
+
 - [ ] Tester la connexion
 - [ ] Tester l'inscription
 - [ ] Tester le profil
@@ -628,12 +657,14 @@ git push --tags        # Push all tags
 - [ ] Vérifier la performance
 
 #### Documentation
+
 - [ ] CHANGELOG mis à jour
 - [ ] README mis à jour
 - [ ] Release notes rédigées
 - [ ] API docs à jour
 
 #### Dépendances
+
 - [ ] `flutter pub get` OK
 - [ ] Pas de vulnérabilités connues
 - [ ] Dépendances compatibles
@@ -641,36 +672,42 @@ git push --tags        # Push all tags
 ### ✅ Jour de la Release
 
 #### Builds
+
 - [ ] Android APK généré
 - [ ] Android AAB généré
 - [ ] iOS build généré
 - [ ] Fichiers signés
 
 #### Tests de Builds
+
 - [ ] APK testable sur appareil
 - [ ] IPA testable sur iPhone
 - [ ] Pas de crashes au démarrage
 - [ ] Authentification fonctionne
 
 #### Versioning
+
 - [ ] pubspec.yaml bumped
 - [ ] android/app/build.gradle bumped
 - [ ] ios/Runner/Info.plist bumped
 - [ ] CHANGELOG mis à jour
 
 #### Git
+
 - [ ] Commit: "chore: bump version to X.Y.Z"
 - [ ] Tag créé: vX.Y.Z
 - [ ] Push vers origin
 - [ ] Push des tags
 
 #### Déploiement
+
 - [ ] Google Play: APK/AAB uploadé
 - [ ] TestFlight: IPA uploadé
 - [ ] GitHub: Release créée
 - [ ] GitHub: APK en attachment
 
 #### Communication
+
 - [ ] Annoncement rédigé
 - [ ] Email envoyé
 - [ ] Slack notifié
@@ -679,22 +716,26 @@ git push --tags        # Push all tags
 ### ✅ Après la Release (1 semaine)
 
 #### Monitoring
+
 - [ ] Vérifier Google Play Console
 - [ ] Vérifier TestFlight
 - [ ] Lire les reviews
 - [ ] Regarder les crash reports
 
 #### Feedback
+
 - [ ] Répondre aux questions
 - [ ] Triage des bugs reportés
 - [ ] Planifier des hotfixes si nécessaire
 
 #### Documentation
+
 - [ ] Mise à jour des tutoriels
 - [ ] Mise à jour des docs
 - [ ] Screenshots mis à jour
 
 #### Planification
+
 - [ ] Planifier la prochaine release
 - [ ] Ajouter les features pour beta+1
 - [ ] Créer les issues
@@ -705,12 +746,14 @@ git push --tags        # Push all tags
 ## Exemple Complet: Release 1.0.0-beta.2
 
 ### Jour 1: Planification
+
 ```bash
 git checkout -b release/1.0.0-beta.2
 # Travailler sur les features
 ```
 
 ### Jour 8: Code Freeze
+
 ```bash
 flutter analyze      # ✅ 0 errors
 flutter test        # ✅ Tous passent
@@ -719,6 +762,7 @@ git commit -m "fix: final bugs for beta.2"
 ```
 
 ### Jour 9: Versioning
+
 ```bash
 # Mettre à jour les versions
 vim pubspec.yaml    # 1.0.0-beta.2+2
@@ -731,6 +775,7 @@ git tag -a v1.0.0-beta.2 -m "Release 1.0.0-beta.2"
 ```
 
 ### Jour 10: Builds
+
 ```bash
 flutter clean
 flutter build apk --release
@@ -743,6 +788,7 @@ jarsigner -keystore ~/.android/release-key.jks \
 ```
 
 ### Jour 11: Tests
+
 ```bash
 adb install build/app/outputs/flutter-app.apk
 # Tester l'app complètement
@@ -753,6 +799,7 @@ adb install build/app/outputs/flutter-app.apk
 ```
 
 ### Jour 12: Déploiement
+
 ```bash
 # Google Play
 open https://play.google.com/console
@@ -769,6 +816,7 @@ gh release create v1.0.0-beta.2 \
 ```
 
 ### Jour 13: Annonce
+
 ```
 Email + Slack + GitHub:
 "🎉 LevelMind 1.0.0-beta.2 released!
@@ -781,7 +829,7 @@ Download: [links]"
 
 ## Support & Questions
 
-- 📧 support@levelmind.app
+- 📧 <support@levelmind.app>
 - 💬 GitHub Issues
 - 🐙 GitHub Discussions
 - 📱 In-app help

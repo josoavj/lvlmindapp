@@ -47,6 +47,7 @@
 **LevelMind** est une application mobile Flutter de nouvelle génération conçue pour révolutionner l'expérience d'apprentissage au sein des établissements scolaires et universitaires. Actuellement en **phase BETA**, elle vise à fournir un écosystème numérique complet et intuitif pour les étudiants et les enseignants.
 
 ### Objectifs Principaux
+
 - 🎯 Centraliser toutes les ressources pédagogiques en un seul endroit
 - 📱 Offrir une expérience mobile fluide et réactive
 - 🔐 Garantir la sécurité et la confidentialité des données utilisateur
@@ -124,22 +125,26 @@
 ### Installation
 
 #### 1️⃣ Cloner le dépôt
+
 ```bash
 git clone https://github.com/josoavj/lvlmindapp.git
 cd lvlmindapp
 ```
 
 #### 2️⃣ Installer les dépendances
+
 ```bash
 flutter pub get
 ```
 
 #### 3️⃣ Générer les fichiers Hive
+
 ```bash
 flutter pub run build_runner build
 ```
 
 #### 4️⃣ Vérifier l'installation
+
 ```bash
 flutter doctor
 flutter analyze
@@ -148,12 +153,14 @@ flutter analyze
 ### Première Utilisation
 
 #### Option 1: Émulateur Android
+
 ```bash
 flutter emulators --launch Pixel_4_API_30
 flutter run
 ```
 
 #### Option 2: Appareil iOS
+
 ```bash
 open ios/Runner.xcworkspace
 # Sélectionner votre appareil dans Xcode
@@ -161,6 +168,7 @@ flutter run
 ```
 
 #### Option 3: Appareil Physique
+
 ```bash
 # Brancher l'appareil en mode développeur
 flutter run
@@ -299,6 +307,7 @@ UserProfile? current = appInit.db.getCurrentUser();
 ### Flux d'Authentification
 
 #### Inscription
+
 ```
 RegistrationPage → Validation → EnhancedAuthService.register()
     ↓
@@ -308,6 +317,7 @@ Hive.box("users").put(matricule, userProfile)
 ```
 
 #### Connexion
+
 ```
 LoginPage → Validation → EnhancedAuthService.login()
     ↓
@@ -321,6 +331,7 @@ UserNotifier.loadCurrentUser()
 ```
 
 #### Déconnexion
+
 ```
 ProfilePage → Confirmation → UserNotifier.logout()
     ↓
@@ -410,6 +421,7 @@ MAJEURE.MINEURE.CORRECTIF+METADATA
 ### Plan de Release
 
 #### Phase 1: BETA (Actuelle) 🟠
+
 - **Version**: 1.0.0-beta.1 → 1.0.0-beta.5
 - **Timeline**: Nov 2025 - Déc 2025
 - **Focus**: Stabilisation auth & profil
@@ -421,6 +433,7 @@ MAJEURE.MINEURE.CORRECTIF+METADATA
   - GitHub Releases (APK direct)
 
 #### Phase 2: RELEASE CANDIDATE 🟡
+
 - **Version**: 1.0.0-rc.1 → 1.0.0-rc.3
 - **Timeline**: Déc 2025 - Jan 2026
 - **Focus**: Bug fixes, performance
@@ -428,6 +441,7 @@ MAJEURE.MINEURE.CORRECTIF+METADATA
 - **Validation**: Test coverage > 80%
 
 #### Phase 3: STABLE 🟢
+
 - **Version**: 1.0.0
 - **Timeline**: Jan 2026
 - **Focus**: Production-ready
@@ -435,6 +449,7 @@ MAJEURE.MINEURE.CORRECTIF+METADATA
 - **Support**: 1 an minimum
 
 #### Phase 4: ÉVOLUTION 🚀
+
 - **Version**: 1.1.0+, 2.0.0+
 - **Timeline**: À partir de Jan 2026
 - **Features**: Nouvelles fonctionnalités
@@ -538,6 +553,7 @@ flutter test test/integration/login_test.dart
 ```
 
 ### Où Signaler
+
 - 📧 Email: support@levelmind.app
 - 💬 GitHub Issues: [Créer une issue](https://github.com/josoavj/lvlmindapp/issues)
 - 📱 In-app: Menu → Aide → Signaler un problème
