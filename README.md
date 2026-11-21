@@ -86,13 +86,13 @@
   - Persistance des données utilisateur
   - Synchronisation automatique
 
-### En Développement 🚀
+### En Développement
 
-- 📢 Annonces et Actualités
-- 💬 Messagerie entre utilisateurs
-- 📊 Suivi de progression académique
-- 📝 Système d'évaluation
-- 🔔 Notifications push
+- Annonces et Actualités
+- Messagerie entre utilisateurs
+- Suivi de progression académique
+- Système d'évaluation
+- Notifications push
 
 ---
 
